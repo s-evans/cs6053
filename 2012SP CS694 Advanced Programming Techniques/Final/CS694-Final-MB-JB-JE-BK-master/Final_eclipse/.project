@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Final_eclipse</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>Final</name>
+			<type>2</type>
+			<location>/mnt/raid/Dropbox/Grad School/2012SP CS694 Advanced Programming Techniques/Final/CS694-Final-MB-JB-JE-BK/Final/src</location>
+		</link>
+	</linkedResources>
+</projectDescription>

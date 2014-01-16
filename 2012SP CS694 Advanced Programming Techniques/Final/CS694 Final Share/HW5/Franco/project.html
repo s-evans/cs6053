@@ -1,0 +1,329 @@
+<html>
+<head>
+<title>I-Wars C694 Project Description</title>
+<meta name="ROBOTS" content="index,follow">
+<meta name="keywords" content=" $keywords-body$">
+<meta name="DESCRIPTION" content="Project Protocol">
+<meta name="Edited" content="Fri, 15 May 2009 14:18:31 GMT">
+<meta name="Published" content="Fri, 15 May 2009 14:21:26 GMT">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="mainStyle.css" type="text/css" media="screen">
+</head>
+<body bgcolor="#FFFFDF">
+<center>
+<table cellspacing=10>
+
+<tr>
+<th width=200><b><font color="#0000bb">20-CS-694</font></b></th>
+<th width=500><b><font color="#bb0000" size=+1>Advanced Programming Techniques</font></b></th>
+<th width=200><b><font color="#0000bb">Spring 2012</font></b></th>
+</tr>
+
+
+<tr>
+<th></th>
+<th><font color="#0000bb" size=+1><b>I-Wars Project</b></font></th>
+<th></th>
+</tr>
+
+</table>
+
+<hr width=50% color=#bb00bb>
+<font color="#FF0000" size=-2>
+<nobr>Interfaces, Exceptions, Graphics, Animation, Threads, Reflection, Networking, RMI, JDBC, JNI</nobr><br>
+</font>
+<hr width=50% color=#bb00bb>
+<p> <!--&nbsp;<br>-->
+
+
+
+<font size=+2 color="#0000FF"><b>I-Wars Project Description Index</b></font>
+<p>
+Due: End of Finals Week
+(submit instructions: email zipped file to franco@gauss.ececs.uc.edu)
+<br>
+</center>
+<p>
+
+<div style="margin:0em 3em;">
+<table width=90%>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="tunnel.html"><font color="#00bb00"><nobr>Use ssh to tunnel to project machines</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="description.html"><font color="#FF0000"><nobr>Detailed description</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="monitor.html"><font color="#FF0000"><nobr>Protocol</a> (See RMI section)</font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks" valign="top">
+A Player:&nbsp;&nbsp;&nbsp;<applet code="ProjectApplet.class" codebase="ProjectPlayer" width=80 height=20></applet>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<font color="#bb0000"><nobr><a href="handshake.pdf">Handshake demo</a>
+&nbsp;&nbsp;&nbsp;
+<a href="rsa.pdf">RSA description</a>
+&nbsp;&nbsp;&nbsp;
+<a href="hash.pdf">Hash description</a>
+&nbsp;&nbsp;&nbsp;
+<a href="karn.pdf">Karn description</a></nobr></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks"><nobr><font color="#bb0000">
+<a href="SecureClasses/BigIntegerTest.java">BigIntegerTest.java</a>
+&nbsp;&nbsp;&nbsp;
+<a href="SecureClasses/SecureRandomTest.java">SecureRandomTest.java</a>
+&nbsp;&nbsp;&nbsp;
+<a href="SecureClasses/MessageDigestTest.java">MessageDigestTest.java</a></nobr></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<font color="#FF0000"><nobr>Additional Documentation:</font>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp;&nbsp;</td>
+<td colspan=3 class="courseLinks">
+<font color="#FF0000"><a href="Classes/index.html"><nobr>Project Classes</a></font>
+</td>
+</tr>
+
+<tr>
+<td></td>
+<td colspan=3 class="courseLinks">
+<font color="#FF0000"><a href="Docs/index.html"><nobr>Player Classes</a></font>
+</td>
+</tr>
+
+<tr>
+<td></td>
+<td>&nbsp;</td>
+<td colspan=2 class="courseLinks">
+<font color="#FF0000"><a href="Docs/KarnBufferedReader.html"><nobr>KarnBufferedReader</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=2></td>
+<td colspan=2 class="courseLinks">
+<font color="#FF0000"><a href="Docs/KarnPrintWriter.html"><nobr>KarnPrintWriter</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=2></td>
+<td colspan=2 class="courseLinks">
+<font color="#FF0000"><a href="Docs/PlayerCertificate.html"><nobr>PlayerCertificate</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=2></td>
+<td colspan=2 class="courseLinks">
+<font color="#FF0000"><a href="Docs/PubRSA.html"><nobr>PubRSA</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=2></td>
+<td colspan=2 class="courseLinks">
+<font color="#FF0000"><a href="Docs/CertRemote.html"><nobr>CertRemote</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=2></td>
+<td colspan=2 class="courseLinks">
+<font color="#FF0000"><a href="Docs/RSA.html"><nobr>RSA</a></font>
+</td>
+</tr>
+
+<tr>
+<td></td>
+<td colspan=3 class="courseLinks">
+<font color="#FF0000"><a href="Docs/serialized-form.html"><nobr>serialized form</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<font color="#FF0000"><nobr>Useful Code:</font>
+</td>
+</tr>
+
+<tr>
+<td></td>
+<td colspan=3 class="courseLinks">
+<font color="#FF0000"><a href="Classes/CertRemoteImpl_Stub.class"><nobr>CertRemoteImpl_Stub.class</a></font>
+</td>
+</tr>
+
+<tr>
+<td></td>
+<td colspan=3 class="courseLinks">
+<font color="#FF0000"><a href="Java/rmi_test.java"><nobr>rmi_test.java</a></font>
+</td>
+</tr>
+
+<tr>
+<td></td>
+<td colspan=3 class="courseLinks">
+<font color="#FF0000"><a href="Java/RSA.java"><nobr>RSA.java</a></font>
+</td>
+</tr>
+
+<tr>
+<td></td>
+<td colspan=3 class="courseLinks">
+<font color="#FF0000"><a href="Java/PubRSA.java"><nobr>PubRSA.java</a></font>
+</td>
+</tr>
+
+<tr>
+<td></td>
+<td colspan=3 class="courseLinks">
+<font color="#FF0000"><a href="Java/CertRemote.java"><nobr>CertRemote.java</a></font>
+</td>
+</tr>
+
+<tr>
+<td></td>
+<td colspan=3 class="courseLinks">
+<font color="#FF0000"><a href="Java/PlayerCertificate.java"><nobr>PlayerCertificate.java</a></font>
+</td>
+</tr>
+
+<tr>
+<td></td>
+<td colspan=3 class="courseLinks">
+<font color="#FF0000"><a href="Java/KarnBufferedReader.java"><nobr>KarnBufferedReader.java</a></font>
+</td>
+</tr>
+
+<tr>
+<td></td>
+<td colspan=3 class="courseLinks">
+<font color="#FF0000"><a href="Java/KarnPrintWriter.java"><nobr>KarnPrintWriter.java</a></font>
+</td>
+</tr>
+
+<tr><td colspan=4>&nbsp;</td></tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="submit.html"><font color="#FF0000"><nobr>Contest Dates and Submitting your work</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="login.html"><font color="#FF0000"><nobr>Possible first login</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="cookie.html"><font color="#FF0000"><nobr>Do you know where your cookie is?</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="http://gauss.ececs.uc.edu/standings8160.html"><font color="#FF0000"><nobr>Practice Contest Standings (gauss:8160)</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="http://gauss.ececs.uc.edu/standings8180.html"><font color="#FF0000"><nobr>Final Contest Standings (gauss:8180)</a></font>
+</td>
+</tr>
+
+<tr><td colspan=4>&nbsp;</td></tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="http://www.quadibloc.com/crypto/mi060501.htm"><nobr>Explain Secure Hash Algorithm (SHA-1)</nobr>
+</td>
+</tr>
+
+<!---
+<tr>
+<td></td>
+<td class="courseLinks">
+<a href="http://www.tecapro.com/godsave.html"><nobr>Explain Karn Encryption</nobr>
+</td>
+</tr>
+--->
+
+<tr><td colspan=4>&nbsp;</td></tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="8180a.log.html"><font color="0000bb"><nobr>Sample session log</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="capture_mine.html"><font color="0000bb"><nobr>Sample sniffer session - Watch Out!!! Encryt!!!</a></font>
+</td>
+</tr>
+
+<tr><td colspan=4>&nbsp;</td></tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="karpski-0.101.tar.gz"><font color="#0000bb"><nobr>A Packet Sniffer - for Linux - Amuse yourself with this one</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="libpcap-0.4.tar.gz"><font color="#0000bb"><nobr>You may need these libraries for the sniffer</a></font>
+</td>
+</tr>
+
+<tr><td colspan=4>&nbsp;</td></tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="GameParameters.java.gauss.html"><font color="#00bb00"><nobr>Game Parameters for the Final Contest</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="GameParameters.java.helios.html"><font color="#00bb00"><nobr>Game Parameters for the Practice Contest</a></font>
+</td>
+</tr>
+
+<tr>
+<td colspan=4 class="courseLinks">
+<a href="GameParameters.diff.java"><font color="#00bb00"><nobr>Difference of above two files</a></font>
+</td>
+</tr>
+
+
+</table>
+</body>
+</html>

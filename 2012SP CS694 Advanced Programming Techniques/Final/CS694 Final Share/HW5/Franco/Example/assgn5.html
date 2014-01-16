@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>HW 5</title>
+<meta name="ROBOTS" content="index,follow">
+<meta name="keywords" content=" $keywords-body$">
+<meta name="DESCRIPTION" content="assignment 5">
+<meta name="Edited" content="Fri, 15 May 2009 14:18:31 GMT">
+<meta name="Published" content="Fri, 15 May 2009 14:21:26 GMT">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="mainStyle.css" type="text/css" media="screen">
+</head>
+<body bgcolor="#FFFFDF">
+<center>
+<table cellspacing=10>
+<tr>
+
+<tr>
+<th width=200><b><font color="#0000bb">20-CS-694</font></b></th>
+<th width=500><b><font color="#bb0000" size=+1>Advanced Programming Techniques</font></b></th>
+<th width=200><b><font color="#0000bb">Spring 2012</font></b></th>
+</tr>
+
+
+<tr>
+<th></th>
+<th><font color="#0000bb" size=+1><b>Homework Assignment 5</b></font></th>
+<th></th>
+</tr>
+
+</table>
+
+<hr width=50% color=#bb00bb>
+<font color="#FF0000" size=-2>
+<nobr>Interfaces, Exceptions, Graphics, Animation, Threads, Reflection, Networking, RMI, JDBC, JNI</nobr><br>
+</font>
+<hr width=50% color=#bb00bb>
+<p> <!--&nbsp;<br>-->
+
+
+
+
+<font size=+2 color="#0000FF"><b>Communicating with the Project Monitor</b></font>
+<p>
+Due: May 20, 2012 (submit instructions: <a href="../submissions.html">here</a>)
+<p>
+
+<table width=90%><tr><td colspan=2>
+<font size=+1 color="#0000bb"><b>Rationale:</b></font></td></tr>
+
+<tr>
+<td>&nbsp;&nbsp;&nbsp;</td>
+<td>To write basic code for communicating with the monitor that will
+be used in the final project.  Gain familiarity with the design and use 
+of elementary protocols.  Prepare for necessary components of the final 
+project.</td>
+</tr>
+
+<tr><td colspan=2>&nbsp;</td></tr>
+
+<tr><td colspan=2>
+<font size=+1 color="#0000bb"><b>Homework Problem:</b></font>
+&nbsp;&nbsp;&nbsp;
+<applet code=ProjectApplet height=20 width=90></applet></td></tr>
+
+<tr><td></td><td>
+Write Java code to support communication with a Monitor.  The Monitor
+listens for connection requests on port 8180 of helios.ececs.uc.edu.
+A request for a connection is made by a Client who also supplies a
+port and host containing the Client's Server.  The Monitor then
+authenticates itself to the Client by sending a secret to the Client's
+Server over the specified channel.  Details of the protocol, including
+all commands and directives you need to support,
+are given <a href="http://gauss.ececs.uc.edu/Courses/c694/project/Protocol.html">here</a>.
+A description of the project is given 
+<a href="http://gauss.ececs.uc.edu/Courses/c694/project/project.html">here</a>.
+<p>
+We provide sample Java code which is the beginning of an 
+<a href="http://gauss.ececs.uc.edu/Courses/c653/homework/Specs/ActiveClient.java">Active Client</a>, a 
+<a href="http://gauss.ececs.uc.edu/Courses/c653/homework/Specs/Server.java">Client's Server</a>, and the 
+<a href="http://gauss.ececs.uc.edu/Courses/c653/homework/Specs/Homework.java">means to start them</a>.
+Here is skeleton for the <a href="http://gauss.ececs.uc.edu/Courses/c653/homework/MessageParser.java">MessageParser</a>
+class.
+<p>
+The following are useful documentation:&nbsp;&nbsp;
+<font color="#bb0000"><nobr><a href="handshake.pdf">Handshake demo</a>
+&nbsp;&nbsp;
+<a href="rsa.pdf">RSA description</a>
+&nbsp;&nbsp;
+<a href="hash.pdf">Hash description</a>
+&nbsp;&nbsp;
+<a href="karn.pdf">Karn description</a></nobr></font>
+</td></tr></table>
+<p>
+</center>
+</body>
+</html>
