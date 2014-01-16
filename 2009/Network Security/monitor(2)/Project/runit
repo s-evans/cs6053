@@ -1,0 +1,9 @@
+#!/bin/csh
+
+limit coredumpsize 0
+
+set count = 0
+
+set log = ../logs/final.log
+
+nohup java -Djava.net.preferIPv4Stack=true -ss1m -ms96m -mx156m MonitorServer 8180 NEW DYNAMIC ../Final >& $log

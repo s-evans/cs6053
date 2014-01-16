@@ -1,0 +1,5 @@
+grep -i -n -A 30 "ident overmetal" final.log.8150.gauss | grep -i -A 2 "ALIVE 
+
+ssh -N -L 8151:gauss.ececs.uc.edu:8150 -l chris helios.ececs.uc.edu
+
+will forward any traffic on localhost:8151 to gauss.ececs.uc.edu:8150
