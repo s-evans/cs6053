@@ -1,0 +1,11 @@
+#!/bin/sh
+#  Does a transfer request get sent to the server or a client? - Server
+#    try 'transfer_request franco1 100 from franco2'
+#    at franco1's Active Client command prompt
+#  Does a client have to be logged in to get it? - No
+#    Control-C out or QUIT out of franco2's active client before issuing above
+MONITOR="localhost"
+xterm -T "Franco1 Server" -fn 10x20 -bg papayawhip -cr red -geometry 80x18+500+20 -e java StartServer ${MONITOR} 8150 20500 franco1 &
+xterm -T "Franco1 Client" -fn 10x20 -bg papayawhip -cr red -geometry 80x18+500+420 -e java StartClient ${MONITOR} 8150 20500 franco1 &
+xterm -T "Franco2 Server" -fn 10x20 -bg papayawhip -cr red -geometry 80x18+0+20 -e java StartServer ${MONITOR} 8150 20000 franco2 &
+xterm -T "Franco2 Client" -fn 10x20 -bg papayawhip -cr red -geometry 80x18+0+420 -e java StartClient ${MONITOR} 8150 20000 franco2 &

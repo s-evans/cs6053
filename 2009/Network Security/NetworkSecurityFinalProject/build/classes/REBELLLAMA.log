@@ -1,0 +1,20 @@
+Incoming Monitor Message [D] to client:
+COMMENT: Monitor Version 2.2 REQUIRE: IDENT WAITING: 
+
+
+Outgoing message [D] from client:
+IDENT rebelllama 10pubqbsihj6c1k7dq2uvb1h964nq1781falrpjeuo5l6sq5q9216t3eqiuu5rhhvt5t447c9n6ql2go8k3vdeov0vglt5mlumpm6pn
+
+
+Incoming Monitor Message [D] to client:
+RESULT: IDENT e6f3kuiu8cjg4u3ippugpgk2nd8nhhip4k8gupgnkf8kq5ko21q75h48l25vulirfg4tlklbr3ugbfbi4nn0piob3tkrihpsjm99uv REQUIRE: ALIVE WAITING: 
+
+
+Outgoing message [E] from client:
+ALIVE 3JRE4RT9HWRR2LBJSX4
+
+
+Incoming Monitor Message [E] to client:
+COMMAND_ERROR: Invalid monitor password. REQUIRE: ALIVE WAITING: 
+
+
