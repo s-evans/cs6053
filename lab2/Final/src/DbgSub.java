@@ -1,8 +1,0 @@
-public enum DbgSub {
-    ALL,
-    ACTIVE_CLIENT,
-    SERVER,
-    MESSAGE_PARSER,
-    CONNECTION_HANDLER,
-    PASSWORD_CLIENT
-}
