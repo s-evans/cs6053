@@ -1,9 +1,5 @@
 import java.util.*;
-import java.lang.*;
 import java.io.*;
-import java.net.*;
-import java.security.*;
-import java.math.*;
 
 public class MessageParser {
     // Monitor Handling Declarations
@@ -323,7 +319,6 @@ public class MessageParser {
             pout.close();
             success = true;
         } catch (IOException e) {
-            pout.close();
             return success;
         } catch (NumberFormatException n) {
         }

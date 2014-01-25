@@ -1,8 +1,5 @@
 import java.io.*;
 import java.net.*;
-import java.util.*;
-import java.lang.*;
-import java.awt.*;
 
 public class ActiveClient extends MessageParser implements Runnable {
 
@@ -82,7 +79,7 @@ public class ActiveClient extends MessageParser implements Runnable {
                 out.close();
                 in.close();
                 try {
-                    runner.sleep(DELAY);
+                    Thread.sleep(DELAY);
                 } catch (Exception e) {
                 }
 

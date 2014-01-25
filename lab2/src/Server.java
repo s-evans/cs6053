@@ -1,7 +1,5 @@
 import java.io.*;
 import java.net.*;
-import java.util.*;
-import java.lang.*;
 
 public class Server implements Runnable {
 
@@ -19,7 +17,6 @@ public class Server implements Runnable {
             s = new ServerSocket(p);
             MONITOR_PORT = p;
             LOCAL_PORT = lp;
-            int i = 1;
         } catch (IOException e) {
         }
     }
@@ -62,7 +59,6 @@ class ConnectionHandler extends MessageParser implements Runnable {
             in = new BufferedReader(new InputStreamReader(incoming.getInputStream()));
             out = new PrintWriter(incoming.getOutputStream(), true);
 
-            boolean done = false;
             HOST_PORT = Server.LOCAL_PORT;
             CType = 1; // Indicates Server
             System.out.println("Starting login from Server..");
