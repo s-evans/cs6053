@@ -1,7 +1,7 @@
 class Homework {
     public static String MONITOR_NAME = "helios.ececs.uc.edu";
     public static int MONITOR_PORT = 8180;
-    public static int HOST_PORT = 20000 + (int) (Math.random() * 1000);
+    public static int HOST_PORT = 22334;  // TODO: randomize this
     public static int MAX = 5;
     ActiveClient ac;
     Server s;
@@ -19,7 +19,7 @@ class Homework {
         } else {
             MONITOR_NAME = new String(args[0]);
             MONITOR_PORT = Integer.parseInt(args[1]);
-            Homework hw = new Homework(args[2], "-----");
+            Homework hw = new Homework(args[2], "qwerqwer");  // TODO
             hw.ac.start(); // Start the Active Client
             hw.s.start(); // Start the Server
         }

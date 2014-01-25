@@ -55,12 +55,49 @@ public class ActiveClient extends MessageParser implements Runnable {
                 HOST_PORT = LOCAL_PORT;
                 if (!Login()) {
                     System.out.println("ActiveClient [run]: Login failed");
-                    if (IsVerified == 0) {
-                        System.out.println("ActiveClient [run]: IsVerified = 0");
-                        System.exit(1);
-                    }
+                    System.exit(1);
                 }
+                
+                try {
+                    String monMsg = GetMonitorMessage();
+                    String nextCmd = GetNextCommand(monMsg,"");
+                    if (!monMsg.trim().startsWith("RESULT: ALIVE Identity has been verified.")) {
+                        throw new Exception("MessageParser [Login]: Monitor may not be legit.  Banner = " + monMsg);
+                    }
+
+                    if (!monMsg.trim().equals("RESULT: ALIVE Identity has been verified. WAITING:")) {
+                        monMsg = GetMonitorMessage();
+                        while (!monMsg.trim().equals("")) {
+                            nextCmd = GetNextCommand(monMsg,"");
+                            if (nextCmd == null) {
+                                // we may have reached a success state
+                                break;
+                            }
+                            if (!nextCmd.trim().equals("HOST_PORT")) {
+                                throw new Exception("ActiveClient [run]: Monitor may not be legit.  Asking for " + nextCmd + " instead of HOST_PORT");
+                            }
+                            
+                            if (!Execute("HOST_PORT")) {
+                                System.out.println("ActiveClient [run]: HOST_PORT failed");
+                                monMsg = GetMonitorMessage();
+                                continue;
+                            }
+                            
+                            break;
+                        }
+                        System.out.println("ActiveClient [run]: Exited HOST_PORT loop");
+                    }
+                } catch (Exception e) {
+                    System.out.println("ActiveClient [run]: Exception:\n\t" + e + this);
+                    System.exit(1);
+                }
+                
+                // at this point, we think we're legit 
+                System.out.println("ActiveClient [run]: Login succeeded");
+                IsVerified = 1;
+                
                 System.out.println("***************************");
+                /*
                 // TODO
                 if (Execute("GET_GAME_IDENTS")) {
                     String msg = GetMonitorMessage();
@@ -80,7 +117,7 @@ public class ActiveClient extends MessageParser implements Runnable {
                 }
                 ChangePassword(PASSWORD);  // TODO:  where get new password?
                 System.out.println("Password:" + PASSWORD);
-
+                */
                 toMonitor.close();
                 out.close();
                 in.close();
@@ -90,8 +127,9 @@ public class ActiveClient extends MessageParser implements Runnable {
                 } catch (Exception e) {
                     System.out.println("ActiveClient [run]: Exception:\n\t" + e + this);
                 }
-
-                // TODO? - What next?
+                
+                System.out.println("ActiveClient [run]: Looping again...");
+                
             } catch (UnknownHostException e) {
                 System.out.println("ActiveClient [run]: UnknownHostException:\n\t" + e + this);
             } catch (IOException e) {

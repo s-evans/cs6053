@@ -1,5 +1,8 @@
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.io.*;
+import java.math.BigInteger;
 
 public class MessageParser {
     // Monitor Handling Declarations
@@ -11,18 +14,18 @@ public class MessageParser {
     String mesg, sentmessage;
     String filename;
     StringTokenizer t;
-    String IDENT = "Skipper";  // TODO
-    String PASSWORD = "franco";  // TODO
-    static String COOKIE = "bkuhn";  // TODO
-    String PPCHECKSUM = "";  // TODO
+    String IDENT;
+    String PASSWORD;
+    static String COOKIE = "66NJQA18PY6W1UP62QC";  // TODO - Make this read from file/database/constructor (like username/password?)
+    String PPCHECKSUM = "";
     int HOST_PORT;
     public static int IsVerified;
 
     // File I/O Declarations
     BufferedReader fIn = null;
     PrintWriter fOut = null;
-    static String InputFileName = "Input.dat";
-    static String ResourceFileName = "Resources.dat";
+    static String InputFileName = "Input.dat";  // TODO
+    static String ResourceFileName = "Resources.dat";  // TODO
     String[] cmdArr = new String[COMMAND_LIMIT];
 
     static String MyKey;
@@ -32,12 +35,29 @@ public class MessageParser {
     ObjectOutputStream oout = null;
 
     public MessageParser() {
-        filename = "passwd.dat";
+        filename = "passwd.dat";  // TODO
         GetIdentification(); // Gets Password and Cookie from 'passwd.dat' file
     }
 
+    // function taken from Dr. Franco's monitor source code
+    static String performSHA(String input) throws NoSuchAlgorithmException {
+        /*
+         * This method is: Copyright(C) 1998 Robert Sexton. Use it any way you
+         * wish. Just leave my name on.
+         */
+
+        MessageDigest md;
+        byte target[];
+
+        md = MessageDigest.getInstance("SHA");
+        target = input.toUpperCase().getBytes();
+        md.update(target);
+
+        return (new BigInteger(1, md.digest())).toString(16);
+    }
+
     public MessageParser(String ident, String password) {
-        filename = ident + ".dat";
+        filename = ident + ".dat";  // TODO
         PASSWORD = password;
         IDENT = ident;
         GetIdentification(); // Gets Password and Cookie from 'passwd.dat' file
@@ -79,20 +99,23 @@ public class MessageParser {
 
     // Handling Cookie and PPChecksum
     public String GetNextCommand(String mesg, String sCommand) {
+        String sDefault = "REQUIRE";
+        if (!(sCommand.equals("")))
+            sDefault = sCommand;
+
         try {
-            String sDefault = "REQUIRE";
-            if (!(sCommand.equals("")))
-                sDefault = sCommand;
             t = new StringTokenizer(mesg, " :\n");
-            // Search for the REQUIRE Command
+
+            // Search for the sDefault Command
             String temp = t.nextToken();
             while (!(temp.trim().equals(sDefault.trim())))
                 temp = t.nextToken();
             temp = t.nextToken();
+
             System.out.println("MessageParser [GetNextCommand]: returning " + temp);
             return temp; // returns what the monitor wants
         } catch (NoSuchElementException e) {
-            System.out.println("MessageParser [GetNextCommand]: NoSuchElementException:\n\t" + e + this);
+            // didn't find 'sDefault' string in 'mesg'
             return null;
         }
     }
@@ -100,9 +123,27 @@ public class MessageParser {
     public boolean Login() {
         boolean success = false;
         try {
-            // TODO
-        } catch (NullPointerException n) {
-            System.out.println("MessageParser [Login]: NullPointerException:\n\t" + n + this);
+            String monBanner = GetMonitorMessage();
+            String nextCmd = GetNextCommand(monBanner, "");
+            if (!monBanner.trim().equals("COMMENT: Monitor Version 2.2.1 REQUIRE: IDENT WAITING:")
+                    || !nextCmd.trim().equals("IDENT")) {
+                throw new Exception("MessageParser [Login]: Monitor may not be legit.  Banner = " + monBanner);
+            }
+
+            if (Execute("IDENT") != true) {
+                throw new Exception("MessageParser [Login]: IDENT failed");
+            }
+
+            String monMsg = GetMonitorMessage();
+            nextCmd = GetNextCommand(monMsg, "");
+            if (!nextCmd.trim().equals("ALIVE")) {
+                throw new Exception("MessageParser [Login]: Monitor may not be legit.  Asking for " + nextCmd
+                        + " instead of ALIVE");
+            }
+
+            success = Execute("ALIVE");
+        } catch (Exception e) {
+            System.out.println("MessageParser [Login]: Exception:\n\t" + e + this);
             success = false;
         }
 
@@ -118,6 +159,7 @@ public class MessageParser {
                 sentmessage = sentmessage.concat(" ");
                 sentmessage = sentmessage.concat(arg);
                 SendIt(sentmessage);
+                // TODO: validate result before considering this success?
                 success = true;
             } else {
                 System.out.println("MessageParser [Execute]: " + sentmessage + " not implemented");
@@ -141,11 +183,13 @@ public class MessageParser {
                 sentmessage = sentmessage.concat(" ");
                 sentmessage = sentmessage.concat(IDENT);
                 SendIt(sentmessage);
+                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("PASSWORD")) {
                 sentmessage = sentmessage.concat(" ");
                 sentmessage = sentmessage.concat(PASSWORD);
                 SendIt(sentmessage.trim());
+                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("HOST_PORT")) {
                 sentmessage = sentmessage.concat(" ");
@@ -153,26 +197,32 @@ public class MessageParser {
                 sentmessage = sentmessage.concat(" ");
                 sentmessage = sentmessage.concat(String.valueOf(HOST_PORT));
                 SendIt(sentmessage);
+                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("ALIVE")) {
                 sentmessage = sentmessage.concat(" ");
                 sentmessage = sentmessage.concat(COOKIE);
                 SendIt(sentmessage);
+                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("QUIT")) {
                 SendIt(sentmessage);
+                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("SIGN_OFF")) {
                 SendIt(sentmessage);
+                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("GET_GAME_IDENTS")) {
                 SendIt(sentmessage);
+                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("PARTICIPANT_STATUS")) {
                 SendIt(sentmessage);
                 success = true;
             } else if (sentmessage.trim().equals("RANDOM_PARTICIPANT_HOST_PORT")) {
                 SendIt(sentmessage);
+                // TODO: validate result before considering this success?
                 success = true;
             } else {
                 System.out.println("MessageParser [Execute]: " + sentmessage + " not implemented");
@@ -302,7 +352,7 @@ public class MessageParser {
         try {
             if ((Passwd != null) && !(Passwd.equals(""))) {
                 pout = new PrintWriter(new FileWriter(filename));
-                
+
                 pout.println("PASSWORD");
                 pout.println(Passwd);
                 pout.flush();
@@ -312,7 +362,7 @@ public class MessageParser {
                     pout.println(Cookie);
                     pout.flush();
                 }
-                
+
                 pout.close();
             }
             success = true;
@@ -323,16 +373,5 @@ public class MessageParser {
             System.out.println("MessageParser [WritePersonalData]: NumberFormatException:\n\t" + n + this);
         }
         return success;
-    }
-
-    // Check whether the Monitor is Authentic
-    public boolean Verify(String passwd, String chksum) {
-        // TODO
-        return false;
-    }
-
-    public boolean IsMonitorAuthentic(String MonitorMesg) {
-        // TODO
-        return false;
     }
 }

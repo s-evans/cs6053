@@ -63,20 +63,57 @@ class ConnectionHandler extends MessageParser implements Runnable {
             HOST_PORT = Server.LOCAL_PORT;
             CType = 1; // Indicates Server
             
-            System.out.println("Starting login from Server..");
-            if (Login()) {
-                System.out.println("ConnectionHandler [run]: Login success");
-            } else {
-                System.out.println("ConnectionHandler [run]: Login failure");
-                if (IsVerified != 1) {
-                    // TODO
+            System.out.println("ConnectionHandler(" + counter +") [Login]: Starting login from Server...");
+            
+            boolean success = false;
+            try {
+                String monBanner = GetMonitorMessage();
+                String nextCmd = GetNextCommand(monBanner,"");
+                
+                System.out.println("PASSWORD = " + PASSWORD);                
+                String expectedBanner = "COMMENT: Monitor Version 2.2.1 PARTICIPANT_PASSWORD_CHECKSUM:  " + performSHA(PASSWORD) + " REQUIRE: IDENT WAITING:";
+                if (!monBanner.trim().equals(expectedBanner) || !nextCmd.trim().equals("IDENT")) {
+                    throw new Exception("ConnectionHandler(" + counter +") [Login]: Monitor may not be legit.\nActual   = " + monBanner + "\nExpected = " + expectedBanner);
                 }
+                
+                if (Execute("IDENT") != true) {
+                    throw new Exception("ConnectionHandler(" + counter +") [Login]: IDENT failed");
+                }
+                
+                String monMsg = GetMonitorMessage();
+                nextCmd = GetNextCommand(monMsg,"");
+                if (!nextCmd.trim().equals("ALIVE")) {
+                    throw new Exception("ConnectionHandler(" + counter +") [Login]: Monitor may not be legit.  Asking for " + nextCmd + " instead of ALIVE");
+                }
+                
+                if (Execute("ALIVE") != true) {
+                    throw new Exception("ConnectionHandler(" + counter +") [Login]: IDENT failed");
+                }
+                
+                monMsg = GetMonitorMessage();
+                nextCmd = GetNextCommand(monMsg,"");
+                if (!nextCmd.trim().equals("QUIT")) {
+                    throw new Exception("ConnectionHandler(" + counter +") [Login]: Monitor may not be legit.  Asking for " + nextCmd + " instead of ALIVE");
+                }
+                
+                success = Execute("QUIT");
+            } catch (Exception e) {
+                System.out.println("ConnectionHandler(" + counter +") [Login]: Exception:\n\t" + e + this);
+                success = false;
             }
+
+            if (!success) {
+                System.out.println("ConnectionHandler(" + counter +") [run]: Login failed");
+                System.exit(1);
+            }
+            
+            System.out.println("ConnectionHandler(" + counter +") [run]: Login succeeded");
+            
             incoming.close();
         } catch (IOException e) {
-            System.out.println("Server [run]: IOException:\n\t" + e + this);
+            System.out.println("ConnectionHandler [run]: IOException:\n\t" + e + this);
         } catch (NullPointerException n) {
-            System.out.println("Server [run]: NullPointerException:\n\t" + n + this);
+            System.out.println("ConnectionHandler [run]: NullPointerException:\n\t" + n + this);
         }
     }
 
