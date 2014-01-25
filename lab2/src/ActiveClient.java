@@ -28,7 +28,7 @@ public class ActiveClient extends MessageParser implements Runnable {
             MONITOR_PORT = p;
             LOCAL_PORT = lp;
         } catch (NullPointerException n) {
-            System.out.println("Active Client [Constructor]: TIMEOUT Error: " + n);
+            System.out.println("ActiveClient [ActiveClient]: NullPointerException:\n\t" + n + this);
         }
     }
 
@@ -45,17 +45,23 @@ public class ActiveClient extends MessageParser implements Runnable {
                 System.out.print("Active Client: trying monitor: " + MonitorName + " port: " + MONITOR_PORT + "...");
                 toMonitor = new Socket(MonitorName, MONITOR_PORT);
                 System.out.println("completed.");
+                
                 out = new PrintWriter(toMonitor.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(toMonitor.getInputStream()));
 
                 HOSTNAME = toMonitor.getLocalAddress().getHostName();
                 CType = 0; // Indicates Client
+                
                 HOST_PORT = LOCAL_PORT;
                 if (!Login()) {
-                    if (IsVerified == 0)
+                    System.out.println("ActiveClient [run]: Login failed");
+                    if (IsVerified == 0) {
+                        System.out.println("ActiveClient [run]: IsVerified = 0");
                         System.exit(1);
+                    }
                 }
                 System.out.println("***************************");
+                // TODO
                 if (Execute("GET_GAME_IDENTS")) {
                     String msg = GetMonitorMessage();
                     System.out.println("ActiveClient [GET_GAME_IDENTS]:\n\t" + msg);
@@ -64,7 +70,7 @@ public class ActiveClient extends MessageParser implements Runnable {
                     String msg = GetMonitorMessage();
                     System.out.println("ActiveClient [RANDOM_PARTICIPANT_HOST_PORT]:\n\t" + msg);
                 }
-                if (Execute("PARTICIPANT_HOST_PORT", "FRANCO")) {
+                if (Execute("PARTICIPANT_HOST_PORT", "FRANCO")) {  // TODO
                     String msg = GetMonitorMessage();
                     System.out.println("ActiveClient [PARTICIPANT_HOST_PORT]:\n\t" + msg);
                 }
@@ -72,28 +78,37 @@ public class ActiveClient extends MessageParser implements Runnable {
                     String msg = GetMonitorMessage();
                     System.out.println("ActiveClient [PARTICIPANT_STATUS]:\n\t" + msg);
                 }
-                ChangePassword(PASSWORD);
+                ChangePassword(PASSWORD);  // TODO:  where get new password?
                 System.out.println("Password:" + PASSWORD);
 
                 toMonitor.close();
                 out.close();
                 in.close();
                 try {
+                    System.out.println("ActiveClient [run]: Sleeping for " + DELAY + "...");
                     Thread.sleep(DELAY);
                 } catch (Exception e) {
+                    System.out.println("ActiveClient [run]: Exception:\n\t" + e + this);
                 }
 
+                // TODO? - What next?
             } catch (UnknownHostException e) {
+                System.out.println("ActiveClient [run]: UnknownHostException:\n\t" + e + this);
             } catch (IOException e) {
+                System.out.println("ActiveClient [run]: IOException:\n\t" + e + this);
+                // TODO? - What does this block do?
                 try {
                     toMonitor.close();
                     // toMonitor = new Socket(MonitorName,MONITOR_PORT);
                 } catch (IOException ioe) {
+                    System.out.println("ActiveClient [run]: IOException:\n\t" + ioe + this);
                 } catch (NullPointerException n) {
+                    System.out.println("ActiveClient [run]: NullPointerException:\n\t" + e + this);
                     try {
                         toMonitor.close();
                         // toMonitor = new Socket(MonitorName,MONITOR_PORT);
                     } catch (IOException ioe) {
+                        System.out.println("ActiveClient [run]: IOException:\n\t" + ioe + this);
                     }
                 }
             }

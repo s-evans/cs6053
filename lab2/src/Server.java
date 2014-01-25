@@ -18,6 +18,7 @@ public class Server implements Runnable {
             MONITOR_PORT = p;
             LOCAL_PORT = lp;
         } catch (IOException e) {
+            System.out.println("Server [Server]: IOException:\n\t" + e + this);
         }
     }
 
@@ -38,7 +39,7 @@ public class Server implements Runnable {
                 i++;
             }
         } catch (Exception e) {
-            System.out.println("Server [run]: Error in Server: " + e);
+            System.out.println("Server [run]: Exception:\n\t" + e + this);
         }
     }
 }
@@ -61,17 +62,21 @@ class ConnectionHandler extends MessageParser implements Runnable {
 
             HOST_PORT = Server.LOCAL_PORT;
             CType = 1; // Indicates Server
+            
             System.out.println("Starting login from Server..");
             if (Login()) {
-                System.out.println("ConnectionHandler [run]: success Logged In!");
+                System.out.println("ConnectionHandler [run]: Login success");
             } else {
-                System.out.println("Server could not log in.");
+                System.out.println("ConnectionHandler [run]: Login failure");
                 if (IsVerified != 1) {
+                    // TODO
                 }
             }
             incoming.close();
         } catch (IOException e) {
+            System.out.println("Server [run]: IOException:\n\t" + e + this);
         } catch (NullPointerException n) {
+            System.out.println("Server [run]: NullPointerException:\n\t" + n + this);
         }
     }
 
