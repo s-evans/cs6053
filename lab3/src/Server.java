@@ -49,7 +49,7 @@ class ConnectionHandler extends MessageParser implements Runnable {
     private int counter;
     Thread runner;
 
-    public ConnectionHandler(Socket i, int c, String name, String password) {
+    public ConnectionHandler(Socket i, int c, String name, String password) throws IOException {
         super(name, password);
         incoming = i;
         counter = c;
@@ -60,40 +60,32 @@ class ConnectionHandler extends MessageParser implements Runnable {
             in = new BufferedReader(new InputStreamReader(incoming.getInputStream()));
             out = new PrintWriter(incoming.getOutputStream(), true);
 
-            HOST_PORT = Server.LOCAL_PORT;
+            hostPort = Server.LOCAL_PORT;
             CType = 1; // Indicates Server
             
             System.out.println("ConnectionHandler(" + counter +") [Login]: Starting login from Server...");
             
             boolean success = false;
             try {
-                String monBanner = GetMonitorMessage();
-                String nextCmd = GetNextCommand(monBanner,"");
-                
-                System.out.println("PASSWORD = " + PASSWORD);                
-                String expectedBanner = "COMMENT: Monitor Version 2.2.1 PARTICIPANT_PASSWORD_CHECKSUM:  " + performSHA(PASSWORD) + " REQUIRE: IDENT WAITING:";
-                if (!monBanner.trim().equals(expectedBanner) || !nextCmd.trim().equals("IDENT")) {
-                    throw new Exception("ConnectionHandler(" + counter +") [Login]: Monitor may not be legit.\nActual   = " + monBanner + "\nExpected = " + expectedBanner);
+                //Attempt to Login, starting the DH exchange
+                if (!Login()) {
+                    System.out.println("ActiveClient [run]: Login failed");
+                    System.exit(1);
                 }
-                
-                if (Execute("IDENT") != true) {
-                    throw new Exception("ConnectionHandler(" + counter +") [Login]: IDENT failed");
-                }
-                
+
                 String monMsg = GetMonitorMessage();
-                nextCmd = GetNextCommand(monMsg,"");
-                if (!nextCmd.trim().equals("ALIVE")) {
-                    throw new Exception("ConnectionHandler(" + counter +") [Login]: Monitor may not be legit.  Asking for " + nextCmd + " instead of ALIVE");
+                String nextCmd = GetNextCommand(monMsg,"");
+
+                //Check for ALIVE: IDENTITY VERIFIED
+                if (!monMsg.trim().startsWith("RESULT: ALIVE Identity has been verified.")) {
+                    throw new Exception("ConnectionHandler(" + counter +") [Login]: Monitor may not be legit.  Found " +
+                            monMsg + " instead of RESULT: ALIVE Identity has been verified.");
                 }
                 
-                if (Execute("ALIVE") != true) {
-                    throw new Exception("ConnectionHandler(" + counter +") [Login]: IDENT failed");
-                }
-                
-                monMsg = GetMonitorMessage();
-                nextCmd = GetNextCommand(monMsg,"");
+
                 if (!nextCmd.trim().equals("QUIT")) {
-                    throw new Exception("ConnectionHandler(" + counter +") [Login]: Monitor may not be legit.  Asking for " + nextCmd + " instead of ALIVE");
+                    throw new Exception("ConnectionHandler(" + counter +") [Login]: Monitor may not be legit.  Asking for "
+                            + nextCmd + " instead of ALIVE");
                 }
                 
                 success = Execute("QUIT");

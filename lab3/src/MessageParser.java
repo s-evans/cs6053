@@ -4,21 +4,24 @@ import java.util.*;
 import java.io.*;
 import java.math.BigInteger;
 
+//TODO: Remove all unused functions and variables
 public class MessageParser {
     // Monitor Handling Declarations
-    int COMMAND_LIMIT = 25;
+    private final static int COMMAND_LIMIT = 25;
     public int CType;
-    public static String HOSTNAME;
+    public static String hostName;
+
+    //out and in are initialized by implementors
     PrintWriter out = null;
     BufferedReader in = null;
     String mesg, sentmessage;
-    String filename;
+    String FILENAME;
     StringTokenizer t;
     String IDENT;
     String PASSWORD;
-    static String COOKIE = "66NJQA18PY6W1UP62QC";  // TODO - Make this read from file/database/constructor (like username/password?)
+    private final static String COOKIE = "66NJQA18PY6W1UP62QC";  // TODO - Make this read from file/database/constructor (like username/password?)
     String PPCHECKSUM = "";
-    int HOST_PORT;
+    int hostPort;
     public static int IsVerified;
     private boolean encryptionStarted = false;
 
@@ -30,23 +33,30 @@ public class MessageParser {
     String[] cmdArr = new String[COMMAND_LIMIT];
 
     static String MyKey;
-    String MonitorKey;
+    String monitorKey;
     String first;
     ObjectInputStream oin = null;
     ObjectOutputStream oout = null;
 
-    PlantDHKey newKey = new PlantDHKey();
-    DiffieHellmanExchange dhEx = new DiffieHellmanExchange();
-    private Karn karn;
+
+    private final DiffieHellmanExchange diffieHellmanExchange;
+    private Karn karnProcessor;
     private BigInteger publicKey;
 
-    public MessageParser() {
-        filename = "passwd.dat";  // TODO
+
+    public MessageParser(String ident, String password) throws IOException {
+        FILENAME = ident + ".dat";  // TODO
+        PASSWORD = password;
+        IDENT = ident;
         GetIdentification(); // Gets Password and Cookie from 'passwd.dat' file
+
+        //Init DH Exchange data
+        PlantDHKey.plantKey();
+        diffieHellmanExchange = new DiffieHellmanExchange();
     }
 
     // function taken from Dr. Franco's monitor source code
-    static String performSHA(String input) throws NoSuchAlgorithmException {
+    public static final String performSHA(String input) throws NoSuchAlgorithmException {
         /*
          * This method is: Copyright(C) 1998 Robert Sexton. Use it any way you
          * wish. Just leave my name on.
@@ -62,51 +72,43 @@ public class MessageParser {
         return (new BigInteger(1, md.digest())).toString(16);
     }
 
-    public MessageParser(String ident, String password) {
-        filename = ident + ".dat";  // TODO
-        PASSWORD = password;
-        IDENT = ident;
-        GetIdentification(); // Gets Password and Cookie from 'passwd.dat' file
-    }
-
+    //Retrieve the next message from
     public String GetMonitorMessage() {
-        String sMesg = "", decrypt = "";
+
+        String finalMsg = "";
+
+        //Read socket input from monitor until "WAITING:" is found
         try {
-            String temp = in.readLine();
-            first = temp; // 1st
-            sMesg = temp;
-            decrypt = temp;
+            String currentLine;
+            do {
+                //Read the next line. decrypt if necessary
+                currentLine = in.readLine();
+                if (encryptionStarted) {
+                    currentLine = karnProcessor.decrypt(currentLine);
+                }
 
-            //Decrypt if necessary
-            if (encryptionStarted) {
-                temp = karn.decrypt(temp);
-                sMesg = temp;
-            }
+                finalMsg.concat(currentLine);
+                finalMsg.concat(" ");
+            } while (!currentLine.equals("WAITING:"));
 
-            // After IDENT has been sent-to handle partially encrypted msg group
-            while (!(decrypt.trim().equals("WAITING:"))) {
-                temp = in.readLine();
-                sMesg = sMesg.concat(" ");
-                decrypt = temp;
-                sMesg = sMesg.concat(decrypt);
-            } // sMesg now contains the Message Group sent by the Monitor
         } catch (IOException e) {
             System.out.println("MessageParser [GetMonitorMessage]: IOException:\n\t" + e + this);
-            sMesg = "";
+            finalMsg = "";
         } catch (NullPointerException n) {
             System.out.println("MessageParser [GetMonitorMessage]: NullPointerException:\n\t" + n + this);
-            sMesg = "";
+            finalMsg = "";
         } catch (NumberFormatException o) {
             System.out.println("MessageParser [GetMonitorMessage]: NumberFormatException:\n\t" + o + this);
-            sMesg = "";
+            finalMsg = "";
         } catch (NoSuchElementException ne) {
             System.out.println("MessageParser [GetMonitorMessage]: NoSuchElementException:\n\t" + ne + this);
-            sMesg = "";
+            finalMsg = "";
         } catch (ArrayIndexOutOfBoundsException ae) {
             System.out.println("MessageParser [GetMonitorMessage]: ArrayIndexOutOfBoundsException:\n\t" + ae + this);
-            sMesg = "";
+            finalMsg = "";
+        } finally {
+            return finalMsg;
         }
-        return sMesg;
     }
 
     // Handling Cookie and PPChecksum
@@ -132,8 +134,9 @@ public class MessageParser {
         }
     }
 
+    //Performs the DiffieHellman exchange common to Active Client and Server
     public boolean Login() {
-        boolean success = false;
+        boolean success;
         try {
             String monBanner = GetMonitorMessage();
             String nextCmd = GetNextCommand(monBanner, "");
@@ -142,7 +145,7 @@ public class MessageParser {
                 throw new Exception("MessageParser [Login]: Monitor may not be legit.  Banner = " + monBanner);
             }
 
-            publicKey = dhEx.getDHParmMakePublicKey("DHKey");
+            publicKey = diffieHellmanExchange.getDHParmMakePublicKey("DHKey");
 
             //Send the DH public key
             if (Execute("IDENT") != true) {
@@ -158,8 +161,8 @@ public class MessageParser {
                 String[] msgParts = nextMsg.split(" ");
 
                 if (msgParts.length == 3) {
-                    MonitorKey = msgParts[2];
-                    karn = new Karn(dhEx.getSecret(MonitorKey));
+                    monitorKey = msgParts[2];
+                    karnProcessor = new Karn(diffieHellmanExchange.getSecret(monitorKey));
                     encryptionStarted = true;
                 } else {
                     throw new Exception("MessageParser [Login]: Monitor may not be legit.  Received: " + nextMsg);
@@ -167,7 +170,6 @@ public class MessageParser {
             } else {
                 throw new Exception("MessageParser [Login]: Monitor may not be legit.  DH exchange response: " + nextCmd
                         + " instead of RESULT:IDENT");
-
             }
 
             nextMsg = GetMonitorMessage();
@@ -188,7 +190,7 @@ public class MessageParser {
 
         } catch (Exception e) {
             System.out.println("MessageParser [Login]: Exception:\n\t" + e + this);
-            MonitorKey = null;
+            monitorKey = null;
             encryptionStarted = false;
             success = false;
         }
@@ -223,6 +225,7 @@ public class MessageParser {
 
     // Handle Directives and Execute appropriate commands
     public boolean Execute(String sentmessage) {
+        //TODO: This would look so much nicer with an enum and switch statement
         boolean success = false;
         try {
             if (sentmessage.trim().equals("IDENT")) {
@@ -230,6 +233,7 @@ public class MessageParser {
                 sentmessage = sentmessage.concat(IDENT);
                 sentmessage = sentmessage.concat(" ");
                 sentmessage = sentmessage.concat(publicKey.toString(32));
+                //Do not encrypt since Ident is used before encryption is started
                 SendIt(sentmessage, false);
                 // TODO: validate result before considering this success?
                 success = true;
@@ -241,9 +245,9 @@ public class MessageParser {
                 success = true;
             } else if (sentmessage.trim().equals("HOST_PORT")) {
                 sentmessage = sentmessage.concat(" ");
-                sentmessage = sentmessage.concat(HOSTNAME);// hostname
+                sentmessage = sentmessage.concat(hostName);// hostname
                 sentmessage = sentmessage.concat(" ");
-                sentmessage = sentmessage.concat(String.valueOf(HOST_PORT));
+                sentmessage = sentmessage.concat(String.valueOf(hostPort));
                 SendIt(sentmessage, true);
                 // TODO: validate result before considering this success?
                 success = true;
@@ -295,7 +299,7 @@ public class MessageParser {
         try {
             System.out.println("MessageParser [SendIt]: plaintext message:\n\t" + finalMessage);
             if (shouldEncrypt && encryptionStarted) {
-                finalMessage = karn.encrypt(message);
+                finalMessage = karnProcessor.encrypt(message);
                 System.out.println("MessageParser [SendIt]: encrypted message:\n\t" + finalMessage);
             } else if (shouldEncrypt) {
                 throw new SecurityException("Attempted to send encrypted message before DH Exchange completed! Investigate!");
@@ -410,7 +414,7 @@ public class MessageParser {
         PrintWriter pout = null;
         try {
             if ((Passwd != null) && !(Passwd.equals(""))) {
-                pout = new PrintWriter(new FileWriter(filename));
+                pout = new PrintWriter(new FileWriter(FILENAME));
 
                 pout.println("PASSWORD");
                 pout.println(Passwd);

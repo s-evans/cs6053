@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 class Homework {
     public static String MONITOR_NAME = "helios.ececs.uc.edu";
     public static int MONITOR_PORT = 8180;
@@ -9,8 +11,13 @@ class Homework {
     public Homework(String name, String password) {
         System.out.println("Project Begin:\n\tMonitor: " + MONITOR_NAME + " random port: " + HOST_PORT
                 + " monitor port: " + MONITOR_PORT);
-        ac = new ActiveClient(MONITOR_NAME, MONITOR_PORT, HOST_PORT, 0, name, password);
-        s = new Server(HOST_PORT, HOST_PORT, name, password);
+        try {
+            ac = new ActiveClient(MONITOR_NAME, MONITOR_PORT, HOST_PORT, 0, name, password);
+            s = new Server(HOST_PORT, HOST_PORT, name, password);
+        } catch (IOException e) {
+            System.err.println("Could not start client");
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
