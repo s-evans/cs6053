@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2867f528-ff58-4542-98e7-12d83dd7bb4a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ActiveClient.java" afterPath="$PROJECT_DIR$/src/ActiveClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Homework.java" afterPath="$PROJECT_DIR$/src/Homework.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessageParser.java" afterPath="$PROJECT_DIR$/src/MessageParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PlantDHKey.java" afterPath="$PROJECT_DIR$/src/PlantDHKey.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server.java" afterPath="$PROJECT_DIR$/src/Server.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="2867f528-ff58-4542-98e7-12d83dd7bb4a" name="Default" comment="" />
     <ignored path="lab3.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1392079236779" ignored="false" />
@@ -118,7 +111,7 @@
       <file leaf-file-name="Homework.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Homework.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="9" selection-start="800" selection-end="800" vertical-scroll-proportion="0.44061303">
+            <state line="29" column="46" selection-start="1203" selection-end="1203" vertical-scroll-proportion="0.7662835">
               <folding />
             </state>
           </provider>
@@ -646,7 +639,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Homework.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="9" selection-start="800" selection-end="800" vertical-scroll-proportion="0.44061303">
+        <state line="29" column="46" selection-start="1203" selection-end="1203" vertical-scroll-proportion="0.7662835">
           <folding />
         </state>
       </provider>
