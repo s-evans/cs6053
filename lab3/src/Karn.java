@@ -109,7 +109,9 @@ public class Karn {
         input = bi.toByteArray();
 
 	    // Remove guard value from beginning
-        input = Arrays.copyOfRange(input, 1, input.length-1);
+        ByteArrayOutputStream scratch = new ByteArrayOutputStream();
+        scratch.write(input,1,input.length - 1);
+        input = scratch.toByteArray();
 
         // Start decryption
         ByteArrayOutputStream out = new ByteArrayOutputStream();
