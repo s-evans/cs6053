@@ -53,14 +53,6 @@ public class ActiveClient extends MessageParser implements Runnable {
                     System.exit(1);
                 }
 
-                String monMsg = GetMonitorMessage();
-                String nextCmd = GetNextCommand(monMsg, "");
-
-                if (!nextCmd.trim().equals("HOST_PORT")) {
-                    System.out.println("ActiveClient [run]: Monitor may not be legit.  Asking for " + nextCmd + " instead of HOST_PORT");
-                    System.exit(1);
-                }
-
                 if (!Execute("HOST_PORT")) {
                     System.out.println("ActiveClient [run]: HOST_PORT failed");
                     System.exit(1);

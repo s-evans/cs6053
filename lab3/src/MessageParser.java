@@ -175,21 +175,28 @@ public class MessageParser {
                 success = Execute("ALIVE");
             }
 
-            String monMsg = GetMonitorMessage();
+            nextMsg = GetMonitorMessage();
+            nextCmd = GetNextCommand(nextMsg, "");
 
-            if (!monMsg.trim().startsWith("RESULT: PASSWORD") && !monMsg.trim().startsWith("RESULT: ALIVE Identity has been verified")) {
-                throw new Exception("MessageParser [Login]: Monitor may not be legit.  Banner = " + monMsg);
+            if (!nextMsg.trim().startsWith("RESULT: PASSWORD") && !nextMsg.trim().startsWith("RESULT: ALIVE Identity has been verified")) {
+                throw new Exception("MessageParser [Login]: Monitor may not be legit.  Banner = " + nextMsg);
             }
 
             //TODO: Validate the password checksum
 
             //Parse the monitors password from the response if it is an initial login
-            if (monMsg.trim().startsWith("RESULT: PASSWORD")) {
-                String[] msgParts = monMsg.split(" ");
+            if (nextMsg.trim().startsWith("RESULT: PASSWORD")) {
+                String[] msgParts = nextMsg.split(" ");
                 if (msgParts.length < 3) {
-                    throw new Exception("MessageParser [Login]: Monitor may not be legit.  Banner = " + monMsg);
+                    throw new Exception("MessageParser [Login]: Monitor may not be legit.  Banner = " + nextMsg);
                 }
                 cookie = msgParts[2];
+                //TODO: Write the cookie to file if this session is going to work again after restart
+
+                if (!nextCmd.trim().equals("HOST_PORT")) {
+                    System.out.println("ActiveClient [run]: Monitor may not be legit.  Asking for " + nextCmd + " instead of HOST_PORT");
+                    System.exit(1);
+                }
             }
 
 
