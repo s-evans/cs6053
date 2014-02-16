@@ -19,7 +19,7 @@ public class MessageParser {
     StringTokenizer t;
     String IDENT;
     String PASSWORD;
-    private final static String COOKIE = "66NJQA18PY6W1UP62QC";  // TODO - Make this read from file/database/constructor (like username/password?)
+    private String cookie;  // TODO - Make this read from file/database/constructor (like username/password?)
     String PPCHECKSUM = "";
     int hostPort;
     public static int IsVerified;
@@ -175,6 +175,24 @@ public class MessageParser {
                 success = Execute("ALIVE");
             }
 
+            String monMsg = GetMonitorMessage();
+
+            if (!monMsg.trim().startsWith("RESULT: PASSWORD") && !monMsg.trim().startsWith("RESULT: ALIVE Identity has been verified")) {
+                throw new Exception("MessageParser [Login]: Monitor may not be legit.  Banner = " + monMsg);
+            }
+
+            //TODO: Validate the password checksum
+
+            //Parse the monitors password from the response if it is an initial login
+            if (monMsg.trim().startsWith("RESULT: PASSWORD")) {
+                String[] msgParts = monMsg.split(" ");
+                if (msgParts.length < 3) {
+                    throw new Exception("MessageParser [Login]: Monitor may not be legit.  Banner = " + monMsg);
+                }
+                cookie = msgParts[2];
+            }
+
+
         } catch (Exception e) {
             System.out.println("MessageParser [Login]: Exception:\n\t" + e + this);
             monitorKey = null;
@@ -240,7 +258,7 @@ public class MessageParser {
                 success = true;
             } else if (sentmessage.trim().equals("ALIVE")) {
                 sentmessage = sentmessage.concat(" ");
-                sentmessage = sentmessage.concat(COOKIE);
+                sentmessage = sentmessage.concat(cookie);
                 SendIt(sentmessage, true);
                 // TODO: validate result before considering this success?
                 success = true;
@@ -408,7 +426,7 @@ public class MessageParser {
                 pout.flush();
 
                 if ((Cookie != null) && !(Cookie.equals(""))) {
-                    pout.println("COOKIE");
+                    pout.println("cookie");
                     pout.println(Cookie);
                     pout.flush();
                 }

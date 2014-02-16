@@ -3,20 +3,22 @@
   <component name="ChangeListManager">
     <list default="true" id="2867f528-ff58-4542-98e7-12d83dd7bb4a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DHKey" afterPath="$PROJECT_DIR$/DHKey" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ActiveClient.java" afterPath="$PROJECT_DIR$/src/ActiveClient.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessageParser.java" afterPath="$PROJECT_DIR$/src/MessageParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server.java" afterPath="$PROJECT_DIR$/src/Server.java" />
     </list>
     <ignored path="lab3.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1392577266668" ignored="false" />
     <file path="/Karn.java" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1391973569605" ignored="false" />
     <file path="/DiffieHellmanExchange.java" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1391973750463" ignored="false" />
-    <file path="/MessageParser.java" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1392584115781" ignored="false" />
+    <file path="/MessageParser.java" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1392589094935" ignored="false" />
     <file path="/ActiveClient.java" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1392178558690" ignored="false" />
     <file path="/PlantDHKey.java" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1392176146216" ignored="false" />
     <file path="/Server.java" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1392179409802" ignored="false" />
     <file path="/Homework.java" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1392577980561" ignored="false" />
-    <file path="/fragment.java" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1392581254760" ignored="false" />
-    <file path="/a.dummy" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1392585399063" ignored="false" />
+    <file path="/fragment.java" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1392589161346" ignored="false" />
+    <file path="/a.dummy" changelist="2867f528-ff58-4542-98e7-12d83dd7bb4a" time="1392587843090" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +71,7 @@
       </breakpoint>
     </breakpoint_any>
     <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/MessageParser.java" line="84" class="MessageParser" package="">
+      <breakpoint url="file://$PROJECT_DIR$/src/MessageParser.java" line="186" class="MessageParser" package="">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -106,7 +108,7 @@
       <file leaf-file-name="ActiveClient.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ActiveClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="66" selection-start="1440" selection-end="1440" vertical-scroll-proportion="0.0">
+            <state line="56" column="60" selection-start="1961" selection-end="1961" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -115,7 +117,7 @@
       <file leaf-file-name="Server.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="107" column="9" selection-start="3689" selection-end="3689" vertical-scroll-proportion="0.0">
+            <state line="67" column="27" selection-start="1925" selection-end="1925" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -124,7 +126,7 @@
       <file leaf-file-name="Homework.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Homework.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="16" selection-start="990" selection-end="990" vertical-scroll-proportion="0.0">
+            <state line="30" column="24" selection-start="1249" selection-end="1249" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -142,7 +144,7 @@
       <file leaf-file-name="MessageParser.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/MessageParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="165" column="53" selection-start="5810" selection-end="5810" vertical-scroll-proportion="0.39221558">
+            <state line="260" column="54" selection-start="10124" selection-end="10124" vertical-scroll-proportion="0.6211604">
               <folding />
             </state>
           </provider>
@@ -204,10 +206,10 @@
       <list>
         <option value="$PROJECT_DIR$/src/DiffieHellmanExchange.java" />
         <option value="$PROJECT_DIR$/src/PlantDHKey.java" />
-        <option value="$PROJECT_DIR$/src/ActiveClient.java" />
-        <option value="$PROJECT_DIR$/src/Server.java" />
         <option value="$PROJECT_DIR$/src/Homework.java" />
         <option value="$PROJECT_DIR$/src/Karn.java" />
+        <option value="$PROJECT_DIR$/src/Server.java" />
+        <option value="$PROJECT_DIR$/src/ActiveClient.java" />
         <option value="$PROJECT_DIR$/src/MessageParser.java" />
       </list>
     </option>
@@ -462,7 +464,7 @@
     <configuration default="false" name="Homework" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Homework" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="localhost 20000 browck" />
+      <option name="PROGRAM_PARAMETERS" value="localhost 20000 thisguy" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -524,7 +526,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4020443" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39863715" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39863715" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -533,8 +535,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.6712095" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32879046" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.6013629" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -637,13 +639,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Homework.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="16" selection-start="990" selection-end="990" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/start.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="100" selection-start="348" selection-end="348" vertical-scroll-proportion="0.0">
@@ -672,20 +667,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="9" selection-start="3689" selection-end="3689" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ActiveClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="66" selection-start="1440" selection-end="1440" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_40/src.zip!/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1968" column="18" selection-start="77880" selection-end="77880" vertical-scroll-proportion="0.0">
@@ -707,9 +688,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Homework.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="24" selection-start="1249" selection-end="1249" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="27" selection-start="1925" selection-end="1925" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ActiveClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="60" selection-start="1961" selection-end="1961" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/MessageParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="165" column="53" selection-start="5810" selection-end="5810" vertical-scroll-proportion="0.39221558">
+        <state line="260" column="54" selection-start="10124" selection-end="10124" vertical-scroll-proportion="0.6211604">
           <folding />
         </state>
       </provider>

@@ -65,7 +65,7 @@ class ConnectionHandler extends MessageParser implements Runnable {
             
             System.out.println("ConnectionHandler(" + counter +") [Login]: Starting login from Server...");
             
-            boolean success = false;
+            boolean success;
             try {
                 //Attempt to Login, starting the DH exchange
                 if (!Login()) {
@@ -76,12 +76,6 @@ class ConnectionHandler extends MessageParser implements Runnable {
                 String monMsg = GetMonitorMessage();
                 String nextCmd = GetNextCommand(monMsg,"");
 
-                //Check for ALIVE: IDENTITY VERIFIED
-                if (!monMsg.trim().startsWith("RESULT: ALIVE Identity has been verified.")) {
-                    throw new Exception("ConnectionHandler(" + counter +") [Login]: Monitor may not be legit.  Found " +
-                            monMsg + " instead of RESULT: ALIVE Identity has been verified.");
-                }
-                
 
                 if (!nextCmd.trim().equals("QUIT")) {
                     throw new Exception("ConnectionHandler(" + counter +") [Login]: Monitor may not be legit.  Asking for "

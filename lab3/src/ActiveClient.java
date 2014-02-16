@@ -56,13 +56,6 @@ public class ActiveClient extends MessageParser implements Runnable {
                 String monMsg = GetMonitorMessage();
                 String nextCmd = GetNextCommand(monMsg, "");
 
-                if (!monMsg.trim().startsWith("RESULT: PASSWORD")) {
-                    System.out.println("MessageParser [Login]: Monitor may not be legit.  Banner = " + monMsg);
-                    System.exit(1);
-                }
-
-                //TODO: Validate the password checksum
-
                 if (!nextCmd.trim().equals("HOST_PORT")) {
                     System.out.println("ActiveClient [run]: Monitor may not be legit.  Asking for " + nextCmd + " instead of HOST_PORT");
                     System.exit(1);
