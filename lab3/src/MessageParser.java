@@ -19,7 +19,7 @@ public class MessageParser {
     StringTokenizer t;
     String IDENT;
     String PASSWORD;
-    private String cookie;  // TODO - Make this read from file/database/constructor (like username/password?)
+    private static String cookie;  // TODO - Make this read from file/database/constructor (like username/password?)
     String PPCHECKSUM = "";
     int hostPort;
     public static int IsVerified;
@@ -127,10 +127,11 @@ public class MessageParser {
         try {
             String monBanner = GetMonitorMessage();
             String nextCmd = GetNextCommand(monBanner, "");
-            if (!monBanner.trim().equals("COMMENT: Monitor Version 2.2.1 REQUIRE: IDENT WAITING:")
-                    || !nextCmd.trim().equals("IDENT")) {
+            if (!monBanner.trim().startsWith("COMMENT: Monitor Version 2.2.1")) {
                 throw new Exception("MessageParser [Login]: Monitor may not be legit.  Banner = " + monBanner);
             }
+
+            //TODO: Validate Participant Password Checksum
 
             publicKey = diffieHellmanExchange.getDHParmMakePublicKey("DHKey");
 
