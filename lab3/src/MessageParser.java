@@ -163,7 +163,7 @@ public class MessageParser {
             nextCmd = GetNextCommand(nextMsg, "");
 
             //The client expects PASSWORD and the server expects ALIVE
-            if (!nextCmd.trim().equals("PASSWORD") || !nextCmd.trim().equals("ALIVE")) {
+            if (!nextCmd.trim().equals("PASSWORD") && !nextCmd.trim().equals("ALIVE")) {
                 throw new Exception("MessageParser [Login]: Monitor may not be legit.  Asking for " + nextCmd
                         + " instead of PASSWORD or ALIVE");
             }
