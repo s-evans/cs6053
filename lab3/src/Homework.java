@@ -1,19 +1,19 @@
 import java.io.IOException;
 
 class Homework {
-    public static String MONITOR_NAME = "helios.ececs.uc.edu";
-    public static int MONITOR_PORT = 8180;
-    public static int HOST_PORT = 22334;  // TODO: randomize this
-    public static int MAX = 5;
-    ActiveClient ac;
-    Server s;
+    public static String monitorName;
+    public static int monitorPort = 8180;
+    public static final int HOST_PORT = 22334;  // TODO: randomize this
+
+    private static ActiveClient activeClient;
+    private static Server server;
 
     public Homework(String name, String password) {
-        System.out.println("Project Begin:\n\tMonitor: " + MONITOR_NAME + " random port: " + HOST_PORT
-                + " monitor port: " + MONITOR_PORT);
+        System.out.println("Project Begin:\n\tMonitor: " + monitorName + " random port: " + HOST_PORT
+                + " monitor port: " + monitorPort);
         try {
-            ac = new ActiveClient(MONITOR_NAME, MONITOR_PORT, HOST_PORT, 0, name, password);
-            s = new Server(HOST_PORT, HOST_PORT, name, password);
+            activeClient = new ActiveClient(monitorName, monitorPort, HOST_PORT, 0, name, password);
+            server = new Server(HOST_PORT, HOST_PORT, name, password);
         } catch (IOException e) {
             System.err.println("Could not start client");
             e.printStackTrace();
@@ -24,11 +24,11 @@ class Homework {
         if (args.length != 3) {
             System.out.println("Usage: java Homework monitor monitor-port ident");
         } else {
-            MONITOR_NAME = new String(args[0]);
-            MONITOR_PORT = Integer.parseInt(args[1]);
+            monitorName = new String(args[0]);
+            monitorPort = Integer.parseInt(args[1]);
             Homework hw = new Homework(args[2], "qwerqwer");  // TODO
-            hw.ac.start(); // Start the Active Client
-            hw.s.start(); // Start the Server
+            hw.activeClient.start(); // Start the Active Client
+            hw.server.start(); // Start the Server
         }
     }
 }

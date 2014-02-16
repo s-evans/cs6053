@@ -87,25 +87,12 @@ public class MessageParser {
                     currentLine = karnProcessor.decrypt(currentLine);
                 }
 
-                finalMsg.concat(currentLine);
-                finalMsg.concat(" ");
-            } while (!currentLine.equals("WAITING:"));
+                finalMsg = finalMsg.concat(currentLine);
+                finalMsg = finalMsg.concat(" ");
+            } while (!currentLine.trim().equals("WAITING:"));
 
-        } catch (IOException e) {
-            System.out.println("MessageParser [GetMonitorMessage]: IOException:\n\t" + e + this);
-            finalMsg = "";
-        } catch (NullPointerException n) {
-            System.out.println("MessageParser [GetMonitorMessage]: NullPointerException:\n\t" + n + this);
-            finalMsg = "";
-        } catch (NumberFormatException o) {
-            System.out.println("MessageParser [GetMonitorMessage]: NumberFormatException:\n\t" + o + this);
-            finalMsg = "";
-        } catch (NoSuchElementException ne) {
-            System.out.println("MessageParser [GetMonitorMessage]: NoSuchElementException:\n\t" + ne + this);
-            finalMsg = "";
-        } catch (ArrayIndexOutOfBoundsException ae) {
-            System.out.println("MessageParser [GetMonitorMessage]: ArrayIndexOutOfBoundsException:\n\t" + ae + this);
-            finalMsg = "";
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             return finalMsg;
         }
