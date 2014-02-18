@@ -19,7 +19,7 @@ public class MessageParser {
     StringTokenizer t;
     String IDENT;
     String PASSWORD;
-    private static String cookie;  // TODO - Make this read from file/database/constructor (like username/password?)
+    private String cookie;  // TODO - Make this read from file/database/constructor (like username/password?)
     String PPCHECKSUM = "";
     int hostPort;
     public static int IsVerified;
@@ -48,7 +48,7 @@ public class MessageParser {
         FILENAME = ident + ".dat";  // TODO
         PASSWORD = password;
         IDENT = ident;
-        GetIdentification(); // Gets Password and Cookie from 'passwd.dat' file
+        GetIdentification(); // Gets Password and Cookie from file
 
         //Init DH Exchange data
         PlantDHKey.plantKey();
@@ -130,6 +130,7 @@ public class MessageParser {
             if (!monBanner.trim().startsWith("COMMENT: Monitor Version 2.2.1")) {
                 throw new Exception("MessageParser [Login]: Monitor may not be legit.  Banner = " + monBanner);
             }
+            //TODO: Need to look for the actual command also
 
             //TODO: Validate Participant Password Checksum
 
@@ -192,7 +193,7 @@ public class MessageParser {
                     throw new Exception("MessageParser [Login]: Monitor may not be legit.  Banner = " + nextMsg);
                 }
                 cookie = msgParts[2];
-                //TODO: Write the cookie to file if this session is going to work again after restart
+                WritePersonalData();
 
                 if (!nextCmd.trim().equals("HOST_PORT")) {
                     System.out.println("ActiveClient [run]: Monitor may not be legit.  Asking for " + nextCmd + " instead of HOST_PORT");
@@ -417,37 +418,70 @@ public class MessageParser {
         // TODO
     }
 
+    /**
+     * Retrieves the password and cookie identification data from persistent storage
+     */
     public void GetIdentification() {
-        // TODO
+        String identFile = "users/" + IDENT;
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(identFile));
+            String line = bufferedReader.readLine();
+            String[] identEntry = line.split("[:,]");
+            if (identEntry.length != 6) {
+                System.out.println("MessageParser [GetIdentification]: Invalid formatted line");
+            } else {
+                // Check to make sure that identity matches current identity
+                if (identEntry[0].trim().equals("IDENT") && identEntry[1].trim().equals(IDENT)) {
+                    // Set the password if non-empty
+                    // TODO: This will override any value supplied in the constructor. Decide if this is the desired behavior
+                    if (identEntry[2].trim().equals("PASSWORD")) {
+                        String tempPassword = identEntry[3].trim();
+                        if (tempPassword.length() != 0)
+                            PASSWORD = tempPassword;
+                    }
+                    // Set the cookie if non-empty
+                    if (identEntry[4].trim().equals("COOKIE")) {
+                        String tempCookie = identEntry[5].trim();
+                        if (tempCookie.length() != 0)
+                            cookie = tempCookie;
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            // Nothing to do, the user maybe hasn't been used yet
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    // Write Personal data such as Password and Cookie
-    public boolean WritePersonalData(String Passwd, String Cookie) {
+    /**
+     * Write Personal data such as Password and Cookie
+     * @return success of writing data to persistent storage
+     */
+    public boolean WritePersonalData() {
         boolean success = false;
-        PrintWriter pout = null;
+        PrintWriter pout;
+        String Passwd = PASSWORD;
+        String Cookie = cookie;
         try {
-            if ((Passwd != null) && !(Passwd.equals(""))) {
-                pout = new PrintWriter(new FileWriter(FILENAME));
-
-                pout.println("PASSWORD");
-                pout.println(Passwd);
-                pout.flush();
-
-                if ((Cookie != null) && !(Cookie.equals(""))) {
-                    pout.println("cookie");
-                    pout.println(Cookie);
-                    pout.flush();
-                }
-
-                pout.close();
+            if (Passwd == null) {
+                Passwd = "";
             }
+
+            if (Cookie == null) {
+                Cookie = "";
+            }
+            String identFile = "users/" + IDENT;
+            pout = new PrintWriter(new FileWriter(identFile));
+            pout.printf("IDENT: %s, PASSWORD: %s, COOKIE: %s\n", IDENT, Passwd, Cookie);
+            pout.flush();
+            pout.close();
+
             success = true;
         } catch (IOException e) {
             System.out.println("MessageParser [WritePersonalData]: IOException:\n\t" + e + this);
-            return success;
-        } catch (NumberFormatException n) {
-            System.out.println("MessageParser [WritePersonalData]: NumberFormatException:\n\t" + n + this);
         }
+
         return success;
     }
 }
