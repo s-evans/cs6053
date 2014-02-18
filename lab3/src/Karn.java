@@ -9,7 +9,6 @@ public class Karn {
     private final int HALF_BLOCK_SIZE_BYTES = PADSIZE_BYTES / 2;
     private final int GUARD_VALUE = 42;
 
-    private byte key[];
     private byte key_left[];
     private byte key_right[];
 
@@ -24,16 +23,13 @@ public class Karn {
      */
     public Karn(BigInteger bi) {
         if (sr == null) sr = new SecureRandom();
-        key = bi.toByteArray();
+        byte[] key = bi.toByteArray();
 
         // Digest encryption needs keys split into two halves
-        key_left = new byte[key.length / 2];
-        key_right = new byte[key.length / 2];
+        int halfKeyLen = key.length /2;
 
-        for (int i = 0; i < key.length / 2; i++) {
-            key_left[i] = key[i];
-            key_right[i] = key[i + key.length / 2];
-        }
+        key_left = Arrays.copyOfRange(key, 0, halfKeyLen);
+        key_right = Arrays.copyOfRange(key, halfKeyLen, halfKeyLen*2);
 
         try {
             md = MessageDigest.getInstance("SHA");
@@ -56,13 +52,8 @@ public class Karn {
         // These buffers are used for the encryption.
         byte input[] = StringToBytes(plaintext); // Pad the string
 
-        plain_left = new byte[HALF_BLOCK_SIZE_BYTES];
-        plain_right = new byte[HALF_BLOCK_SIZE_BYTES];
-
         ciph_left = new byte[HALF_BLOCK_SIZE_BYTES];
         ciph_right = new byte[HALF_BLOCK_SIZE_BYTES];
-
-        digest = new byte[HALF_BLOCK_SIZE_BYTES];  // Temp storage for the hash
 
         // Our pointer into the workspace
         int cursor = 0;
@@ -73,11 +64,8 @@ public class Karn {
 
         while (cursor < input.length) {
             // Copy the next slab into the left and right
-            // TODO: This could be optimized with array copies
-            for (int i = 0; i < HALF_BLOCK_SIZE_BYTES; i++) {
-                plain_left[i] = input[cursor + i];
-                plain_right[i] = input[cursor + HALF_BLOCK_SIZE_BYTES + i];
-            }
+            plain_left = Arrays.copyOfRange(input, cursor, cursor+HALF_BLOCK_SIZE_BYTES);
+            plain_right = Arrays.copyOfRange(input, cursor+HALF_BLOCK_SIZE_BYTES, cursor + HALF_BLOCK_SIZE_BYTES*2);
 
             // Hash the left plaintext with the left key
             md.reset(); // Start the hash fresh
@@ -115,8 +103,8 @@ public class Karn {
         byte input[];
         byte[] plaintTextLeft = new byte[HALF_BLOCK_SIZE_BYTES];
         byte[] paintTextRight = new byte[HALF_BLOCK_SIZE_BYTES];
-        byte[] ciphLeft = new byte[HALF_BLOCK_SIZE_BYTES];
-        byte[] ciphRight = new byte[HALF_BLOCK_SIZE_BYTES];
+        byte[] ciphLeft;
+        byte[] ciphRight;
         byte[] digest;
         int pos = 0;
 
@@ -135,11 +123,8 @@ public class Karn {
         //Decryption is a mirror of the encryption code
         while (pos < input.length) {
             // Copy the next slab into the left and right
-            // TODO: This could be optimized with array copies
-            for (int i = 0; i < HALF_BLOCK_SIZE_BYTES; i++) {
-                ciphLeft[i] = input[pos + i];
-                ciphRight[i] = input[pos + HALF_BLOCK_SIZE_BYTES + i];
-            }
+            ciphLeft = Arrays.copyOfRange(input, pos, pos+HALF_BLOCK_SIZE_BYTES);
+            ciphRight = Arrays.copyOfRange(input, pos+HALF_BLOCK_SIZE_BYTES, pos+HALF_BLOCK_SIZE_BYTES*2);
 
             md.reset();
             md.update(ciphRight);
@@ -207,10 +192,10 @@ public class Karn {
     
     public static void main(String[] args) {
     	// Validate that encryption and decryption are consistent
-    	String plaintext = null;
-    	String ciphertext = null;
-        String decrypted = null;
-    	Karn karn = null;
+    	String plaintext;
+    	String ciphertext;
+        String decrypted;
+    	Karn karn;
     	BigInteger key;
         String testDescr;
         int i;
