@@ -7,15 +7,14 @@ public class Client extends MessageParser implements Runnable {
     Thread runner;
     Socket toMonitor = null;
     protected int localPort;
-    int DELAY = 90000; // Interval after which a new Active Client is started
-    long prevTime;
-    long present;
     protected int monitorPort;
 
     protected static final int HOST_PORT = 22334; // TODO: randomize this
 
     // Entry point
     public static void main(String[] args) throws Exception {
+
+        // TODO: Add a verb to the CLI to allow the client to do customizeable things for each run of the process 
    
         // Validate input
         if (args.length != 3) {
@@ -51,48 +50,38 @@ public class Client extends MessageParser implements Runnable {
 
     // Thread function
     public void run() {
-        while (Thread.currentThread() == runner) {
-            try {
-                System.out.print("Active Client: trying monitor: " + monitorHostName + " port: " + monitorPort + "...");
-                toMonitor = new Socket(monitorHostName, monitorPort);
-                System.out.println("completed.");
+        try {
+            System.out.print("Active Client: trying monitor: " + monitorHostName + " port: " + monitorPort + "...");
+            toMonitor = new Socket(monitorHostName, monitorPort);
+            System.out.println("completed.");
 
-                out = new PrintWriter(toMonitor.getOutputStream(), true);
-                in = new BufferedReader(new InputStreamReader(toMonitor.getInputStream()));
+            out = new PrintWriter(toMonitor.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(toMonitor.getInputStream()));
 
-                hostName = toMonitor.getLocalAddress().getHostName();
-                CType = 0; // Indicates Client
+            hostName = toMonitor.getLocalAddress().getHostName();
+            CType = 0; // Indicates Client
 
-                hostPort = localPort;
+            hostPort = localPort;
 
-                // Attempt to Login, starting the DH exchange
-                if (!Login(false)) {
-                    System.out.println("Client [run]: Login failed");
-                    System.exit(1);
-                }
-
-                // at this point, we think we're legit
-                System.out.println("Client [run]: Login succeeded");
-                IsVerified = 1;
-
-                System.out.println("***************************");
-                
-                toMonitor.close();
-                out.close();
-                in.close();
-
-                try {
-                    System.out.println("Client [run]: Sleeping for " + DELAY + "...");
-                    Thread.sleep(DELAY);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                System.out.println("Client [run]: Looping again...");
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            // Attempt to Login, starting the DH exchange
+            if (!Login(false)) {
+                System.out.println("Client [run]: Login failed");
+                System.exit(1);
             }
+
+            // at this point, we think we're legit
+            System.out.println("Client [run]: Login succeeded");
+            IsVerified = 1;
+
+            // TODO: execute the verb
+
+            // Clean up
+            toMonitor.close();
+            out.close();
+            in.close();
+        } catch ( Exception e) {
+            e.printStackTrace();
         }
+
     }
 }
