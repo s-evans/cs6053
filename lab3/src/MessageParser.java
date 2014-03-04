@@ -83,7 +83,8 @@ public class MessageParser {
             do {
                 //Read the next line. decrypt if necessary
                 currentLine = in.readLine();
-                if (encryptionStarted) {
+                // TODO: This IsEncrypted check is just a shortcut. When the connection is re-established, encryption also needs to be re-initialized.
+                if (encryptionStarted && Karn.IsEncrypted(currentLine)) {
                     currentLine = karnProcessor.decrypt(currentLine);
                 }
 

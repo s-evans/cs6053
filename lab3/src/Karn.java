@@ -4,10 +4,10 @@ import java.security.*;
 import java.util.Arrays;
 
 public class Karn {
-    private final int RADIX_SIZE_BYTES = 32;
-    private final int PADSIZE_BYTES = 40;
-    private final int HALF_BLOCK_SIZE_BYTES = PADSIZE_BYTES / 2;
-    private final int GUARD_VALUE = 42;
+    private static final int RADIX_SIZE_BYTES = 32;
+    private static final int PADSIZE_BYTES = 40;
+    private static final int HALF_BLOCK_SIZE_BYTES = PADSIZE_BYTES / 2;
+    private static final int GUARD_VALUE = 42;
 
     private byte key_left[];
     private byte key_right[];
@@ -188,6 +188,26 @@ public class Karn {
         }
 
         return (new String(buffer.toByteArray()));
+    }
+
+    /**
+     * Determines if the string appears to be encrypted with the Karn cipher
+     * @param ciphertext Probable base32 encoded cipher text
+     */
+    public static boolean IsEncrypted(String ciphertext) {
+        try {
+            byte[] input;
+            // Try to decode as base32 string
+            input = new BigInteger(ciphertext, RADIX_SIZE_BYTES).toByteArray();
+            // Validate that the guard byte is in place
+            if (input[0] != GUARD_VALUE) {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return true;
     }
     
     public static void main(String[] args) {
