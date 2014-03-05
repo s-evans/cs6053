@@ -1,5 +1,5 @@
 public class MessageComment extends Message {
-    protected String mComment;
+    public String mComment;
 
     public MessageComment() {
         mComment = "";

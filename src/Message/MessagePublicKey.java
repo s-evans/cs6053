@@ -1,6 +1,6 @@
 public class MessagePublicKey extends Message {
-    protected String mV;
-    protected String mN;
+    public String mV;
+    public String mN;
 
     public MessagePublicKey() {
         mV = "";
@@ -12,8 +12,16 @@ public class MessagePublicKey extends Message {
         mN = n;
     }
 
-    public MessagePublicKey(String args) {
-        // TODO: Implement
+    public MessagePublicKey(String args) throws Exception {
+        // Parse the input string 
+        String[] vals = args.split(" ");
+        if ( vals.length != 2 ) {
+            throw new Exception(new String("PARSE ERROR"));
+        }
+
+        // Populate from values
+        mV = vals[0];
+        mN = vals[1];
     }
 
     public String directive() {

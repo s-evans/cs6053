@@ -1,5 +1,5 @@
 public class MessageRounds extends Message {
-    protected Integer mRounds;
+    public Integer mRounds;
 
     public MessageRounds() {
         mRounds = 0;
@@ -9,8 +9,15 @@ public class MessageRounds extends Message {
         mRounds = rounds;
     }
 
-    public MessageRounds(String args) {
-        // TODO: Implement
+    public MessageRounds(String args) throws Exception {
+        // Parse the input string 
+        String[] vals = args.split(" ");
+        if ( vals.length != 1 ) {
+            throw new Exception(new String("PARSE ERROR"));
+        }
+
+        // Populate from values
+        mRounds = Integer.parseInt(vals[0]);
     }
 
     public String directive() {

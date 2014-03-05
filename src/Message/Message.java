@@ -7,8 +7,8 @@ public abstract class Message {
 
     }
 
-    static protected final String sArgDelimit = " ";
-    static protected final String sDirDelimit = ":";
+    static public final String sArgDelimit = " ";
+    static public final String sDirDelimit = ":";
 
     // Returns the directive associated with the message
     public abstract String directive();

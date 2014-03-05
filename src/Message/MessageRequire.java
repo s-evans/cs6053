@@ -1,5 +1,5 @@
 public class MessageRequire extends Message {
-    protected String mCommand;
+    public String mCommand;
 
     public MessageRequire() {
         mCommand = "";

@@ -1,5 +1,5 @@
 public class MessagePassword extends Message {
-    protected String mPassword;
+    public String mPassword;
 
     public MessagePassword() {
         mPassword = "";

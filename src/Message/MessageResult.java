@@ -1,6 +1,6 @@
 public class MessageResult extends Message {
-    protected String mCommand;
-    protected String mResult;
+    public String mCommand;
+    public String mResult;
 
     public MessageResult() {
         mCommand = "";
@@ -12,8 +12,16 @@ public class MessageResult extends Message {
         mResult = result;
     }
 
-    public MessageResult(String args) {
-        // TODO: Implement
+    public MessageResult(String args) throws Exception {
+        // Parse the input string 
+        String[] vals = args.split(" ");
+        if ( vals.length != 2 ) {
+            throw new Exception(new String("PARSE ERROR"));
+        }
+
+        // Populate from values
+        mCommand = vals[0];
+        mResult = vals[1];
     }
 
     public String directive() {

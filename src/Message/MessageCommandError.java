@@ -1,5 +1,5 @@
 public class MessageCommandError extends Message {
-    protected String mErrorMessage;
+    public String mErrorMessage;
 
     public MessageCommandError() {
         mErrorMessage = "";

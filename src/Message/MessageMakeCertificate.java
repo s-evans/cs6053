@@ -1,6 +1,6 @@
 public class MessageMakeCertificate extends Message {
-    protected String mV;
-    protected String mN;
+    public String mV;
+    public String mN;
 
     public MessageMakeCertificate() {
         mV = "";
@@ -12,8 +12,16 @@ public class MessageMakeCertificate extends Message {
         mN = n;
     }
 
-    public MessageMakeCertificate(String args) {
-        // TODO: Implement
+    public MessageMakeCertificate(String args) throws Exception {
+        // Parse the input string 
+        String[] vals = args.split(" ");
+        if ( vals.length != 2 ) {
+            throw new Exception(new String("PARSE ERROR"));
+        }
+
+        // Populate from values
+        mV = vals[0];
+        mN = vals[1];
     }
 
     public String directive() {

@@ -1,6 +1,6 @@
 public class MessageChangePassword extends Message {
-    protected String mCurrentPassword;
-    protected String mNewPassword;
+    public String mCurrentPassword;
+    public String mNewPassword;
 
     public MessageChangePassword() {
         mCurrentPassword = "";
@@ -12,8 +12,16 @@ public class MessageChangePassword extends Message {
         mNewPassword = newPassword;
     }
 
-    public MessageChangePassword(String args) {
-        // TODO: Implement
+    public MessageChangePassword(String args) throws Exception {
+        // Parse the input string 
+        String[] vals = args.split(" ");
+        if ( vals.length != 2 ) {
+            throw new Exception(new String("PARSE ERROR"));
+        }
+
+        // Get values
+        mCurrentPassword = vals[0];
+        mNewPassword = vals[1];
     }
 
     public String directive() {

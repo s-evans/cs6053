@@ -1,5 +1,5 @@
 public class MessagePassCsum extends Message {
-    protected String mChecksum;
+    public String mChecksum;
 
     public MessagePassCsum() {
         mChecksum = "";

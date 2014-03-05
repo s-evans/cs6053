@@ -8,19 +8,11 @@ public abstract class MessageFactory {
 
     }
 
-    public Message createMsg(String directive, String args) {
-        try {
-            Class<? extends Message> m = mMap.get(directive);
+    public Message createMsg(String directive, String args) throws Exception {
+        // Get the class that corresponds to the directive string
+        Class<? extends Message> m = mMap.get(directive);
 
-            if ( m == null ) {
-                return new MessageInvalid();
-            }
-
-            return m.getDeclaredConstructor(String.class).newInstance(args);
-        } catch (Exception e) {
-            // TODO: Handle this?
-            e.printStackTrace();
-            return new MessageInvalid();
-        }
+        // Create the message class given the string of arguments
+        return m.getDeclaredConstructor(String.class).newInstance(args);
     }
 }

@@ -1,5 +1,5 @@
 public class MessageGetCertificate extends Message {
-    protected String mIdent;
+    public String mIdent;
 
     public MessageGetCertificate() {
         mIdent = "";

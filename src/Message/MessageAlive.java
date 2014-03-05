@@ -1,5 +1,5 @@
 public class MessageAlive extends Message {
-    protected String mCookie;
+    public String mCookie;
 
     public MessageAlive() {
         mCookie = "";

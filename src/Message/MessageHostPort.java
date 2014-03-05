@@ -1,10 +1,10 @@
 import org.w3c.dom.ranges.RangeException;
 
 public class MessageHostPort extends Message {
-    protected String mHostName;
-    protected Integer mPort;
+    public String mHostName;
+    public Integer mPort;
 
-    protected void setPort(int port) {
+    public void setPort(int port) {
         if ( port > 65000 || port < 2048 ) {
             throw new IllegalArgumentException();
         }
@@ -22,8 +22,16 @@ public class MessageHostPort extends Message {
         setPort(port);
     }
 
-    public MessageHostPort(String args) {
-        // TODO: Implement
+    public MessageHostPort(String args) throws Exception {
+        // Parse the input string 
+        String[] vals = args.split(" ");
+        if ( vals.length != 2 ) {
+            throw new Exception(new String("PARSE ERROR"));
+        }
+
+        // Get the values
+        mHostName = vals[0];
+        setPort(Integer.parseInt(vals[1]));
     }
 
     public String directive() {

@@ -7,35 +7,26 @@ import java.math.BigInteger;
 //TODO: Remove all unused functions and variables
 public class MessageParser {
     // Monitor Handling Declarations
-    private final static int COMMAND_LIMIT = 25;
     public int CType;
     public static String hostName;
 
     // out and in are initialized by implementors
     PrintWriter out = null;
     BufferedReader in = null;
-    String mesg, sentmessage;
-    String FILENAME;
+    String mesg;
     StringTokenizer t;
     String IDENT;
     String PASSWORD;
     private String cookie;
-    String PPCHECKSUM = "";
     int hostPort;
     public static int IsVerified;
     private boolean encryptionStarted = false;
 
     // File I/O Declarations
-    BufferedReader fIn = null;
     PrintWriter fOut = null;
     static String ResourceFileName = "Resources.dat"; // TODO
-    String[] cmdArr = new String[COMMAND_LIMIT];
 
-    static String MyKey;
     String monitorKey;
-    String first;
-    ObjectInputStream oin = null;
-    ObjectOutputStream oout = null;
 
     private final DiffieHellmanExchange diffieHellmanExchange;
     private Karn karnProcessor;
@@ -341,24 +332,23 @@ public class MessageParser {
     public void SendIt(String message, boolean shouldEncrypt) throws IOException {
         String finalMessage = message;
 
-        try {
-            System.out.println("MessageParser [SendIt]: plaintext message:\n\t" + finalMessage);
-            if (shouldEncrypt && encryptionStarted) {
-                finalMessage = karnProcessor.encrypt(message);
-                System.out.println("MessageParser [SendIt]: encrypted message:\n\t" + finalMessage);
-            } else if (shouldEncrypt) {
-                throw new SecurityException(
-                        "Attempted to send encrypted message before DH Exchange completed! Investigate!");
-            }
-            out.println(finalMessage);
-            if (out.checkError() == true)
-                throw (new IOException());
-            out.flush();
-            if (out.checkError() == true)
-                throw (new IOException());
-        } catch (Exception e) {
-            System.out.println("MessageParser [SendIt]: Exception:\n\t" + e + " " + this);
-        } // Bubble the Exception upwards
+        System.out.println("MessageParser [SendIt]: plaintext message:\n\t" + finalMessage);
+
+        if (shouldEncrypt && encryptionStarted) {
+            finalMessage = karnProcessor.encrypt(message);
+            System.out.println("MessageParser [SendIt]: encrypted message:\n\t" + finalMessage);
+        } else if (shouldEncrypt) {
+            throw new SecurityException(
+                    "Attempted to send encrypted message before DH Exchange completed! Investigate!");
+        }
+
+        out.println(finalMessage);
+        if (out.checkError() == true)
+            throw (new IOException());
+
+        out.flush();
+        if (out.checkError() == true)
+            throw (new IOException());
     }
 
     // In future send parameters here so that diff commands are executed
@@ -679,16 +669,17 @@ public class MessageParser {
         if (senderInOurGroup && !recipientInOurGroup) {
             // transfer is leaving our group
             return false;
-        } else if (!senderInOurGroup && recipientInOurGroup) {
+        } 
+        if (!senderInOurGroup && recipientInOurGroup) {
             // transfer is entering our group
             return true;
-        } else if (senderInOurGroup && recipientInOurGroup) {
+        } 
+        if (senderInOurGroup && recipientInOurGroup) {
             // transfer is completely within our group
             return true;
-        } else {
-            // transfer is completely outside of our group
-            return false;
-        }
+        } 
+        // transfer is completely outside of our group
+        return false;
     }
 
     public static boolean IsUserInOurGroup(String username) {

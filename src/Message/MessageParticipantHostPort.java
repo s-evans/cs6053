@@ -1,5 +1,5 @@
 public class MessageParticipantHostPort extends Message {
-    protected String mIdent;
+    public String mIdent;
 
     public MessageParticipantHostPort() {
         mIdent = "";

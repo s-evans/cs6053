@@ -17,7 +17,7 @@ public class Client extends MessageParser implements Runnable {
         // TODO: Add a verb to the CLI to allow the client to do customizeable things for each run of the process 
    
         // Validate input
-        if (args.length != 3) {
+        if (args.length < 3) {
             System.out.println("Usage: java Client <monitor-host-name> <monitor-port> <ident>");
             return;
         }

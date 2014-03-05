@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Collections;
 
 public class MessageSubsetA extends Message {
     public List<String> mSet;
@@ -7,8 +8,15 @@ public class MessageSubsetA extends Message {
 
     }
 
-    public MessageSubsetA(String args) {
-        // TODO: Implement
+    public MessageSubsetA(String args) throws Exception {
+        // Parse the input string 
+        String[] vals = args.split(" ");
+        if ( vals.length < 1 ) {
+            throw new Exception(new String("PARSE ERROR"));
+        }
+
+        // Convert the array to a set
+        Collections.addAll(mSet, vals);
     }
 
     public String directive() {

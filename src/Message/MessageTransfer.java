@@ -1,7 +1,7 @@
 public class MessageTransfer extends Message {
-    protected String mRecipientIdent;
-    protected Integer mPointsRequested;
-    protected String mSenderIdent;
+    public String mRecipientIdent;
+    public Integer mPointsRequested;
+    public String mSenderIdent;
 
     public MessageTransfer() {
         mRecipientIdent = "";
@@ -15,8 +15,22 @@ public class MessageTransfer extends Message {
         mSenderIdent = sender;
     }
 
-    public MessageTransfer(String args) {
-        // TODO: Implement
+    public MessageTransfer(String args) throws Exception {
+        // Parse the input string 
+        String[] vals = args.split(" ");
+        if ( vals.length != 4 ) {
+            throw new Exception(new String("PARSE ERROR"));
+        }
+
+        // Validate the FROM string
+        if ( !vals[2].equals("FROM") ) { 
+            throw new Exception(new String("Validation error"));
+        }
+
+        // Get and validate values
+        mRecipientIdent = vals[0];
+        mPointsRequested = Integer.parseInt(vals[1]);
+        mSenderIdent = vals[3];
     }
 
     public String directive() {

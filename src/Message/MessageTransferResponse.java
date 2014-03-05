@@ -4,9 +4,9 @@ public class MessageTransferResponse extends Message {
         DECLINE
     }
 
-    protected Response mResponse;
+    public Response mResponse;
 
-    protected String getResponse() {
+    public String getResponse() {
         if ( mResponse == Response.ACCEPT ) {
             return "ACCEPT";
         } else {
@@ -22,8 +22,22 @@ public class MessageTransferResponse extends Message {
         mResponse = response;
     }
 
-    public MessageTransferResponse(String args) {
-        // TODO: Implement
+    public MessageTransferResponse(String args) throws Exception {
+        // Parse the input string 
+        String[] vals = args.split(" ");
+        if ( vals.length != 1 ) {
+            throw new Exception(new String("PARSE ERROR"));
+        }
+
+        // Get value
+        if ( vals[0].equals("ACCEPT") ) {
+            mResponse = Response.ACCEPT; 
+        } else if ( vals[0].equals("DECLINE") ) { 
+            mResponse = Response.DECLINE;
+        } else {
+            throw new Exception( new String("Invalid value") );
+        }
+            
     }
 
     public String directive() {
