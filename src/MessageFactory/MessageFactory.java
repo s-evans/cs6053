@@ -1,5 +1,6 @@
 import java.util.Map;
 
+// This class is used to create message objects for incoming messages
 public abstract class MessageFactory {
 
     protected Map<String, Class<? extends Message>> mMap;

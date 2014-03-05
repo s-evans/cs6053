@@ -1,6 +1,7 @@
 public class MessageInvalid extends Message {
 
     // NOTE: This is not a message that exists on the wire
+    // Instead this just represents a bad or unhandled message
 
     public MessageInvalid() {
 
