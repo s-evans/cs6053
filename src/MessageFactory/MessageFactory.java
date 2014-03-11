@@ -9,7 +9,17 @@ public abstract class MessageFactory {
 
     }
 
-    public Message createMsg(String directive, String args) throws Exception {
+    public Message createMsg(String input) throws Exception {
+        // Parse the string 
+        String[] strs = input.split("( |:)"); // TODO: Validate this regex string
+        if ( strs.length < 1 ) {
+            throw new Exception("Failed to parse message");
+        }
+
+        // Get directive and args from line
+        String directive = strs[0]; 
+        String args = input.substring(strs[0].length()); 
+
         // Get the class that corresponds to the directive string
         Class<? extends Message> m = mMap.get(directive);
 

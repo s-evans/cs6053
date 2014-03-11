@@ -1,15 +1,17 @@
 import java.io.*;
 import java.net.*;
 
-public class Client extends MessageParser implements Runnable {
+public class Client implements Runnable {
 
-    protected String monitorHostName;
     Thread runner;
     Socket toMonitor = null;
+
+    protected String monitorHostName;
     protected int localPort;
     protected int monitorPort;
+    protected String ident;
 
-    protected static final int HOST_PORT = 22334; // TODO: randomize this
+    protected static final int HOST_PORT = 22334; 
 
     // Entry point
     public static void main(String[] args) throws Exception {
@@ -18,7 +20,7 @@ public class Client extends MessageParser implements Runnable {
    
         // Validate input
         if (args.length < 3) {
-            System.out.println("Usage: java Client <monitor-host-name> <monitor-port> <ident>");
+            System.out.println("Usage: java Client <monitor-host-name> <monitor-port> <ident> <host-port>");
             return;
         }
 
@@ -29,15 +31,11 @@ public class Client extends MessageParser implements Runnable {
     }
 
     // Constructor
-    public Client(String mname, int p, int lp, String name) throws IOException {
-        super(name);
-        try {
-            monitorHostName = mname;
-            monitorPort = p;
-            localPort = lp;
-        } catch (NullPointerException n) {
-            n.printStackTrace();
-        }
+    public Client(String mname, int p, int lp, String name) throws Exception {
+        ident = name;
+        monitorHostName = mname;
+        monitorPort = p;
+        localPort = lp;
     }
 
     // Starts the thread running
@@ -51,34 +49,28 @@ public class Client extends MessageParser implements Runnable {
     // Thread function
     public void run() {
         try {
+            // Create socket to monitor
             System.out.print("Active Client: trying monitor: " + monitorHostName + " port: " + monitorPort + "...");
             toMonitor = new Socket(monitorHostName, monitorPort);
             System.out.println("completed.");
 
-            out = new PrintWriter(toMonitor.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(toMonitor.getInputStream()));
+            // Create io buffer objects
+            PrintWriter out = new PrintWriter(toMonitor.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(toMonitor.getInputStream()));
 
-            hostName = toMonitor.getLocalAddress().getHostName();
-            CType = 0; // Indicates Client
+            // Create message factory
+            MessageFactoryClient msgFactory = new MessageFactoryClient();
 
-            hostPort = localPort;
+            // Create MessageTextParser object
+            MessageTextParser mtp = new MessageTextParser(in, out, msgFactory);
 
-            // Attempt to Login, starting the DH exchange
-            if (!Login(false)) {
-                System.out.println("Client [run]: Login failed");
-                System.exit(1);
-            }
+            // TODO: Invoke login command using the ident
 
             // at this point, we think we're legit
             System.out.println("Client [run]: Login succeeded");
-            IsVerified = 1;
 
             // TODO: execute the verb
 
-            // Clean up
-            toMonitor.close();
-            out.close();
-            in.close();
         } catch ( Exception e) {
             e.printStackTrace();
         }

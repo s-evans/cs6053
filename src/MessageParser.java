@@ -4,7 +4,6 @@ import java.util.*;
 import java.io.*;
 import java.math.BigInteger;
 
-//TODO: Remove all unused functions and variables
 public class MessageParser {
     // Monitor Handling Declarations
     public int CType;
@@ -23,8 +22,7 @@ public class MessageParser {
     private boolean encryptionStarted = false;
 
     // File I/O Declarations
-    PrintWriter fOut = null;
-    static String ResourceFileName = "Resources.dat"; // TODO
+    private static final String ResourceFileName = "Resources.dat"; 
 
     String monitorKey;
 
@@ -208,7 +206,6 @@ public class MessageParser {
 
     // Handle Directives and Execute appropriate commands
     public boolean Execute(String sentmessage) {
-        // TODO: This would look so much nicer with an enum and switch statement
         boolean success = false;
         try {
             if (sentmessage.trim().equals("IDENT")) {
@@ -219,13 +216,11 @@ public class MessageParser {
                 // Do not encrypt since Ident is used before encryption is
                 // started
                 SendIt(sentmessage, false);
-                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("PASSWORD")) {
                 sentmessage = sentmessage.concat(" ");
                 sentmessage = sentmessage.concat(PASSWORD);
                 SendIt(sentmessage.trim(), true);
-                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("HOST_PORT")) {
                 sentmessage = sentmessage.concat(" ");
@@ -233,32 +228,26 @@ public class MessageParser {
                 sentmessage = sentmessage.concat(" ");
                 sentmessage = sentmessage.concat(String.valueOf(hostPort));
                 SendIt(sentmessage, true);
-                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("ALIVE")) {
                 sentmessage = sentmessage.concat(" ");
                 sentmessage = sentmessage.concat(cookie);
                 SendIt(sentmessage, true);
-                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("QUIT")) {
                 SendIt(sentmessage, true);
-                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("SIGN_OFF")) {
                 SendIt(sentmessage, true);
-                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("GET_GAME_IDENTS")) {
                 SendIt(sentmessage, true);
-                // TODO: validate result before considering this success?
                 success = true;
             } else if (sentmessage.trim().equals("PARTICIPANT_STATUS")) {
                 SendIt(sentmessage, true);
                 success = true;
             } else if (sentmessage.trim().equals("RANDOM_PARTICIPANT_HOST_PORT")) {
                 SendIt(sentmessage, true);
-                // TODO: validate result before considering this success?
                 success = true;
             } else {
                 System.out.println("MessageParser [Execute]: " + sentmessage + " not implemented");
@@ -285,7 +274,6 @@ public class MessageParser {
                 sentmessage = sentmessage.concat(" ");
                 sentmessage = sentmessage.concat(arg);
                 SendIt(sentmessage, true);
-                // TODO: validate result before considering this success?
                 success = true;
             } else {
                 System.out.println("MessageParser [Execute]: " + sentmessage + " not implemented");
@@ -313,7 +301,6 @@ public class MessageParser {
                 sentmessage = sentmessage.concat(" FROM ");
                 sentmessage = sentmessage.concat(arg3);
                 SendIt(sentmessage, true);
-                // TODO: validate result before considering this success?
                 success = true;
             } else {
                 System.out.println("MessageParser [Execute]: " + sentmessage + " not implemented");
@@ -403,9 +390,9 @@ public class MessageParser {
         try { // If an error occurs then don't update the Resources File
             String temp = GetNextCommand(res, "COMMAND_ERROR");
             if ((temp == null) || (temp.equals(""))) {
-                fOut = new PrintWriter(new FileWriter(ResourceFileName));
                 t = new StringTokenizer(res, " :\n");
                 try {
+                    PrintWriter fOut = new PrintWriter(new FileWriter(ResourceFileName));
                     temp = t.nextToken();
                     temp = t.nextToken();
                     temp = t.nextToken();
@@ -418,13 +405,10 @@ public class MessageParser {
                 } catch (NoSuchElementException ne) {
                     System.out.println("MessageParser [SaveResources]: NoSuchElementException:\n\t" + ne + " " + this);
                     temp = "";
-                    fOut.close();
                 }
             }
-            fOut.close();
         } catch (IOException e) {
             System.out.println("MessageParser [SaveResources]: IOException:\n\t" + e + " " + this);
-            fOut.close();
         }
     }
 
@@ -533,7 +517,6 @@ public class MessageParser {
             }
 
             SendIt(initiator.getPublicKey(), true);
-            // TODO: validate result before considering this success?
 
             monMsg = GetMonitorMessage();
             nextCmd = GetNextCommand(monMsg, "");
@@ -547,7 +530,6 @@ public class MessageParser {
             initiator.saveRounds(monMsg);
 
             SendIt(initiator.getAuthorizeSet(), true);
-            // TODO: validate result before considering this success?
 
             monMsg = GetMonitorMessage();
             nextCmd = GetNextCommand(monMsg, "");
@@ -561,7 +543,6 @@ public class MessageParser {
             initiator.saveSubsetA(monMsg);
 
             SendIt(initiator.getSubsetK(), true);
-            // TODO: validate result before considering this success?
 
             monMsg = GetMonitorMessage();
             nextCmd = GetNextCommand(monMsg, "");
@@ -570,7 +551,6 @@ public class MessageParser {
             }
 
             SendIt(initiator.getSubsetJ(), true);
-            // TODO: validate result before considering this success?
 
             success = true;
 
@@ -614,7 +594,6 @@ public class MessageParser {
             sender.savePublicKey(monMsg);
 
             SendIt(sender.getRounds(rounds), true);
-            // TODO: validate result before considering this success?
 
             monMsg = GetMonitorMessage();
             nextCmd = GetNextCommand(monMsg, "");
@@ -628,7 +607,6 @@ public class MessageParser {
             sender.saveAuthorizeSet(monMsg);
 
             SendIt(sender.getSubsetA(), true);
-            // TODO: validate result before considering this success?
 
             monMsg = GetMonitorMessage();
             nextCmd = GetNextCommand(monMsg, "");
@@ -651,7 +629,6 @@ public class MessageParser {
             }
 
             SendIt(sender.response(), true);
-            // TODO: validate result before considering this success?
 
             success = true;
 
