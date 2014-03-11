@@ -11,7 +11,7 @@ public class Client implements Runnable {
     protected int monitorPort;
     protected String ident;
 
-    protected static final int HOST_PORT = 22334; 
+    public static final int DEFAULT_HOST_PORT = 22334; // TODO: local / host port may not be necessary 
 
     // Entry point
     public static void main(String[] args) throws Exception {
@@ -19,14 +19,20 @@ public class Client implements Runnable {
         // TODO: Add a verb to the CLI to allow the client to do customizeable things for each run of the process 
    
         // Validate input
-        if (args.length < 3) {
-            System.out.println("Usage: java Client <monitor-host-name> <monitor-port> <ident> <host-port>");
+        if (args.length < 3 || args.length > 4) {
+            System.out.println("Usage: java Client <monitor-host-name> <monitor-port> <ident> [host-port]");
             return;
+        }
+
+        // Get host port if it exists
+        int hostPort = DEFAULT_HOST_PORT;
+        if (args.length >= 4) {
+            hostPort = Integer.parseInt(args[3]);
         }
 
         // Create and start the client
         Client client = new Client(
-                new String(args[0]), Integer.parseInt(args[1]), HOST_PORT, args[2]); 
+                new String(args[0]), Integer.parseInt(args[1]), hostPort, args[2]); 
         client.start(); 
     }
 
