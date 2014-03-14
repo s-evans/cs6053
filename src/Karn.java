@@ -183,9 +183,7 @@ public class Karn {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         int i = 0;
 
-        // TODO: This could maybe done faster. Padding should only be on the
-        // last block.
-        while (input[i] != 0 && i < input.length) {
+        while ( i < input.length && input[i] != 0 ) {
             buffer.write(input[i]);
             i++;
         }

@@ -1,9 +1,9 @@
 
-
 public class MessageFactoryClient extends MessageFactory {
 
     public MessageFactoryClient() {
-        mMap.put(new MessageWaiting().directive(), MessageWaiting.class);      
+		super(); 
+        mMap.put(new MessageWaiting().directive(), MessageWaiting.class);
         mMap.put(new MessageRequire().directive(), MessageRequire.class);
         mMap.put(new MessageCommandError().directive(), MessageCommandError.class);
         mMap.put(new MessageComment().directive(), MessageComment.class);

@@ -6,10 +6,10 @@ public class Client implements Runnable {
     Thread runner;
     Socket toMonitor = null;
 
-    protected String monitorHostName;
-    protected int localPort;
-    protected int monitorPort;
-    protected String ident;
+    protected String mMonitorHostName;
+    protected int mLocalPort;
+    protected int mMonitorPort;
+    protected String mIdent;
 
     public static final int DEFAULT_HOST_PORT = 22334; // TODO: local / host port may not be necessary 
 
@@ -20,7 +20,7 @@ public class Client implements Runnable {
    
         // Validate input
         if (args.length < 3 || args.length > 4) {
-            System.out.println("Usage: java Client <monitor-host-name> <monitor-port> <ident> [host-port]");
+            System.out.println("Usage: java Client <monitor-host-name> <monitor-port> <mIdent> [host-port]");
             return;
         }
 
@@ -38,10 +38,10 @@ public class Client implements Runnable {
 
     // Constructor
     public Client(String mname, int p, int lp, String name) throws Exception {
-        ident = name;
-        monitorHostName = mname;
-        monitorPort = p;
-        localPort = lp;
+        mIdent = name;
+        mMonitorHostName = mname;
+        mMonitorPort = p;
+        mLocalPort = lp;
     }
 
     // Starts the thread running
@@ -56,8 +56,8 @@ public class Client implements Runnable {
     public void run() {
         try {
             // Create socket to monitor
-            System.out.print("Active Client: trying monitor: " + monitorHostName + " port: " + monitorPort + "...");
-            toMonitor = new Socket(monitorHostName, monitorPort);
+            System.out.println("Active Client: trying monitor: " + mMonitorHostName + " port: " + mMonitorPort + "...");
+            toMonitor = new Socket(mMonitorHostName, mMonitorPort);
             System.out.println("completed.");
 
             // Create io buffer objects
@@ -70,7 +70,21 @@ public class Client implements Runnable {
             // Create MessageTextParser object
             MessageTextParser mtp = new MessageTextParser(in, out, msgFactory);
 
-            // TODO: Invoke login command using the ident
+            // MessageTextParser conn, String mIdent, String password,
+            // String serverHostName, int serverPort) {
+
+            // Open the ident file
+            IdentFile identFile = new IdentFile(mIdent);
+
+            // Create the login command object 
+            CommandLogin cmdLogin = new CommandLogin(
+                    mtp, mIdent, identFile.mPassword, identFile.mCookie,
+                    toMonitor.getLocalAddress().getHostName(), mLocalPort);
+            
+            // Execute the login command 
+            if ( !cmdLogin.Execute() ) {
+                throw new Exception("Failed to log in");
+            }
 
             // at this point, we think we're legit
             System.out.println("Client [run]: Login succeeded");

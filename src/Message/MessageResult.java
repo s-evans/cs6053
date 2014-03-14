@@ -21,7 +21,7 @@ public class MessageResult extends Message {
 
         // Populate from values
         mCommand = vals[0];
-        mResult = vals[1];
+        mResult = args.substring(mCommand.length());
     }
 
     public String directive() {

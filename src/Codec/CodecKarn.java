@@ -11,10 +11,16 @@ public class CodecKarn extends Codec {
 
     // Useful methods
         
-    // TODO: Validate the usage pattern for Karn
+    // NOTE: may want to check for Karn::IsEncrypted first and pass back input string if not encrypted
 
     // Decode a message
     public String decode(String in) throws Exception {
+        // Validate message is encrypted
+        if ( !mKarn.IsEncrypted(in) ) {
+            throw new Exception("Message not karn encrypted");
+        }
+
+        // Do decryption
         return mKarn.decrypt(in);
     }
    

@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.List;
+import java.util.LinkedList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 public class MessageTextParser {
     private BufferedReader in;
@@ -13,6 +15,7 @@ public class MessageTextParser {
             BufferedReader input, 
             PrintWriter output, 
             MessageFactory messageFactory) {
+        mCodecList = new LinkedList<Codec>();
         in = input;
         out = output;
         msgFactory = messageFactory;
@@ -33,13 +36,15 @@ public class MessageTextParser {
 
         // Read the next line. 
         line = in.readLine();
-        System.out.println("MessageTextParser [Recv]: Returning " + line);
+        System.out.println("MessageTextParser [recv]: Returning " + line);
 
-        // Pass the message to the decode stack
-        Iterator<Codec> iter = mCodecList.iterator();
+        // Pass the message to the decode stack in reverse order
         String postLine = line;
-        while (  iter.hasNext() ) {
-            postLine = iter.next().decode(postLine);
+        ListIterator<Codec> iter = mCodecList.listIterator(mCodecList.size());
+        while ( iter.hasPrevious() ) {
+            System.out.println("MessageTextParser [recv]: Encoded:\n\t" + postLine);
+            postLine = iter.previous().decode(postLine);
+            System.out.println("MessageTextParser [recv]: Decoded:\n\t" + postLine);
         }
 
         // Create the message object 
@@ -50,13 +55,15 @@ public class MessageTextParser {
 
     public void send(Message msg) throws Exception {
 
-        System.out.println("MessageTextParser [Send]: plaintext message:\n\t" + msg.serialize());
+        System.out.println("MessageTextParser [send]: plaintext message:\n\t" + msg.serialize());
 
         // Pass the message to the encode stack
-        Iterator<Codec> iter = mCodecList.iterator();
         String outMsg = msg.serialize();
-        while (  iter.hasNext() ) {
+        Iterator<Codec> iter = mCodecList.iterator();
+        while ( iter.hasNext() ) {
+            System.out.println("MessageTextParser [send]: Unencoded:\n\t" + outMsg);
             outMsg = iter.next().encode(outMsg);
+            System.out.println("MessageTextParser [send]: Encoded:\n\t" + outMsg);
         }
 
         // Output the message

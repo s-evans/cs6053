@@ -2,6 +2,7 @@
 public class MessageFactoryServer extends MessageFactory {
 
     public MessageFactoryServer() {
+		super(); 
         mMap.put(new MessageWaiting().directive(), MessageWaiting.class);      
         mMap.put(new MessageRequire().directive(), MessageRequire.class);
         mMap.put(new MessageCommandError().directive(), MessageCommandError.class);
