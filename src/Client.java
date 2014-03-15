@@ -70,9 +70,6 @@ public class Client implements Runnable {
             // Create MessageTextParser object
             MessageTextParser mtp = new MessageTextParser(in, out, msgFactory);
 
-            // MessageTextParser conn, String mIdent, String password,
-            // String serverHostName, int serverPort) {
-
             // Create ident file object
             IdentFile identFile = new IdentFile(mIdent);
 
@@ -83,7 +80,7 @@ public class Client implements Runnable {
 
             // Create the login command object 
             CommandLoginClient cmdLogin = new CommandLoginClient(
-                    mtp, mIdent, identFile.mPassword, identFile.mCookie,
+                    mtp, mIdent, identFile.mCookie,
                     mMonConnSock.getLocalAddress().getHostName(), mLocalPort);
             
             // Execute the login command 
@@ -96,7 +93,7 @@ public class Client implements Runnable {
 
             // TODO: execute the verb
 
-        } catch ( Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

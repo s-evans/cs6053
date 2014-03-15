@@ -11,9 +11,9 @@ public class CommandLoginClient extends CommandLogin {
 
     public CommandLoginClient(
             MessageTextParser conn, 
-            String ident, String password, String cookie,
+            String ident, String cookie,
             String serverHostName, int serverPort) {
-        super(conn, ident, password, cookie);
+        super(conn, ident, cookie);
 
         mServerHostName = serverHostName;
         mServerPort = serverPort;
@@ -23,7 +23,8 @@ public class CommandLoginClient extends CommandLogin {
         // Parse thru a message group
         ParserHelper ph = new ParserHelper(mMtp);
         if ( !ph.parseToCommand("HOST_PORT") ) {
-            throw new Exception("Failed to find REQUIRE: HOST_PORT");
+            // May not get the HOST_PORT message if our server is alive so just short circuit
+            return true;
         }
 
         // Wait for a waiting message
@@ -45,12 +46,6 @@ public class CommandLoginClient extends CommandLogin {
             throw new Exception("Result type validation failed");
         }
         
-        // Validate the result code  
-        String[] results = msgResult.mResult.split(" ");
-        if ( results.length != 2 ) {
-            throw new Exception("Result message validation failed");
-        }
-
         return true;
     }
 

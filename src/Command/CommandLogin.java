@@ -3,7 +3,6 @@ import java.math.BigInteger;
 public abstract class CommandLogin {
     protected MessageTextParser mMtp;
     protected String mIdent;
-    protected String mPassword;
     protected String mCookie;
 
     private final String sExpectedComment = "Monitor Version 2.2.1";
@@ -14,10 +13,9 @@ public abstract class CommandLogin {
 
     public CommandLogin(
             MessageTextParser conn, 
-            String ident, String password, String cookie) {
+            String ident, String cookie) {
         mMtp = conn;
         mIdent = ident;
-        mPassword = password;
         mCookie = cookie;
     }
 

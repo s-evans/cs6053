@@ -1,6 +1,8 @@
 import java.math.BigInteger;
 
 public class CommandLoginServer extends CommandLogin {
+    protected String mPassword;
+
     public CommandLoginServer(String args) throws Exception {
         super(args);
         throw new Exception("Not Implemented");
@@ -8,8 +10,10 @@ public class CommandLoginServer extends CommandLogin {
 
     public CommandLoginServer(
             MessageTextParser conn, 
-            String ident, String password, String cookie) {
-        super(conn, ident, password, cookie);
+            String ident, String cookie, String password) {
+        super(conn, ident, cookie);
+
+        mPassword = password;
     }
 
     protected boolean PasswordCsum() throws Exception {

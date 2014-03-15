@@ -18,27 +18,43 @@ class ConnectionHandler implements Runnable {
     // Run for each new mIncomingConnSock connection from the monitor (presumably)
     public void run() {
         try {
+            // Create io buffer objects from the connection stream
             BufferedReader in = new BufferedReader(new InputStreamReader(mIncomingConnSock.getInputStream()));
             PrintWriter out = new PrintWriter(mIncomingConnSock.getOutputStream(), true);
 
-            System.out.println("ConnectionHandler(" + mConnNumber + ") [Login]: Starting login from Server...");
+            // Create message factory
+            MessageFactoryClient msgFactory = new MessageFactoryClient();
 
-            boolean success;
-            try {
-                // TODO: Attempt to Login, starting the DH exchange
-                success = true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                success = false;
+            // Create MessageTextParser object
+            MessageTextParser mtp = new MessageTextParser(in, out, msgFactory);
+
+            // Create ident file object
+            IdentFile identFile = new IdentFile(mIdent);
+
+            // Attempt to read data from the ident file
+            if ( !identFile.Read() ) {
+                throw new Exception("Failed to read ident file");
             }
 
-            if (!success) {
-                System.out.println("ConnectionHandler(" + mConnNumber + ") [run]: Login failed");
-                System.exit(1);
+            System.out.println("ConnectionHandler(" + mConnNumber + ") [Login]: Starting login from Server...");
+
+            // Create a login command object
+            CommandLoginServer cmdLogin = new CommandLoginServer(
+                    mtp, mIdent, identFile.mCookie, identFile.mPassword);
+
+            // Execute the login command 
+            if ( !cmdLogin.Execute() ) {
+                throw new Exception("Failed to log in");
             }
 
             System.out.println("ConnectionHandler(" + mConnNumber + ") [run]: Login succeeded");
 
+            // TODO: Handle a transfer directive/command ? 
+            // TODO: Anything else we want to do ?
+
+            System.out.println("ConnectionHandler(" + mConnNumber + ") [run]: All done. Exiting.");
+
+            // Close the connection and be done
             mIncomingConnSock.close();
         } catch (Exception e) {
             e.printStackTrace();

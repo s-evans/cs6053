@@ -3,11 +3,11 @@ import java.net.*;
 
 public class Server implements Runnable {
 
-    protected ServerSocket s = null;
-    protected int LOCAL_PORT;
-    protected Thread runner;
-    protected String IDENT;
-    protected String PASSWORD;
+    protected ServerSocket mListeningSock = null;
+    protected int mListeningPort;
+    protected Thread mThread;
+    protected String mIdent;
+    protected String mPassword;
 
     public static final int HOST_PORT = 22334; 
    
@@ -19,48 +19,48 @@ public class Server implements Runnable {
             System.out.println("Usage: java Server <local-listening-port> <ident>");
             return;
         }
-        
-        // Start the server 
+    
+        // Create the server object
         Server server = new Server(Integer.parseInt(args[0]), args[1]);
+
+        // Start the server 
         server.start(); 
     }
 
     // Constructor
-    public Server(int lp, String name) {
-        IDENT = name;
-        LOCAL_PORT = lp;
-       
-        try {
-            s = new ServerSocket(LOCAL_PORT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public Server(int listeningPortNumber, String ident) throws Exception {
+        mIdent = ident;
+        mListeningPort = listeningPortNumber;
+        mListeningSock = new ServerSocket(mListeningPort);
     }
 
     // Runs the thread
     protected void start() {
-        if (runner == null) {
-            runner = new Thread(this);
-            runner.start();
+        if (mThread == null) {
+            mThread = new Thread(this);
+            mThread.start();
         }
     }
 
     // Thread function
     public void run() {
-        try {
-            int i = 1;
-            for (;;) {
+        int i = 1;
+        for (;;) {
+            try {
                 // Accept incoming connections
-                Socket incoming = s.accept();
+                Socket incoming = mListeningSock.accept();
 
                 // Pass off new connections to the connection handler
-                new ConnectionHandler(incoming, i, IDENT).start();
+                ConnectionHandler handler = new ConnectionHandler(incoming, i, mIdent);
 
                 // Count connections
                 i++;
+
+                // Start the handler running
+                handler.start();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
