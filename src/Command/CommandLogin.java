@@ -1,12 +1,10 @@
 import java.math.BigInteger;
 
-public class CommandLogin {
+public abstract class CommandLogin {
     protected MessageTextParser mMtp;
     protected String mIdent;
     protected String mPassword;
     protected String mCookie;
-    protected int mServerPort;
-    protected String mServerHostName;
 
     private final String sExpectedComment = "Monitor Version 2.2.1";
 
@@ -16,14 +14,11 @@ public class CommandLogin {
 
     public CommandLogin(
             MessageTextParser conn, 
-            String ident, String password, String cookie,
-            String serverHostName, int serverPort) {
+            String ident, String password, String cookie) {
         mMtp = conn;
         mIdent = ident;
         mPassword = password;
         mCookie = cookie;
-        mServerHostName = serverHostName;
-        mServerPort = serverPort;
     }
 
     protected boolean Banner() throws Exception {
@@ -36,44 +31,6 @@ public class CommandLogin {
                     "Comment validation failed; exp = " + sExpectedComment + "; act = " + monBanner.mComment + ";");
             return false;
         }
-
-        return true;
-    }
-
-    protected boolean PasswordCsum() throws Exception {
-        // Receive the message
-        MessagePassCsum msg = (MessagePassCsum) mMtp.recv();
-
-        // Create expected string
-        String expected = SHA.perform(mPassword);
-
-        // Validate the message
-        if ( !msg.mChecksum.equals(expected) ) { 
-            System.out.println(
-                    "Password checksum validation failed; exp = " + expected + "; act = " + msg.mChecksum + ";");
-            return false;
-        }
-
-        return true;
-    }
-
-    protected boolean HostPort() throws Exception {
-        // Parse thru a message group
-        ParserHelper ph = new ParserHelper(mMtp);
-        if ( !ph.parseToCommand("HOST_PORT") ) {
-            throw new Exception("Failed to find REQUIRE: HOST_PORT");
-        }
-
-        // Wait for a waiting message
-        if ( !ph.parseToWait() ) { 
-            throw new Exception("Failed to find end of message group");
-        }
-
-        // Create a host port message
-        MessageHostPort msgHostPort = new MessageHostPort(mServerHostName, mServerPort);
-
-        // Send the host port message
-        mMtp.send(msgHostPort);
 
         return true;
     }
@@ -97,7 +54,18 @@ public class CommandLogin {
         // Send the Alive message
         mMtp.send(msgAlive);
 
-        // TODO: Get the alive result message
+        // Get a result message (COMMAND_ERROR also possible)
+        MessageResult msgResult = (MessageResult) mMtp.recv();
+
+        // Validate the result message command type
+        if ( !msgResult.mCommand.equals(msgAlive.directive()) ) {
+            throw new Exception("Result type validation failed");
+        }
+        
+        // Validate the result code  
+        if ( !msgResult.mResult.contains("Identity has been verified.") ) {
+            throw new Exception("Result message validation failed");
+        }
 
         return true;
     }
@@ -156,39 +124,5 @@ public class CommandLogin {
         return true;
     }
     
-    public boolean Execute() throws Exception {
-        // Receive the banner
-        if ( !Banner() ) {
-            throw new Exception("Comment validation failed");
-        }
-
-        // TODO: Split this into two separate classes that differ on whether or not to do pwcsum validation (server does, client doesn't)
-/*
-        // Receive the password checksum
-        if ( !PasswordCsum() ) { 
-            throw new Exception("Password checksum validation failed");
-        }
-*/
-
-        // Do DH KEX
-        if ( !DiffieHellmanEx() ) {
-            throw new Exception("DH KEX failed");
-        }
-
-        // Handle the alive message
-        if ( !Alive() ) { 
-            throw new Exception("Failed to handle alive");
-        }
-
-        // TODO: HostPort is client only
-
-        // Handle the host port directive
-        if ( !HostPort() ) { 
-            throw new Exception("Failed to handle host/port message");
-        }
-
-        // TODO: Server MAY receive a transfer or quit command at this point
-        
-        return true;
-    }
+    public abstract boolean Execute() throws Exception; 
 }

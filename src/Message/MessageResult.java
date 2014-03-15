@@ -15,7 +15,7 @@ public class MessageResult extends Message {
     public MessageResult(String args) throws Exception {
         // Parse the input string 
         String[] vals = args.split(" ");
-        if ( vals.length != 2 ) {
+        if ( vals.length < 2 ) {
             throw new Exception(new String("PARSE ERROR"));
         }
 

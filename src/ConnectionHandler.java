@@ -3,24 +3,25 @@ import java.io.*;
 
 class ConnectionHandler implements Runnable {
 
-    private Socket incoming;
-    private int counter;
-    private String ident;
-    Thread runner;
+    private Socket mIncomingConnSock;
+    private int mConnNumber;
+    private String mIdent;
+    Thread mThread;
 
-    public ConnectionHandler(Socket i, int c, String id) {
-        incoming = i;
-        counter = c;
-        ident = id;
+    public ConnectionHandler(
+            Socket connSock, int connNum, String ident) {
+        mIncomingConnSock = connSock;
+        mConnNumber = connNum;
+        mIdent = ident;
     }
 
-    // Run for each new incoming connection from the monitor (presumably)
+    // Run for each new mIncomingConnSock connection from the monitor (presumably)
     public void run() {
         try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(incoming.getInputStream()));
-            PrintWriter out = new PrintWriter(incoming.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(mIncomingConnSock.getInputStream()));
+            PrintWriter out = new PrintWriter(mIncomingConnSock.getOutputStream(), true);
 
-            System.out.println("ConnectionHandler(" + counter + ") [Login]: Starting login from Server...");
+            System.out.println("ConnectionHandler(" + mConnNumber + ") [Login]: Starting login from Server...");
 
             boolean success;
             try {
@@ -32,22 +33,22 @@ class ConnectionHandler implements Runnable {
             }
 
             if (!success) {
-                System.out.println("ConnectionHandler(" + counter + ") [run]: Login failed");
+                System.out.println("ConnectionHandler(" + mConnNumber + ") [run]: Login failed");
                 System.exit(1);
             }
 
-            System.out.println("ConnectionHandler(" + counter + ") [run]: Login succeeded");
+            System.out.println("ConnectionHandler(" + mConnNumber + ") [run]: Login succeeded");
 
-            incoming.close();
+            mIncomingConnSock.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void start() {
-        if (runner == null) {
-            runner = new Thread(this);
-            runner.start();
+        if (mThread == null) {
+            mThread = new Thread(this);
+            mThread.start();
         }
     }
 }

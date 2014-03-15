@@ -28,6 +28,8 @@ public abstract class MessageFactory {
         // Get the remaining trailing characters
         String args = input.substring(strs[0].length()).trim(); 
 
+        System.out.println("MessageFactory [createMsg]: directive = " + directive + "; args = " + args + ";");
+
         // Get the class that corresponds to the directive string
         Class<? extends Message> m = mMap.get(directive);
 

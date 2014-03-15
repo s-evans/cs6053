@@ -3,15 +3,15 @@ import java.net.*;
 
 public class Client implements Runnable {
 
-    Thread runner;
-    Socket toMonitor = null;
+    Thread mThread;
+    Socket mMonConnSock = null;
 
     protected String mMonitorHostName;
     protected int mLocalPort;
     protected int mMonitorPort;
     protected String mIdent;
 
-    public static final int DEFAULT_HOST_PORT = 22334; // TODO: local / host port may not be necessary 
+    public static final int DEFAULT_HOST_PORT = 22334; 
 
     // Entry point
     public static void main(String[] args) throws Exception {
@@ -37,18 +37,18 @@ public class Client implements Runnable {
     }
 
     // Constructor
-    public Client(String mname, int p, int lp, String name) throws Exception {
-        mIdent = name;
-        mMonitorHostName = mname;
-        mMonitorPort = p;
-        mLocalPort = lp;
+    public Client(String monitorHostName, int monitorPort, int localPort, String ident) throws Exception {
+        mIdent = ident;
+        mMonitorHostName = monitorHostName;
+        mMonitorPort = monitorPort;
+        mLocalPort = localPort;
     }
 
     // Starts the thread running
     public void start() {
-        if (runner == null) {
-            runner = new Thread(this);
-            runner.start();
+        if (mThread == null) {
+            mThread = new Thread(this);
+            mThread.start();
         }
     }
 
@@ -57,12 +57,12 @@ public class Client implements Runnable {
         try {
             // Create socket to monitor
             System.out.println("Active Client: trying monitor: " + mMonitorHostName + " port: " + mMonitorPort + "...");
-            toMonitor = new Socket(mMonitorHostName, mMonitorPort);
+            mMonConnSock = new Socket(mMonitorHostName, mMonitorPort);
             System.out.println("completed.");
 
             // Create io buffer objects
-            PrintWriter out = new PrintWriter(toMonitor.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(toMonitor.getInputStream()));
+            PrintWriter out = new PrintWriter(mMonConnSock.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(mMonConnSock.getInputStream()));
 
             // Create message factory
             MessageFactoryClient msgFactory = new MessageFactoryClient();
@@ -82,9 +82,9 @@ public class Client implements Runnable {
             }
 
             // Create the login command object 
-            CommandLogin cmdLogin = new CommandLogin(
+            CommandLoginClient cmdLogin = new CommandLoginClient(
                     mtp, mIdent, identFile.mPassword, identFile.mCookie,
-                    toMonitor.getLocalAddress().getHostName(), mLocalPort);
+                    mMonConnSock.getLocalAddress().getHostName(), mLocalPort);
             
             // Execute the login command 
             if ( !cmdLogin.Execute() ) {
