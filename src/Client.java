@@ -73,8 +73,13 @@ public class Client implements Runnable {
             // MessageTextParser conn, String mIdent, String password,
             // String serverHostName, int serverPort) {
 
-            // Open the ident file
+            // Create ident file object
             IdentFile identFile = new IdentFile(mIdent);
+
+            // Attempt to read data from the ident file
+            if ( !identFile.Read() ) {
+                throw new Exception("Failed to read ident file");
+            }
 
             // Create the login command object 
             CommandLogin cmdLogin = new CommandLogin(

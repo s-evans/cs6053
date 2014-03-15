@@ -181,13 +181,8 @@ public class Karn {
      */
     private String StripPadding(byte input[]) {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        int i = 0;
-
-        while ( i < input.length && input[i] != 0 ) {
+        for (int i=0 ; i < input.length && input[i] != 0 ; i++) 
             buffer.write(input[i]);
-            i++;
-        }
-
         return (new String(buffer.toByteArray()));
     }
 
@@ -200,8 +195,10 @@ public class Karn {
     public static boolean IsEncrypted(String ciphertext) {
         try {
             byte[] input;
+
             // Try to decode as base32 string
             input = new BigInteger(ciphertext, RADIX_SIZE_BYTES).toByteArray();
+
             // Validate that the guard byte is in place
             if (input[0] != GUARD_VALUE) {
                 return false;

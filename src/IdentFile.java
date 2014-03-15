@@ -24,26 +24,37 @@ public class IdentFile {
 
             // Validate length
             if ( identEntry.length != 6 ) {
-                System.out.println("Invalid formatted line");
+                System.out.println("CommandLogin [Read]: Invalid formatted line");
                 return false;
             } 
 
             // Check to make sure that identity matches current identity
             if (identEntry[0].trim().equals("IDENT") && identEntry[1].trim().equals(mIdent)) {
+
                 // Set the password if non-empty
                 if (identEntry[2].trim().equals("PASSWORD")) {
                     String tempPassword = identEntry[3].trim();
                     if (tempPassword.length() != 0) {
+                        System.out.println("CommandLogin [Read]: Got password");
                         mPassword = tempPassword;
+                    } else {
+                        System.out.println("CommandLogin [Read]: Zero length password");
                     }
+                } else {
+                    System.out.println("CommandLogin [Read]: Password not found");
                 }
 
                 // Set the cookie if non-empty
                 if (identEntry[4].trim().equals("COOKIE")) {
                     String tempCookie = identEntry[5].trim();
                     if (tempCookie.length() != 0) {
+                        System.out.println("CommandLogin [Read]: Got cookie");
                         mCookie = tempCookie;
+                    } else {
+                        System.out.println("CommandLogin [Read]: Zero length cookie");
                     }
+                } else {
+                    System.out.println("CommandLogin [Read]: Cookie not found");
                 }
             }
         } catch (Exception e) {

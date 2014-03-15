@@ -14,6 +14,8 @@ public class MessageAlive extends Message {
     }
 
     public String serialize() {
-        return directive().concat(sArgDelimit).concat(mCookie);
+        return directive().
+            concat(sArgDelimit).
+            concat(mCookie);
     }
 }

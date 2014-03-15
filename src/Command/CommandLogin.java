@@ -57,26 +57,6 @@ public class CommandLogin {
         return true;
     }
 
-    protected boolean RequireIdent() throws Exception {
-        // Get the require directive
-        MessageRequire msg = (MessageRequire) mMtp.recv();
-
-        // Validate require directive
-        if ( !msg.mCommand.equals("IDENT") ) {
-            System.out.println("Unexpected directive; exp = IDENT; act = " + msg.mCommand + ";");
-            return false;
-        }
-
-        return true;
-    }
-
-    protected boolean Waiting() throws Exception {
-        // Get the waiting directive
-        MessageWaiting msg = (MessageWaiting) mMtp.recv();
-
-        return true;
-    }
-
     protected boolean HostPort() throws Exception {
         // Parse thru a message group
         ParserHelper ph = new ParserHelper(mMtp);
@@ -111,27 +91,41 @@ public class CommandLogin {
         }
 
         // Create the Alive message
+        System.out.println("CommandLogin [Alive]: Using cookie: \n\t" + mCookie);
         MessageAlive msgAlive = new MessageAlive(mCookie);
         
         // Send the Alive message
         mMtp.send(msgAlive);
 
+        // TODO: Get the alive result message
+
         return true;
     }
 
     protected boolean DiffieHellmanEx() throws Exception {
+        // Parse thru a message group
+        ParserHelper ph = new ParserHelper(mMtp);
+        if ( !ph.parseToCommand("IDENT") ) {
+            throw new Exception("Failed to find REQUIRE: IDENT");
+        }
+
+        // Wait for a waiting message
+        if ( !ph.parseToWait() ) { 
+            throw new Exception("Failed to find end of message group");
+        }
+
         // Create DH obj
-        DiffieHellmanExchange diffieHellmanExchange = 
-            new DiffieHellmanExchange();
+        PlantDHKey.plantKey();
+        DiffieHellmanExchange diffieHellmanExchange = new DiffieHellmanExchange();
 
         // Get public key from file
         BigInteger publicKey =
             diffieHellmanExchange.getDHParmMakePublicKey("DHKey");
-
-        // Create an ident message
-        MessageIdent msgIdent = new MessageIdent(mIdent, publicKey.toString());
         
-        // Send the ident message
+        // Create an IDENT message
+        MessageIdent msgIdent = new MessageIdent(mIdent, publicKey.toString(32));
+
+        // Send the IDENT message
         mMtp.send(msgIdent);
 
         // Get the monitor DH exchange reply and use to start encryption
@@ -175,15 +169,6 @@ public class CommandLogin {
             throw new Exception("Password checksum validation failed");
         }
 */
-        // Receive the require ident message
-        if ( !RequireIdent() ) {
-            throw new Exception("Require message validation failed");
-        }
-
-        // Receive the waiting message
-        if ( !Waiting() ) { 
-            throw new Exception("Waiting message validation failed");
-        }
 
         // Do DH KEX
         if ( !DiffieHellmanEx() ) {

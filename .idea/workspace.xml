@@ -2,18 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5084d585-fefc-47e3-9f76-3430d5b72f1b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Client.java" afterPath="$PROJECT_DIR$/src/Client.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Codec/CodecKarn.java" afterPath="$PROJECT_DIR$/src/Codec/CodecKarn.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Command/Command.java" afterPath="$PROJECT_DIR$/src/Command/Command.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Command/CommandLogin.java" afterPath="$PROJECT_DIR$/src/Command/CommandLogin.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/IdentFile.java" afterPath="$PROJECT_DIR$/src/IdentFile.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Karn.java" afterPath="$PROJECT_DIR$/src/Karn.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessageFactory/MessageFactory.java" afterPath="$PROJECT_DIR$/src/MessageFactory/MessageFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessageAlive.java" afterPath="$PROJECT_DIR$/src/Message/MessageAlive.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessageFactory/MessageFactoryClient.java" afterPath="$PROJECT_DIR$/src/MessageFactory/MessageFactoryClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessageFactory/MessageFactoryServer.java" afterPath="$PROJECT_DIR$/src/MessageFactory/MessageFactoryServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessageResult.java" afterPath="$PROJECT_DIR$/src/Message/MessageResult.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessageTextParser.java" afterPath="$PROJECT_DIR$/src/MessageTextParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cs6053-project.iml" afterPath="$PROJECT_DIR$/cs6053-project.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ParserHelper.java" afterPath="$PROJECT_DIR$/src/ParserHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PlantDHKey.java" afterPath="$PROJECT_DIR$/src/PlantDHKey.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="cs6053-project.iws" />
@@ -87,19 +85,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CodecKarn.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="CodecKarn.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Codec/CodecKarn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="13" selection-start="341" selection-end="341" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="684">
+            <state line="23" column="13" selection-start="659" selection-end="659" vertical-scroll-proportion="0.33333334" vertical-offset="300" max-vertical-offset="720">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MessageFactory.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MessageFactory.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MessageFactory/MessageFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="52" selection-start="768" selection-end="768" vertical-scroll-proportion="0.34084508" vertical-offset="329" max-vertical-offset="774">
+            <state line="14" column="45" selection-start="462" selection-end="462" vertical-scroll-proportion="0.0" vertical-offset="252" max-vertical-offset="774">
               <folding />
             </state>
           </provider>
@@ -108,10 +106,8 @@
       <file leaf-file-name="MessageTextParser.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MessageTextParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="48" selection-start="1918" selection-end="1918" vertical-scroll-proportion="0.0" vertical-offset="876" max-vertical-offset="1584">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="59" column="48" selection-start="1867" selection-end="1867" vertical-scroll-proportion="0.0" vertical-offset="876" max-vertical-offset="1584">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -119,7 +115,7 @@
       <file leaf-file-name="MessageFactoryClient.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MessageFactory/MessageFactoryClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="50" selection-start="108" selection-end="108" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+            <state line="7" column="50" selection-start="178" selection-end="178" vertical-scroll-proportion="0.0" vertical-offset="126" max-vertical-offset="450">
               <folding />
             </state>
           </provider>
@@ -128,7 +124,7 @@
       <file leaf-file-name="MessageWaiting.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Message/MessageWaiting.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="20" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="396">
+            <state line="9" column="20" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0" vertical-offset="162" max-vertical-offset="396">
               <folding />
             </state>
           </provider>
@@ -137,7 +133,7 @@
       <file leaf-file-name="CommandLogin.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Command/CommandLogin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="138" column="56" selection-start="4298" selection-end="4298" vertical-scroll-proportion="0.0" vertical-offset="108" max-vertical-offset="3870">
+            <state line="66" column="27" selection-start="2073" selection-end="2073" vertical-scroll-proportion="0.0" vertical-offset="1188" max-vertical-offset="3600">
               <folding />
             </state>
           </provider>
@@ -146,7 +142,7 @@
       <file leaf-file-name="IdentFile.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/IdentFile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="33" selection-start="546" selection-end="546" vertical-scroll-proportion="0.0" vertical-offset="18" max-vertical-offset="1656">
+            <state line="32" column="33" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.0" vertical-offset="576" max-vertical-offset="1854">
               <folding />
             </state>
           </provider>
@@ -155,7 +151,7 @@
       <file leaf-file-name="Command.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Command/Command.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="4" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0" vertical-offset="5" max-vertical-offset="360">
+            <state line="13" column="4" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0" vertical-offset="234" max-vertical-offset="360">
               <folding />
             </state>
           </provider>
@@ -164,10 +160,8 @@
       <file leaf-file-name="SHA.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SHA.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="31" selection-start="319" selection-end="319" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="468">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="10" column="31" selection-start="319" selection-end="319" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="468">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -198,8 +192,6 @@
         <option value="$PROJECT_DIR$/src/MessageParser.java" />
         <option value="$PROJECT_DIR$/src/ConnectionHandler.java" />
         <option value="$PROJECT_DIR$/src/Client.java" />
-        <option value="$PROJECT_DIR$/src/Codec/CodecKarn.java" />
-        <option value="$PROJECT_DIR$/src/Command/CommandLogin.java" />
         <option value="$PROJECT_DIR$/src/IdentFile.java" />
         <option value="$PROJECT_DIR$/src/Command/Command.java" />
         <option value="$PROJECT_DIR$/src/SHA.java" />
@@ -207,6 +199,8 @@
         <option value="$PROJECT_DIR$/src/MessageFactory/MessageFactoryClient.java" />
         <option value="$PROJECT_DIR$/src/MessageTextParser.java" />
         <option value="$PROJECT_DIR$/src/MessageFactory/MessageFactory.java" />
+        <option value="$PROJECT_DIR$/src/Command/CommandLogin.java" />
+        <option value="$PROJECT_DIR$/src/Codec/CodecKarn.java" />
       </list>
     </option>
   </component>
@@ -243,7 +237,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -346,6 +339,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -363,6 +357,7 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
     <property name="FullScreen" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin" singleton="true">
@@ -399,6 +394,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -424,19 +432,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -529,7 +524,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -547,7 +542,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36136365" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36136365" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -731,23 +726,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Message/MessageSubsetJ.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="53" selection-start="493" selection-end="493" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
-          <folding />
-        </state>
+        <state line="19" column="53" selection-start="493" selection-end="493" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Message/MessageGameIdents.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="17" selection-start="140" selection-end="140" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="396">
-          <folding />
-        </state>
+        <state line="7" column="17" selection-start="140" selection-end="140" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="396" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Message/MessageAlive.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="13" selection-start="13" selection-end="13" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="432">
-          <folding />
-        </state>
+        <state line="0" column="13" selection-start="13" selection-end="13" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="432" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Message/MessageAuthorizeSet.java">
@@ -769,16 +758,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Message/MessageQuit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="13" selection-start="13" selection-end="13" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="746">
-          <folding />
-        </state>
+        <state line="0" column="13" selection-start="13" selection-end="13" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="746" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Message/Message.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="11" selection-start="274" selection-end="274" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="414">
-          <folding />
-        </state>
+        <state line="13" column="11" selection-start="274" selection-end="274" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="414" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Message/MessageCommandError.java">
@@ -831,23 +816,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Codec/CodecKarn.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="341" selection-end="341" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="684">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Command/CommandLogin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="138" column="56" selection-start="4298" selection-end="4298" vertical-scroll-proportion="0.0" vertical-offset="108" max-vertical-offset="3870">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/IdentFile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="33" selection-start="546" selection-end="546" vertical-scroll-proportion="0.0" vertical-offset="18" max-vertical-offset="1656">
+        <state line="32" column="33" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.0" vertical-offset="576" max-vertical-offset="1854">
           <folding />
         </state>
       </provider>
@@ -862,9 +833,7 @@
     <entry file="file://$PROJECT_DIR$/src/SHA.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="31" selection-start="319" selection-end="319" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="468">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -877,23 +846,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MessageFactory/MessageFactoryClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="50" selection-start="108" selection-end="108" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+        <state line="7" column="50" selection-start="178" selection-end="178" vertical-scroll-proportion="0.0" vertical-offset="126" max-vertical-offset="450">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MessageTextParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="48" selection-start="1918" selection-end="1918" vertical-scroll-proportion="0.0" vertical-offset="876" max-vertical-offset="1584">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="59" column="48" selection-start="1867" selection-end="1867" vertical-scroll-proportion="0.0" vertical-offset="876" max-vertical-offset="1584">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MessageFactory/MessageFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="52" selection-start="768" selection-end="768" vertical-scroll-proportion="0.34084508" vertical-offset="329" max-vertical-offset="774">
+        <state line="14" column="45" selection-start="462" selection-end="462" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="774">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Command/CommandLogin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="27" selection-start="2073" selection-end="2073" vertical-scroll-proportion="0.0" vertical-offset="1188" max-vertical-offset="3600">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Codec/CodecKarn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="13" selection-start="659" selection-end="659" vertical-scroll-proportion="0.33333334" vertical-offset="300" max-vertical-offset="720">
           <folding />
         </state>
       </provider>

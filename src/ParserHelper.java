@@ -40,9 +40,10 @@ public class ParserHelper {
             // Attempt to cast to a wait message
             try {
                 msgWait = (MessageWaiting) msg;
-            } catch (Exception e) {
                 System.out.println("Got wait message early");
                 break;
+            } catch (Exception e) {
+                // Ignore.
             }
 
             // Attempt to get a require message

@@ -36,19 +36,19 @@ public class MessageTextParser {
 
         // Read the next line. 
         line = in.readLine();
-        System.out.println("MessageTextParser [recv]: Returning " + line);
 
         // Pass the message to the decode stack in reverse order
-        String postLine = line;
         ListIterator<Codec> iter = mCodecList.listIterator(mCodecList.size());
         while ( iter.hasPrevious() ) {
-            System.out.println("MessageTextParser [recv]: Encoded:\n\t" + postLine);
-            postLine = iter.previous().decode(postLine);
-            System.out.println("MessageTextParser [recv]: Decoded:\n\t" + postLine);
+            System.out.println("MessageTextParser [recv]: Encoded:\n\t" + line);
+            line = iter.previous().decode(line);
+            System.out.println("MessageTextParser [recv]: Decoded:\n\t" + line);
         }
 
+        System.out.println("MessageTextParser [recv]: Returning " + line);
+
         // Create the message object 
-        msg = msgFactory.createMsg(postLine);
+        msg = msgFactory.createMsg(line);
 
         return msg;
     }
