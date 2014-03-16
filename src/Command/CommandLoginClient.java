@@ -8,8 +8,7 @@ public class CommandLoginClient extends CommandLogin {
     }
 
     public CommandLoginClient(
-            MessageTextParser conn, 
-            String ident, String cookie) {
+            MessageTextParser conn, String ident, String cookie) throws Exception {
         super(conn, ident, cookie);
     }
 

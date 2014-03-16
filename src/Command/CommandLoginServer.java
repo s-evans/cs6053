@@ -10,9 +10,11 @@ public class CommandLoginServer extends CommandLogin {
 
     public CommandLoginServer(
             MessageTextParser conn, 
-            String ident, String cookie, String password) {
+            String ident, String cookie, String password) throws Exception {
+        // Create parent class
         super(conn, ident, cookie);
 
+        // Save off values
         mPassword = password;
     }
 

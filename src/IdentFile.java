@@ -24,7 +24,7 @@ public class IdentFile {
 
             // Validate length
             if ( identEntry.length != 6 ) {
-                System.out.println("CommandLogin [Read]: Invalid formatted line");
+                System.out.println("IdentFile [Read]: Invalid formatted line");
                 return false;
             } 
 
@@ -35,26 +35,26 @@ public class IdentFile {
                 if (identEntry[2].trim().equals("PASSWORD")) {
                     String tempPassword = identEntry[3].trim();
                     if (tempPassword.length() != 0) {
-                        System.out.println("CommandLogin [Read]: Got password");
+                        System.out.println("IdentFile [Read]: Got password");
                         mPassword = tempPassword;
                     } else {
-                        System.out.println("CommandLogin [Read]: Zero length password");
+                        System.out.println("IdentFile [Read]: Zero length password");
                     }
                 } else {
-                    System.out.println("CommandLogin [Read]: Password not found");
+                    System.out.println("IdentFile [Read]: Password not found");
                 }
 
                 // Set the cookie if non-empty
                 if (identEntry[4].trim().equals("COOKIE")) {
                     String tempCookie = identEntry[5].trim();
                     if (tempCookie.length() != 0) {
-                        System.out.println("CommandLogin [Read]: Got cookie");
+                        System.out.println("IdentFile [Read]: Got cookie");
                         mCookie = tempCookie;
                     } else {
-                        System.out.println("CommandLogin [Read]: Zero length cookie");
+                        System.out.println("IdentFile [Read]: Zero length cookie");
                     }
                 } else {
-                    System.out.println("CommandLogin [Read]: Cookie not found");
+                    System.out.println("IdentFile [Read]: Cookie not found");
                 }
             }
         } catch (Exception e) {

@@ -66,8 +66,8 @@ public class Client implements Runnable {
 
     protected void CreateBufferedIO() throws Exception {
         // Create io buffer objects
-        PrintWriter mOut = new PrintWriter(mMonConnSock.getOutputStream(), true);
-        BufferedReader mIn = new BufferedReader(new InputStreamReader(mMonConnSock.getInputStream()));
+        mOut = new PrintWriter(mMonConnSock.getOutputStream(), true);
+        mIn = new BufferedReader(new InputStreamReader(mMonConnSock.getInputStream()));
     }
 
     protected void DoLogin() throws Exception { 
@@ -88,7 +88,7 @@ public class Client implements Runnable {
 
     protected void InitializeIdentFile() throws Exception {
         // Create ident file object
-        IdentFile mIdentFile = new IdentFile(mIdent);
+        mIdentFile = new IdentFile(mIdent);
 
         // Attempt to read data from the ident file
         if ( !mIdentFile.Read() ) {
