@@ -1,14 +1,25 @@
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class MessageSubsetA extends Message {
     public List<String> mSet;
 
     public MessageSubsetA() {
+    }
 
+    public MessageSubsetA(String[] set) throws Exception {
+        // Initialize the list
+        mSet = new ArrayList<String>();
+
+        // Convert the array to a set
+        Collections.addAll(mSet, set);
     }
 
     public MessageSubsetA(String args) throws Exception {
+        // Initialize the list
+        mSet = new ArrayList<String>();
+
         // Parse the input string 
         String[] vals = args.split(" ");
         if ( vals.length < 1 ) {

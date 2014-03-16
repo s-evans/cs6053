@@ -23,7 +23,7 @@ public class CommandLoginClient extends CommandLogin {
         // Parse thru a message group
         ParserHelper ph = new ParserHelper(mMtp);
         if ( !ph.parseToCommand("HOST_PORT") ) {
-            // May not get the HOST_PORT message if our server is alive so just short circuit
+            // May not get the HOST_PORT message if our server is alive so just short circuit here
             return true;
         }
 

@@ -4,10 +4,9 @@ import java.net.*;
 public class Server implements Runnable {
 
     protected ServerSocket mListeningSock = null;
-    protected int mListeningPort;
     protected Thread mThread;
+    protected int mListeningPort;
     protected String mIdent;
-    protected String mPassword;
 
     public static final int HOST_PORT = 22334; 
    

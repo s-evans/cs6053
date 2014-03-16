@@ -1,5 +1,6 @@
 import java.util.Iterator;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.Collections;
 
@@ -10,7 +11,18 @@ public class MessageSubsetJ extends Message {
 
     }
 
+    public MessageSubsetJ(String[] set) throws Exception {
+        // Initialize the collection
+        mSet = new ArrayList<String>();
+        
+        // Convert the array to a set
+        Collections.addAll(mSet, set);
+    }
+
     public MessageSubsetJ(String args) throws Exception {
+        // Initialize the collection
+        mSet = new ArrayList<String>();
+        
         // Parse the input string 
         String[] vals = args.split(" ");
         if ( vals.length < 1 ) {

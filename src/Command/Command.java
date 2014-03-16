@@ -8,7 +8,5 @@ public abstract class Command {
 
     }
 
-    public boolean Execute() throws Exception {
-		return false;
-    }
+    public abstract boolean Execute() throws Exception; 
 }

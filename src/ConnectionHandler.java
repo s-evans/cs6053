@@ -49,8 +49,9 @@ class ConnectionHandler implements Runnable {
 
             System.out.println("ConnectionHandler(" + mConnNumber + ") [run]: Login succeeded");
 
-            // TODO: Handle a transfer directive/command ? 
-            // TODO: Anything else we want to do ?
+            // TODO: Handle a transfer directive/command 
+            CommandTransferServer cmdXferServer =
+                new CommandTransferServer();
 
             System.out.println("ConnectionHandler(" + mConnNumber + ") [run]: All done. Exiting.");
 

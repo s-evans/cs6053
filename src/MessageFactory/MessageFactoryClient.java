@@ -13,7 +13,5 @@ public class MessageFactoryClient extends MessageFactory {
         mMap.put(new MessageResult().directive(), MessageResult.class);
         mMap.put(new MessagePassCsum().directive(), MessagePassCsum.class);
         mMap.put(new MessageTransfer().directive(), MessageTransfer.class);
-
-        // TODO: Add alive message handling
     }
 }

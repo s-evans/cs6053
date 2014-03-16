@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/MessageFactory" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Command" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Codec" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/ZKP" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
