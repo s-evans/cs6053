@@ -93,6 +93,17 @@ public class Client implements Runnable {
 
             // TODO: execute the verb
 
+            // TODO: Remove the below (just test code)
+
+            // Create a transfer command
+            CommandTransferClient cmdXferClient = new 
+                CommandTransferClient(mtp, "TEST1234", 1, "TEST5678");
+
+            // Execute the transfer command
+            if ( !cmdXferClient.Execute() ) {
+                throw new Exception("Transfer command failed");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

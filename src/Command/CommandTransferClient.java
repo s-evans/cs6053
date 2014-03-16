@@ -2,15 +2,15 @@
 public class CommandTransferClient extends CommandTransfer {
     protected Initiator mInitiator;
 
-    public CommandTransferClient(String args) {
+    public CommandTransferClient(String args) throws Exception {
         super(args);
         throw new Exception("not implemented");
     }
 
     public CommandTransferClient(
-            String recipient, Integer amount, String sender) throws Exception {
+            MessageTextParser mtp, String recipient, Integer amount, String sender) throws Exception {
         // Create parent class
-        super(recipient, amount, sender);
+        super(mtp, recipient, amount, sender);
 
         // Create ZKP initiator helper
         mInitiator = new Initiator();
@@ -40,8 +40,8 @@ public class CommandTransferClient extends CommandTransfer {
         }
 
         // Create a public key message
-        MesssagePublicKey msgPubKey = new 
-            MesssagePublicKey(mInitiator.getV(), mInitiator.getN());
+        MessagePublicKey msgPubKey = new 
+            MessagePublicKey(mInitiator.getV().toString(), mInitiator.getN().toString());
 
         // Send the public key message to the monitor
         mMtp.send(msgPubKey);
@@ -141,7 +141,7 @@ public class CommandTransferClient extends CommandTransfer {
         return true;
     }
 
-    protected boolean InitiateTransfer() {
+    protected boolean InitiateTransfer() throws Exception {
 
         // Create and send a transfer request message
         if ( !TransferRequest() ) {

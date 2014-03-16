@@ -49,9 +49,20 @@ class ConnectionHandler implements Runnable {
 
             System.out.println("ConnectionHandler(" + mConnNumber + ") [run]: Login succeeded");
 
-            // TODO: Handle a transfer directive/command 
+            // Receive a transfer message from the monitor
+            MessageTransfer msgXferReq = (MessageTransfer) mtp.recv();
+
+            // Create a transfer command object
             CommandTransferServer cmdXferServer =
-                new CommandTransferServer();
+                new CommandTransferServer(mtp, 
+                        msgXferReq.mRecipientIdent,
+                        msgXferReq.mPointsRequested,
+                        msgXferReq.mSenderIdent);
+
+            // Execute the command object
+            if ( !cmdXferServer.Execute() ) { 
+                System.out.println("ConnectionHandler(" + mConnNumber + ") [run]: Transfer failed!");
+            }
 
             System.out.println("ConnectionHandler(" + mConnNumber + ") [run]: All done. Exiting.");
 

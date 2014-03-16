@@ -43,14 +43,14 @@ class Sender {
         int maxStep = setSize / 5;
         int lastVal = 0;
         Random rnd = new Random();
-        String[] strAr = new String[setSize]();
+        String[] strAr = new String[setSize];
 
-        mSubsetA = new int[setSize]();
+        mSubsetA = new int[setSize];
 
         // Create a set of increasing numbers as indexes into auth set, the set size of which is no larger than the number of rounds
         for (int i = 0; i < setSize; i++) {
             // Make sure we have enough room for all numbers
-            int modulo = mRounds - (setSize - i) - lastValue;
+            int modulo = mRounds - (setSize - i) - lastVal;
 
             // Keep integer indexes from inflating too quickly 
             modulo = (modulo > maxStep ? maxStep : modulo);
@@ -59,7 +59,7 @@ class Sender {
             int val = lastVal + rnd.nextInt(modulo) + 1;
 
             // Convert to a string and store in our array
-            strAr[i] = val.toString();
+            strAr[i] = Integer.toString(val);
 
             // Record the indexes we're sending for future reference
             mSubsetA[i] = val;
@@ -75,7 +75,7 @@ class Sender {
         int setSize = mRounds / 2;
 
         // Validate that the sizes match
-        if ( setSize != set.size() ) {
+        if ( setSize != set.length ) {
             System.out.println("Subset K set size validation failed!");
             return false;
         }
@@ -108,7 +108,7 @@ class Sender {
         int setSize = mRounds / 2;
 
         // Validate that the sizes match
-        if ( setSize != set.size() ) {
+        if ( setSize != set.length ) {
             System.out.println("Subset J set size validation failed!");
             return false;
         }

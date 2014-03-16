@@ -1,32 +1,27 @@
 
-public class CommandTransferServer extends Command {
+public class CommandTransferServer extends CommandTransfer {
     protected Sender mSender;
 
-    public CommandTransferServer(String args) {
+    public CommandTransferServer(String args) throws Exception {
         super(args);
         throw new Exception("not implemented");
     }
 
     public CommandTransferServer(
-            String recipient, Integer amount, String sender) {
+            MessageTextParser mtp, String recipient, Integer amount, String sender) throws Exception {
         // Create parent class
-        super(recipient, amount, sender);
+        super(mtp, recipient, amount, sender);
 
         // Create ZKP sender helper
         mSender = new Sender(64);
     }
 
     protected boolean Transfer() throws Exception {
-        // Receive a transfer message from the monitor
-        MessageTransfer msgXferReq = (MessageTransfer) mMtp.recv();
-
         // Validate the sender and receiver user names make sense
         if ( !ShouldWeConsiderThisTransfer(
-                    msgXferReq.mRecipientIdent,
-                    msgXferReq.mPointsRequested,
-                    msgXferReq.mSenderIdent ) ) {
+                    mRecipientIdent, mAmount, mSenderIdent) ) {
             throw new Exception("Not even considering transferring " 
-                    + amount + " from " + senderName + " to " + recipientName);
+                    + mAmount + " from " + mSenderIdent + " to " + mRecipientIdent);
         }
 
         return true;
@@ -103,7 +98,7 @@ public class CommandTransferServer extends Command {
         }
 
         // Create a SUBSET_A command message
-        MessageSubsetA msgSubA = new MessageSubA(mSender.getSubsetA());
+        MessageSubsetA msgSubA = new MessageSubsetA(mSender.getSubsetA());
 
         // Send the SUBSET_A command message
         mMtp.send(msgSubA);
@@ -124,7 +119,7 @@ public class CommandTransferServer extends Command {
         MessageSubsetK msgSubK = new MessageSubsetK(msgResult.mResult);
 
         // Evaluate the SUBSET_K result message
-        if ( !mSender.checkSubsetK(msgSubK.mSet) ) {
+        if ( !mSender.checkSubsetK(msgSubK.mSet.toArray(new String[msgSubK.mSet.size()])) ) {
             throw new Exception("SUBSET_K validation failed!");
         }
 
@@ -144,7 +139,7 @@ public class CommandTransferServer extends Command {
         MessageSubsetJ msgSubJ = new MessageSubsetJ(msgResult.mResult);
 
         // Evaluate the SUBSET_J result message
-        if ( !mSender.checkSubsetJ(msgSubJ.mSet) ) {
+        if ( !mSender.checkSubsetJ(msgSubJ.mSet.toArray(new String[msgSubJ.mSet.size()])) ) {
             throw new Exception("SUBSET_J validation failed!");
         }
 
@@ -173,7 +168,7 @@ public class CommandTransferServer extends Command {
         return true;
     }
 
-    protected boolean EvaluateTransfer(String nextMsg) throws Exception {
+    protected boolean EvaluateTransfer() throws Exception {
 
         // Handle the transfer command
         if ( !Transfer() ) {
@@ -244,7 +239,9 @@ public class CommandTransferServer extends Command {
     protected static boolean IsUserInOurGroup(String username) {
         String user = username.toUpperCase();
 
-        return (user == "ALIVE" || user == "IDENT" || user == "PASSWORD");
+        // TODO: Restore
+        // return (user == "ALIVE" || user == "IDENT" || user == "PASSWORD");
+        return (user == "NEWTRY5" || user == "TEST1324" || user == "TEST5678");
     }
 
     public boolean Execute() throws Exception {
