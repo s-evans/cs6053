@@ -31,9 +31,6 @@ public class MessageTextParser {
         Message msg;
         String line;
 
-        // TODO: Think about adding a timeout to avoid waiting forever
-        // TODO: Think about setting an upper bound to avoid running out of memory
-
         // Read the next line. 
         line = in.readLine();
 

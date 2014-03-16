@@ -65,27 +65,10 @@ class ConnectionHandler implements Runnable {
         CommandQuit cmdQuit = new CommandQuit(mMtp);
         mMessageHandler.addMessageHandler("QUIT", cmdQuit);
 
-        // TODO: Add transfer message handling 
-
-        
-        // TODO: Remove the below
-
-        // Receive a transfer message from the monitor
-        MessageTransfer msgXferReq = (MessageTransfer) mMtp.recv();
-
-        // Create a transfer command object
-        CommandTransferServer cmdXferServer =
-            new CommandTransferServer(mMtp, 
-                    msgXferReq.mRecipientIdent,
-                    msgXferReq.mPointsRequested,
-                    msgXferReq.mSenderIdent);
-
-        // Execute the command object
-        if ( !cmdXferServer.Execute() ) { 
-            System.out.println("ConnectionHandler(" + mConnNumber + ") [run]: Transfer failed!");
-        }
+        // Add transfer message handling 
+        mMessageHandler.addCommandHandler("TRANSFER", CommandTransferServer.class);
     }
-
+    
     protected void RunMessageHandler() throws Exception {
         // Create a message handler 
         mMessageHandler = new MessageHandler(mMtp);

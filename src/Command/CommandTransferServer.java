@@ -8,6 +8,15 @@ public class CommandTransferServer extends CommandTransfer {
     }
 
     public CommandTransferServer(
+            MessageTextParser mtp, MessageTransfer msg) throws Exception {
+        // Create parent class using the message
+        super(mtp, msg.mRecipientIdent, msg.mPointsRequested, msg.mSenderIdent);
+
+        // Create ZKP sender helper
+        mSender = new Sender(64);
+    }
+
+    public CommandTransferServer(
             MessageTextParser mtp, String recipient, Integer amount, String sender) throws Exception {
         // Create parent class
         super(mtp, recipient, amount, sender);

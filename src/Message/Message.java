@@ -1,4 +1,7 @@
 public abstract class Message {
+    static public final String sArgDelimit = " ";
+    static public final String sDirDelimit = ":";
+
     public Message(String args) {
 
     }
@@ -6,9 +9,6 @@ public abstract class Message {
     public Message() {
 
     }
-
-    static public final String sArgDelimit = " ";
-    static public final String sDirDelimit = ":";
 
     // Returns the directive associated with the message
     public abstract String directive();

@@ -105,8 +105,6 @@ public class Client implements Runnable {
     }
 
     protected void PopulateMessageHandler() throws Exception {
-        // TODO: Add any other crazy crap we might need to handle here 
-        
         // Add HOST_PORT directive handling
         CommandHostPort cmdHostPort = new CommandHostPort(
                 mMtp, mMonConnSock.getLocalAddress().getHostName(), mLocalPort);
@@ -115,6 +113,7 @@ public class Client implements Runnable {
 
     protected void PopulateCommandList() throws Exception {
         // TODO: Add all verbs here
+
         // TODO: Remove the below (just test code)
 
         CommandTransferClient cmdXferClient = new 
