@@ -77,6 +77,8 @@ public class Client implements Runnable {
             if ( !identFile.Read() ) {
                 throw new Exception("Failed to read ident file");
             }
+            
+            System.out.println("Client [run]: Attempting log in");
 
             // Create the login command object 
             CommandLoginClient cmdLogin = new CommandLoginClient(

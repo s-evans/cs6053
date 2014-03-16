@@ -64,6 +64,8 @@ public class CommandLoginClient extends CommandLogin {
         if ( !Alive() ) { 
             throw new Exception("Failed to handle alive");
         }
+        
+        // TODO: This may need to move
 
         // Handle the host port directive
         if ( !HostPort() ) { 
