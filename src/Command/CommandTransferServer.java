@@ -213,7 +213,7 @@ public class CommandTransferServer extends CommandTransfer {
         return true;
     }
 
-    private static boolean ShouldWeConsiderThisTransfer(String recipientName, Integer amount, String senderName) {
+    protected static boolean ShouldWeConsiderThisTransfer(String recipientName, Integer amount, String senderName) {
         boolean senderInOurGroup = IsUserInOurGroup(senderName);
         boolean recipientInOurGroup = IsUserInOurGroup(recipientName);
 

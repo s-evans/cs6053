@@ -33,36 +33,6 @@ public class CommandLoginServer extends CommandLogin {
         return true;
     }
 
-    protected boolean Quit() throws Exception {
-        // Parse thru a message group
-        ParserHelper ph = new ParserHelper(mMtp);
-        if ( !ph.parseToCommand("QUIT") ) {
-            // May not get the QUIT message if our server is alive so just short circuit here
-            return true;
-        }
-
-        // Wait for a waiting message
-        if ( !ph.parseToWait() ) { 
-            throw new Exception("Failed to find end of message group");
-        }
-
-        // Create a QUIT message
-        MessageQuit msgQuit = new MessageQuit();
-
-        // Send the quit message
-        mMtp.send(msgQuit);
-
-        // Get a result message (COMMAND_ERROR also possible)
-        MessageResult msgResult = (MessageResult) mMtp.recv();
-
-        // Validate the result message command type
-        if ( !msgResult.mCommand.equals(msgQuit.directive()) ) {
-            throw new Exception("Result type validation failed");
-        }
-        
-        return true;
-    }
-
     public boolean Execute() throws Exception {
         // Receive the banner
         if ( !Banner() ) {
@@ -82,13 +52,6 @@ public class CommandLoginServer extends CommandLogin {
         // Handle the alive message
         if ( !Alive() ) { 
             throw new Exception("Failed to handle alive");
-        }
-
-        // TODO: This might need to move
-
-        // Handle the quit message
-        if ( !Quit() ) {
-            throw new Exception("Failed to handle quit message");
         }
 
         return true;

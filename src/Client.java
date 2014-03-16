@@ -3,13 +3,18 @@ import java.net.*;
 
 public class Client implements Runnable {
 
-    Thread mThread;
-    Socket mMonConnSock = null;
-
+    protected Thread mThread;
+    protected Socket mMonConnSock = null;
     protected String mMonitorHostName;
     protected int mLocalPort;
     protected int mMonitorPort;
     protected String mIdent;
+    protected PrintWriter mOut;
+    protected BufferedReader mIn;
+    protected MessageFactory mMsgFactory;
+    protected MessageTextParser mMtp;
+    protected IdentFile mIdentFile;
+    protected MessageHandler mMessageHandler;
 
     public static final int DEFAULT_HOST_PORT = 22334; 
 
@@ -17,7 +22,7 @@ public class Client implements Runnable {
     public static void main(String[] args) throws Exception {
 
         // TODO: Add a verb to the CLI to allow the client to do customizeable things for each run of the process 
-   
+
         // Validate input
         if (args.length < 3 || args.length > 4) {
             System.out.println("Usage: java Client <monitor-host-name> <monitor-port> <mIdent> [host-port]");
@@ -45,66 +50,106 @@ public class Client implements Runnable {
     }
 
     // Starts the thread running
-    public void start() {
+    protected void start() {
         if (mThread == null) {
             mThread = new Thread(this);
             mThread.start();
         }
     }
 
+    protected void CreateConnection() throws Exception {
+        // Create socket to monitor
+        System.out.println("Active Client: trying monitor: " + mMonitorHostName + " port: " + mMonitorPort + "...");
+        mMonConnSock = new Socket(mMonitorHostName, mMonitorPort);
+        System.out.println("completed.");
+    }
+
+    protected void CreateBufferedIO() throws Exception {
+        // Create io buffer objects
+        PrintWriter mOut = new PrintWriter(mMonConnSock.getOutputStream(), true);
+        BufferedReader mIn = new BufferedReader(new InputStreamReader(mMonConnSock.getInputStream()));
+    }
+
+    protected void DoLogin() throws Exception { 
+        System.out.println("Client [run]: Attempting log in");
+
+        // Create the login command object 
+        CommandLoginClient cmdLogin = new CommandLoginClient(
+                mMtp, mIdent, mIdentFile.mCookie);
+
+        // Execute the login command 
+        if ( !cmdLogin.Execute() ) {
+            throw new Exception("Failed to log in");
+        }
+
+        // at this point, we think we're legit
+        System.out.println("Client [run]: Login succeeded");
+    }
+
+    protected void InitializeIdentFile() throws Exception {
+        // Create ident file object
+        IdentFile mIdentFile = new IdentFile(mIdent);
+
+        // Attempt to read data from the ident file
+        if ( !mIdentFile.Read() ) {
+            throw new Exception("Failed to read ident file");
+        }
+    }
+
+    protected void CreateStreamParser() throws Exception {
+        // Create message factory
+        mMsgFactory = new MessageFactoryClient();
+
+        // Create MessageTextParser object
+        mMtp = new MessageTextParser(mIn, mOut, mMsgFactory);
+    }
+
+    protected void PopulateMessageHandler() throws Exception {
+        // TODO: Add any other crazy crap we might need to handle here 
+        
+        // Add HOST_PORT directive handling
+        CommandHostPort cmdHostPort = new CommandHostPort(
+                mMtp, mMonConnSock.getLocalAddress().getHostName(), mLocalPort);
+        mMessageHandler.addMessageHandler("HOST_PORT", cmdHostPort);
+    }
+
+    protected void PopulateCommandList() throws Exception {
+        // TODO: Add all verbs here
+        // TODO: Remove the below (just test code)
+
+        CommandTransferClient cmdXferClient = new 
+            CommandTransferClient(mMtp, "TEST1234", 1, "TEST5678");
+        mMessageHandler.addCommand(cmdXferClient);
+    }
+
+    protected void RunMessageHandler() throws Exception {
+        // Create a message handler
+        mMessageHandler = new MessageHandler(mMtp);
+        
+        // Add verbs to the message handler
+        PopulateCommandList();
+
+        // Add message handler routines
+        PopulateMessageHandler();
+
+        // Run the message handler
+        mMessageHandler.run();
+    }
+
     // Thread function
     public void run() {
         try {
-            // Create socket to monitor
-            System.out.println("Active Client: trying monitor: " + mMonitorHostName + " port: " + mMonitorPort + "...");
-            mMonConnSock = new Socket(mMonitorHostName, mMonitorPort);
-            System.out.println("completed.");
+            InitializeIdentFile();
 
-            // Create io buffer objects
-            PrintWriter out = new PrintWriter(mMonConnSock.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(mMonConnSock.getInputStream()));
+            CreateConnection();
 
-            // Create message factory
-            MessageFactoryClient msgFactory = new MessageFactoryClient();
+            CreateBufferedIO();
 
-            // Create MessageTextParser object
-            MessageTextParser mtp = new MessageTextParser(in, out, msgFactory);
+            CreateStreamParser();
 
-            // Create ident file object
-            IdentFile identFile = new IdentFile(mIdent);
+            DoLogin();
 
-            // Attempt to read data from the ident file
-            if ( !identFile.Read() ) {
-                throw new Exception("Failed to read ident file");
-            }
-            
-            System.out.println("Client [run]: Attempting log in");
-
-            // Create the login command object 
-            CommandLoginClient cmdLogin = new CommandLoginClient(
-                    mtp, mIdent, identFile.mCookie,
-                    mMonConnSock.getLocalAddress().getHostName(), mLocalPort);
-            
-            // Execute the login command 
-            if ( !cmdLogin.Execute() ) {
-                throw new Exception("Failed to log in");
-            }
-
-            // at this point, we think we're legit
-            System.out.println("Client [run]: Login succeeded");
-
-            // TODO: execute the verb
-
-            // TODO: Remove the below (just test code)
-
-            // Create a transfer command
-            CommandTransferClient cmdXferClient = new 
-                CommandTransferClient(mtp, "TEST1234", 1, "TEST5678");
-
-            // Execute the transfer command
-            if ( !cmdXferClient.Execute() ) {
-                throw new Exception("Transfer command failed");
-            }
+            RunMessageHandler();
 
         } catch (Exception e) {
             e.printStackTrace();
