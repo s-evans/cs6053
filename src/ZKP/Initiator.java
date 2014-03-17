@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 class Initiator {
-    protected BigInteger mSqr = new BigInteger("2", 10);
+    protected BigInteger mBigIntTwo = new BigInteger("2", 10); // = 2
     protected BigInteger mV;
     protected BigInteger mS;
     protected BigInteger mN;
@@ -65,7 +65,7 @@ class Initiator {
             mR[i] = new BigInteger(256, rnd);
 
             // Do some math and populate the collection class
-            set.add(mR[i].modPow(mSqr, mN).toString());
+            set.add(mR[i].modPow(mBigIntTwo, mN).toString());
         }
 
         // Return the collection class
@@ -91,7 +91,7 @@ class Initiator {
 
         // Populate the collection class 
         for (int i = 0; i < mSubsetASize; i++) {
-            set.add(mR[mA[i]].multiply(mS).modPow(mSqr, mN).toString());
+            set.add(mR[mA[i]].multiply(mS).mod(mN).toString());
         }
 
         // Return the collection class
@@ -102,21 +102,19 @@ class Initiator {
         // Create a new collection class
         List<String> set = new ArrayList<String>();
 
-        for (int i = 0; i < mRounds; i++) {
-            int j = 0;
-
-            for (; j < mSubsetASize; j++) {
-                if (mA[j] == i) {
-                    break;
-                }
-            }
-
-            if (j != mSubsetASize) {
+        // Iterate over the number of rounds
+        int j = 0;
+        for ( int i = 0 ; i < mRounds ; i++ ) {
+            // Check if our current round index doesn't equal our current pointer into the Subset A array
+            if ( j >= mSubsetASize || mA[j] != i ) { 
+                // If not in Subset A...
+                // Do some math to the auth set value not pointed to in Subset A and populate the Subset J
+                set.add(mR[i].mod(mN).toString());
                 continue;
             }
 
-            // Do some math and populate the collection
-            set.add(mR[i].modPow(mSqr, mN).toString());
+            // If we've found an index in Subset A, skip past it
+            j++;
         }
 
         return set.toArray(new String[set.size()]);

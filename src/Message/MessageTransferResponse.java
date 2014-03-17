@@ -6,14 +6,6 @@ public class MessageTransferResponse extends Message {
 
     public Response mResponse;
 
-    public String getResponse() {
-        if ( mResponse == Response.ACCEPT ) {
-            return "ACCEPT";
-        } else {
-            return "DECLINE";
-        }
-    }
-
     public MessageTransferResponse() {
         mResponse = Response.DECLINE;
     }
@@ -23,6 +15,9 @@ public class MessageTransferResponse extends Message {
     }
 
     public MessageTransferResponse(String args) throws Exception {
+        // Clean up input 
+        args = args.trim();
+
         // Parse the input string 
         String[] vals = args.split(" ");
         if ( vals.length != 1 ) {
@@ -30,7 +25,7 @@ public class MessageTransferResponse extends Message {
         }
 
         // Get value
-        if ( vals[0].equals("ACCEPT") ) {
+        if ( vals[0].equals("ACCEPTED") ) {
             mResponse = Response.ACCEPT; 
         } else if ( vals[0].equals("DECLINE") ) { 
             mResponse = Response.DECLINE;
@@ -42,6 +37,14 @@ public class MessageTransferResponse extends Message {
 
     public String directive() {
         return "TRANSFER_RESPONSE";
+    }
+
+    protected String getResponse() {
+        if ( mResponse == Response.ACCEPT ) {
+            return "ACCEPT";
+        } else {
+            return "DECLINE";
+        }
     }
 
     public String serialize() {

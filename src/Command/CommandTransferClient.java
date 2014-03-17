@@ -24,8 +24,6 @@ public class CommandTransferClient extends CommandTransfer {
         // Send the transfer request message
         mMtp.send(msgXferReq);
 
-        // TODO: May get a COMMAND_ERROR here
-
         return true;
     }
 
@@ -143,6 +141,28 @@ public class CommandTransferClient extends CommandTransfer {
         return true;
     }
 
+    protected boolean TransferResponse() throws Exception {
+        // Should eventually get a result message from the monitor
+        MessageResult msgResult = (MessageResult) mMtp.recv();
+
+        // Validate that the result message references the ROUNDS message
+        if ( !msgResult.mCommand.equals("TRANSFER_RESPONSE") ) {
+            throw new Exception("Unexpected result message type; exp = " + "TRANSFER_RESPONSE" + "; act = " + msgResult.mCommand + ";");
+        }
+
+        // Create a transfer response message from the result message
+        MessageTransferResponse msgXferResp = new MessageTransferResponse(msgResult.mResult);
+
+        // Validate the transfer response
+        if ( msgXferResp.mResponse == MessageTransferResponse.Response.ACCEPT ) {
+            System.out.println("Transfer was accepted");
+        } else {
+            System.out.println("Transfer was declined");
+        }
+
+        return true;
+    }
+
     protected boolean InitiateTransfer() throws Exception {
 
         // Create and send a transfer request message
@@ -168,6 +188,11 @@ public class CommandTransferClient extends CommandTransfer {
         // Do third set operation
         if ( !SubsetJ() ) {
             throw new Exception("Failed to do third set operation");
+        }
+
+        // Check out how we did
+        if ( !TransferResponse() ) {
+            throw new Exception("Failed to handle transfer response");
         }
 
         return true;

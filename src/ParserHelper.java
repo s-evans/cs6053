@@ -46,8 +46,6 @@ public class ParserHelper {
                 // Ignore.
             }
 
-            // TODO: Handle COMMAND_ERROR messages here? 
-
             // Attempt to get a require message
             try {
                 msgRequire = (MessageRequire) msg;

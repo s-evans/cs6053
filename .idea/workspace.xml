@@ -2,20 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5084d585-fefc-47e3-9f76-3430d5b72f1b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Client.java" afterPath="$PROJECT_DIR$/src/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Command/CommandQuit.java" afterPath="$PROJECT_DIR$/src/Command/CommandQuit.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Command/CommandTransferClient.java" afterPath="$PROJECT_DIR$/src/Command/CommandTransferClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Command/CommandTransferServer.java" afterPath="$PROJECT_DIR$/src/Command/CommandTransferServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessageAuthorizeSet.java" afterPath="$PROJECT_DIR$/src/Message/MessageAuthorizeSet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessageFactory/MessageFactoryClient.java" afterPath="$PROJECT_DIR$/src/MessageFactory/MessageFactoryClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessageHandler/MessageHandler.java" afterPath="$PROJECT_DIR$/src/MessageHandler/MessageHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessagePublicKey.java" afterPath="$PROJECT_DIR$/src/Message/MessagePublicKey.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessageSubsetA.java" afterPath="$PROJECT_DIR$/src/Message/MessageSubsetA.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessageSubsetJ.java" afterPath="$PROJECT_DIR$/src/Message/MessageSubsetJ.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessageSubsetK.java" afterPath="$PROJECT_DIR$/src/Message/MessageSubsetK.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessageTransfer.java" afterPath="$PROJECT_DIR$/src/Message/MessageTransfer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ParserHelper.java" afterPath="$PROJECT_DIR$/src/ParserHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ZKP/Initiator.java" afterPath="$PROJECT_DIR$/src/ZKP/Initiator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessageTransferResponse.java" afterPath="$PROJECT_DIR$/src/Message/MessageTransferResponse.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ZKP/Sender.java" afterPath="$PROJECT_DIR$/src/ZKP/Sender.java" />
     </list>
     <ignored path="cs6053-project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,8 +72,11 @@
       <file leaf-file-name="Sender.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ZKP/Sender.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="107" column="0" selection-start="3154" selection-end="3154" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2448">
-              <folding />
+            <state line="120" column="17" selection-start="3758" selection-end="3758" vertical-scroll-proportion="0.0" vertical-offset="1956" max-vertical-offset="2700">
+              <folding>
+                <element signature="e#801#802#0" expanded="true" />
+                <element signature="e#831#832#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -106,10 +99,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CommandTransferClient.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="CommandTransferClient.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Command/CommandTransferClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="77" selection-start="715" selection-end="715" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="3330">
+            <state line="157" column="38" selection-start="5822" selection-end="5822" vertical-scroll-proportion="0.2054054" vertical-offset="2712" max-vertical-offset="3780">
               <folding />
             </state>
           </provider>
@@ -144,10 +137,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConnectionHandler.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ConnectionHandler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ConnectionHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="32" selection-start="2063" selection-end="2063" vertical-scroll-proportion="0.33513513" vertical-offset="876" max-vertical-offset="2124">
+            <state line="60" column="32" selection-start="2063" selection-end="2063" vertical-scroll-proportion="0.0" vertical-offset="876" max-vertical-offset="2124">
               <folding />
             </state>
           </provider>
@@ -204,9 +197,7 @@
         <option value="$PROJECT_DIR$/src/MessageFactory/MessageFactory.java" />
         <option value="$PROJECT_DIR$/src/Codec/CodecKarn.java" />
         <option value="$PROJECT_DIR$/src/ZKP/Initiator.java" />
-        <option value="$PROJECT_DIR$/src/ZKP/Sender.java" />
         <option value="$PROJECT_DIR$/src/Command/CommandTransfer.java" />
-        <option value="$PROJECT_DIR$/src/Command/CommandTransferClient.java" />
         <option value="$PROJECT_DIR$/src/Command/CommandLogin.java" />
         <option value="$PROJECT_DIR$/src/Command/CommandLoginServer.java" />
         <option value="$PROJECT_DIR$/src/Command/CommandHostPort.java" />
@@ -214,6 +205,8 @@
         <option value="$PROJECT_DIR$/src/Command/CommandTransferServer.java" />
         <option value="$PROJECT_DIR$/src/MessageHandler/MessageHandler.java" />
         <option value="$PROJECT_DIR$/src/ConnectionHandler.java" />
+        <option value="$PROJECT_DIR$/src/ZKP/Sender.java" />
+        <option value="$PROJECT_DIR$/src/Command/CommandTransferClient.java" />
       </list>
     </option>
   </component>
@@ -803,23 +796,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ZKP/Sender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="0" selection-start="3154" selection-end="3154" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2448">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Command/CommandTransfer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="8" selection-start="274" selection-end="274" vertical-scroll-proportion="0.0" vertical-offset="36" max-vertical-offset="486">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Command/CommandTransferClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="77" selection-start="715" selection-end="715" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="3330">
           <folding />
         </state>
       </provider>
@@ -877,7 +856,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ConnectionHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="32" selection-start="2063" selection-end="2063" vertical-scroll-proportion="0.33513513" vertical-offset="876" max-vertical-offset="2124">
+        <state line="60" column="32" selection-start="2063" selection-end="2063" vertical-scroll-proportion="0.0" vertical-offset="876" max-vertical-offset="2124">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ZKP/Sender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="120" column="17" selection-start="3758" selection-end="3758" vertical-scroll-proportion="0.0" vertical-offset="1956" max-vertical-offset="2700">
+          <folding>
+            <element signature="e#801#802#0" expanded="true" />
+            <element signature="e#831#832#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Command/CommandTransferClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="157" column="38" selection-start="5822" selection-end="5822" vertical-scroll-proportion="0.2054054" vertical-offset="2712" max-vertical-offset="3780">
           <folding />
         </state>
       </provider>

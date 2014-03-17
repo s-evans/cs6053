@@ -8,6 +8,7 @@ import java.util.*;
 import java.math.*;
 
 class Sender {
+    protected BigInteger mBigIntTwo = new BigInteger("2", 10); // = 2
     public BigInteger mV;
     public BigInteger mN;
     public int mRounds;
@@ -28,7 +29,12 @@ class Sender {
         return mRounds;
     }
 
-    public void setAuthorizeSet(String[] set) {
+    public void setAuthorizeSet(String[] set) throws Exception {
+        // Validate the set size
+        if ( set.length != mRounds ) {
+            throw new Exception("Set size unexpected; exp = " + mRounds + "; act = " + set.length + ";");
+        }
+
         // Create a new array for these values
         mRR = new BigInteger[mRounds];
 
@@ -81,14 +87,11 @@ class Sender {
         }
 
         for (int i = 0; i < setSize; i++) {
-            // Use the current set index to get the index into the Auth Set
-            int j = mSubsetA[i];
-
             // Do the math ourselves
-            BigInteger a1 = mRR[j].multiply(mV).mod(mN);
+            BigInteger a1 = mRR[mSubsetA[i]].multiply(mV).mod(mN);
 
             // Get the value given to us
-            BigInteger a2 = new BigInteger(set[i]);
+            BigInteger a2 = new BigInteger(set[i]).modPow(mBigIntTwo, mN);
 
             // Compare 
             if (!a1.equals(a2)) {
@@ -100,12 +103,9 @@ class Sender {
         return true;
     }
 
-    // TODO: Validate that the initiator is doing the right things as well....
-    // TODO: Validate that the sender is doing the right things
-    // TODO: Checkout the assignment and hints
-
     public boolean checkSubsetJ(String[] set) {
-        int setSize = mRounds / 2;
+        int subsetASize = mSubsetA.length;
+        int setSize = mRounds - subsetASize;
 
         // Validate that the sizes match
         if ( setSize != set.length ) {
@@ -113,15 +113,27 @@ class Sender {
             return false;
         }
 
-        for (int i = 1; i < mRounds; i += 2) {
-            BigInteger a1 = mRR[i];
-            BigInteger a2 = new BigInteger(set[i]);
-            
-            // Compare values
-            if (!a1.equals(a2)) {
-                mCheck = false;
-                return false;
+        int j = 0; // Index into subset a
+        int k = 0; // Index into incoming subset j
+        for (int i = 0; i < mRounds; i++) {
+            // Check if our current round index doesn't equal our current pointer into the Subset A array
+            if ( j >= subsetASize || mSubsetA[j] != i ) {
+                // If not in Subset A...
+                BigInteger a1 = mRR[i]; 
+                BigInteger a2 = new BigInteger(set[k]).modPow(mBigIntTwo, mN);
+                
+                // Compare values
+                if ( !a1.equals(a2) ) {
+                    mCheck = false;
+                    return false;
+                }
+
+                k++;
+                continue;
             }
+
+            // If we've found an index in Subset A, skip past it
+            j++;
         }
 
         return true;
