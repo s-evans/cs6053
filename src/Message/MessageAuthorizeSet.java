@@ -11,6 +11,9 @@ public class MessageAuthorizeSet extends Message {
     }
 
     public MessageAuthorizeSet(String args) throws Exception {
+        // Clean up input 
+        args = args.trim();
+
         // Initialize the collection
         mSet = new ArrayList<String>(); 
 

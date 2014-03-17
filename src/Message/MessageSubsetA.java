@@ -17,6 +17,9 @@ public class MessageSubsetA extends Message {
     }
 
     public MessageSubsetA(String args) throws Exception {
+        // Clean up input 
+        args = args.trim();
+
         // Initialize the list
         mSet = new ArrayList<String>();
 

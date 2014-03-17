@@ -117,7 +117,7 @@ public class Client implements Runnable {
         // TODO: Remove the below (just test code)
 
         CommandTransferClient cmdXferClient = new 
-            CommandTransferClient(mMtp, "TEST1234", 1, "TEST5678");
+            CommandTransferClient(mMtp, "brule", 1, "dangus");
         mMessageHandler.addCommand(cmdXferClient);
     }
 

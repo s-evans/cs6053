@@ -3,9 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="5084d585-fefc-47e3-9f76-3430d5b72f1b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Client.java" afterPath="$PROJECT_DIR$/src/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Command/CommandLoginClient.java" afterPath="$PROJECT_DIR$/src/Command/CommandLoginClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Command/CommandLoginServer.java" afterPath="$PROJECT_DIR$/src/Command/CommandLoginServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/IdentFile.java" afterPath="$PROJECT_DIR$/src/IdentFile.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Command/CommandQuit.java" afterPath="$PROJECT_DIR$/src/Command/CommandQuit.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Command/CommandTransferClient.java" afterPath="$PROJECT_DIR$/src/Command/CommandTransferClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Command/CommandTransferServer.java" afterPath="$PROJECT_DIR$/src/Command/CommandTransferServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessageAuthorizeSet.java" afterPath="$PROJECT_DIR$/src/Message/MessageAuthorizeSet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessageFactory/MessageFactoryClient.java" afterPath="$PROJECT_DIR$/src/MessageFactory/MessageFactoryClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MessageHandler/MessageHandler.java" afterPath="$PROJECT_DIR$/src/MessageHandler/MessageHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessagePublicKey.java" afterPath="$PROJECT_DIR$/src/Message/MessagePublicKey.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessageSubsetA.java" afterPath="$PROJECT_DIR$/src/Message/MessageSubsetA.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessageSubsetJ.java" afterPath="$PROJECT_DIR$/src/Message/MessageSubsetJ.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessageSubsetK.java" afterPath="$PROJECT_DIR$/src/Message/MessageSubsetK.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Message/MessageTransfer.java" afterPath="$PROJECT_DIR$/src/Message/MessageTransfer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ParserHelper.java" afterPath="$PROJECT_DIR$/src/ParserHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="cs6053-project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -81,7 +91,7 @@
       <file leaf-file-name="CommandTransferServer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Command/CommandTransferServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="18" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0" vertical-offset="174" max-vertical-offset="4770">
+            <state line="21" column="18" selection-start="681" selection-end="681" vertical-scroll-proportion="0.0" vertical-offset="264" max-vertical-offset="4860">
               <folding />
             </state>
           </provider>
@@ -99,7 +109,7 @@
       <file leaf-file-name="CommandTransferClient.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Command/CommandTransferClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="77" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3204">
+            <state line="20" column="77" selection-start="715" selection-end="715" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="3330">
               <folding />
             </state>
           </provider>
@@ -126,7 +136,7 @@
       <file leaf-file-name="MessageHandler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MessageHandler/MessageHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="25" selection-start="3264" selection-end="3264" vertical-scroll-proportion="0.0" vertical-offset="1776" max-vertical-offset="2754">
+            <state line="111" column="25" selection-start="3420" selection-end="3420" vertical-scroll-proportion="0.0" vertical-offset="1884" max-vertical-offset="3258">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -137,7 +147,7 @@
       <file leaf-file-name="ConnectionHandler.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ConnectionHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="64" selection-start="1953" selection-end="1953" vertical-scroll-proportion="0.2054054" vertical-offset="876" max-vertical-offset="2124">
+            <state line="60" column="32" selection-start="2063" selection-end="2063" vertical-scroll-proportion="0.33513513" vertical-offset="876" max-vertical-offset="2124">
               <folding />
             </state>
           </provider>
@@ -509,7 +519,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -527,7 +537,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36136365" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36136365" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -809,7 +819,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Command/CommandTransferClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="77" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3204">
+        <state line="20" column="77" selection-start="715" selection-end="715" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="3330">
           <folding />
         </state>
       </provider>
@@ -851,14 +861,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Command/CommandTransferServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="18" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0" vertical-offset="174" max-vertical-offset="4770">
+        <state line="21" column="18" selection-start="681" selection-end="681" vertical-scroll-proportion="0.0" vertical-offset="264" max-vertical-offset="4860">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MessageHandler/MessageHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="25" selection-start="3264" selection-end="3264" vertical-scroll-proportion="0.0" vertical-offset="1776" max-vertical-offset="2754">
+        <state line="111" column="25" selection-start="3420" selection-end="3420" vertical-scroll-proportion="0.0" vertical-offset="1884" max-vertical-offset="3258">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -867,7 +877,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ConnectionHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="64" selection-start="1953" selection-end="1953" vertical-scroll-proportion="0.2054054" vertical-offset="876" max-vertical-offset="2124">
+        <state line="60" column="32" selection-start="2063" selection-end="2063" vertical-scroll-proportion="0.33513513" vertical-offset="876" max-vertical-offset="2124">
           <folding />
         </state>
       </provider>

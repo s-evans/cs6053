@@ -34,7 +34,7 @@ public class MessageTransfer extends Message {
     }
 
     public String directive() {
-        return "TRANSFER_REQUEST";
+        return "TRANSFER";
     }
 
     public String serialize() {

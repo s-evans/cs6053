@@ -26,7 +26,7 @@ public class CommandQuit extends Command {
             throw new Exception("Result type validation failed");
         }
         
-        return true;
+        return false;
     }
 
     public boolean Execute() throws Exception {

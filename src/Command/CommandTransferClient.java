@@ -24,6 +24,8 @@ public class CommandTransferClient extends CommandTransfer {
         // Send the transfer request message
         mMtp.send(msgXferReq);
 
+        // TODO: May get a COMMAND_ERROR here
+
         return true;
     }
 
@@ -55,7 +57,7 @@ public class CommandTransferClient extends CommandTransfer {
         }
 
         // Save off the rounds value returned
-        mInitiator.setRounds(Integer.parseInt(msgResult.mResult)); 
+        mInitiator.setRounds(Integer.parseInt(msgResult.mResult.trim())); 
         
         return true;
     }
@@ -146,6 +148,11 @@ public class CommandTransferClient extends CommandTransfer {
         // Create and send a transfer request message
         if ( !TransferRequest() ) {
             throw new Exception("Failed to send a transfer request message");
+        }
+
+        // Do public key junk
+        if ( !PublicKey() ) {
+            throw new Exception("Failed to do public key messaging");
         }
 
         // Do initial set operation

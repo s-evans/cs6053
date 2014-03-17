@@ -11,7 +11,5 @@ public class MessageFactoryClient extends MessageFactory {
         mMap.put(new MessageCommandError().directive(), MessageCommandError.class);
         mMap.put(new MessageComment().directive(), MessageComment.class);
         mMap.put(new MessageResult().directive(), MessageResult.class);
-        mMap.put(new MessagePassCsum().directive(), MessagePassCsum.class);
-        mMap.put(new MessageTransfer().directive(), MessageTransfer.class);
     }
 }

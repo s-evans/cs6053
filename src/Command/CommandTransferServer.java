@@ -2,6 +2,9 @@
 public class CommandTransferServer extends CommandTransfer {
     protected Sender mSender;
 
+    // For whatever reason, the monitor hates rounds over 20
+    final protected static int sRounds = 20;
+
     public CommandTransferServer(String args) throws Exception {
         super(args);
         throw new Exception("not implemented");
@@ -13,7 +16,7 @@ public class CommandTransferServer extends CommandTransfer {
         super(mtp, msg.mRecipientIdent, msg.mPointsRequested, msg.mSenderIdent);
 
         // Create ZKP sender helper
-        mSender = new Sender(64);
+        mSender = new Sender(sRounds);
     }
 
     public CommandTransferServer(
@@ -22,7 +25,7 @@ public class CommandTransferServer extends CommandTransfer {
         super(mtp, recipient, amount, sender);
 
         // Create ZKP sender helper
-        mSender = new Sender(64);
+        mSender = new Sender(sRounds);
     }
 
     protected boolean Transfer() throws Exception {
@@ -246,11 +249,13 @@ public class CommandTransferServer extends CommandTransfer {
     }
 
     protected static boolean IsUserInOurGroup(String username) {
+        // Conver to upper for easy comparison
         String user = username.toUpperCase();
 
-        // TODO: Restore
-        // return (user == "ALIVE" || user == "IDENT" || user == "PASSWORD");
-        return (user == "NEWTRY5" || user == "TEST1324" || user == "TEST5678");
+        // TODO: Restore for the competition
+        // return (user.equals("ALIVE") || user.equals("IDENT") || user.equals("PASSWORD"));
+        // return (user.equals("NEWTRY5") || user.equals("TEST1324") || user.equals("TEST5678"));
+        return (user.equals("DINGUS") || user.equals("DANGUS") || user.equals("BRULE"));
     }
 
     public boolean Execute() throws Exception {

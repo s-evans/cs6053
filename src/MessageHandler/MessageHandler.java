@@ -8,10 +8,16 @@ public class MessageHandler {
     protected HashMap<String, Class<? extends Command>> mMessageMap;
     protected List<Command> mCommandList;
 
+    enum Status {
+        HANDLED,
+        CONTINUE,
+        STOP
+    }
+
     public MessageHandler(MessageTextParser mtp) {
         mMtp = mtp;
-		mRequireMap = new HashMap<String, Command>();
-		mMessageMap = new HashMap<String, Class<? extends Command>>();
+        mRequireMap = new HashMap<String, Command>();
+        mMessageMap = new HashMap<String, Class<? extends Command>>();
         mCommandList = new ArrayList<Command>();
     }
 
@@ -19,7 +25,7 @@ public class MessageHandler {
     public void addMessageHandler(String directive, Command cmd) {
         mRequireMap.put(directive, cmd);
     }
-    
+
     // Add a free form command to be executed in order following an open WAITING message
     public void addCommand(Command cmd) {
         mCommandList.add(cmd);
@@ -30,7 +36,7 @@ public class MessageHandler {
         mMessageMap.put(directive, cmd);
     }
 
-    protected boolean handleRequire(Message msg) {
+    protected Status handleRequire(Message msg) {
         MessageRequire msgReq; 
 
         try {
@@ -38,7 +44,7 @@ public class MessageHandler {
             msgReq = (MessageRequire) msg;
         } catch ( Exception e ) {
             // That wasn't it!
-            return true;
+            return Status.CONTINUE;
         }
 
         try {
@@ -47,7 +53,7 @@ public class MessageHandler {
         } catch ( Exception e ) {
             // Not sure what the deal might be
             e.printStackTrace();
-            return false;
+            return Status.STOP;
         }
 
         try {
@@ -57,30 +63,30 @@ public class MessageHandler {
             // Execute the command
             if ( !cmd.Execute() ) {
                 System.out.println("Failed to execute command!");
-                return false;
+                return Status.STOP;
             }
         } catch ( Exception e ) {
             // Could be leaving stream in a bad state
             e.printStackTrace();
-            return false;
+            return Status.STOP;
         }
 
-        return true;
+        return Status.HANDLED;
     }
 
-    protected boolean handleWaiting(Message msg) {
+    protected Status handleWaiting(Message msg) {
         try {
             // Handle waiting message that are received without a require message
             MessageWaiting msgWait = (MessageWaiting) msg;
         } catch ( Exception e ) {
             // No big deal
-            return true;
+            return Status.CONTINUE;
         }
 
         // Check if we're all out of commands we want to execute
         if ( mCommandList.isEmpty() ) {
             System.out.println("No commands remaining");
-            return false;
+            return Status.STOP;
         }
 
         // Remove the first command from the list
@@ -90,17 +96,17 @@ public class MessageHandler {
             // Execute the command 
             if ( !cmd.Execute() ) {
                 System.out.println("Failed to execute command");
-                return false;
+                return Status.STOP;
             }
         } catch ( Exception e ) {
             e.printStackTrace();
-            return false;
+            return Status.STOP;
         }
 
-        return true;
+        return Status.HANDLED;
     }
 
-    protected boolean handleCommand(Message msg) {
+    protected Status handleCommand(Message msg) {
         try {
             // Look up the message's directive in our map
             Class<? extends Command> c = mMessageMap.get(msg.directive());
@@ -111,37 +117,59 @@ public class MessageHandler {
             // Execute the command
             if ( !cmd.Execute() ) {
                 System.out.println("Failed to execute command");
-                return false;
+                return Status.STOP;
             }
         } catch ( Exception e ) {
             e.printStackTrace();
-            return false;
+            return Status.STOP;
         }
-      
-        return true;
+
+        return Status.HANDLED;
     }
 
     // Begin handling messages
     public void run() throws Exception {
+        Status status;
 
         while ( true ) {
             // Get a message from the stream
             Message msg = mMtp.recv();
 
             // Try it out as a REQUIRE message
-            if ( !handleRequire(msg) ) {
+            status = handleRequire(msg);
+
+            if ( status == Status.HANDLED ) {
+                continue;
+            } 
+
+            if ( status == Status.STOP ) {
                 return;
             }
 
             // Try it out as a WAITING message
-            if ( !handleWaiting(msg) ) {
+            status = handleWaiting(msg);
+
+            if ( status == Status.HANDLED ) {
+                continue;
+            } 
+
+            if ( status == Status.STOP ) {
                 return;
             }
 
             // Try it out as a vanilla command message
-            if ( !handleCommand(msg) ) {
+            status = handleCommand(msg);
+
+            if ( status == Status.HANDLED ) {
+                continue;
+            } 
+
+            if ( status == Status.STOP ) {
                 return;
             }
+
+            System.out.println("Got to the end of the line");
+            return;
         }
     }
 }

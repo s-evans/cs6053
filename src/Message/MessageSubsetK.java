@@ -20,6 +20,9 @@ public class MessageSubsetK extends Message {
     }
 
     public MessageSubsetK(String args) throws Exception {
+        // Clean up the input
+        args = args.trim();
+        
         // Initialize the list
         mSet = new ArrayList<String>();
 

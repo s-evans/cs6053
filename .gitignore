@@ -89,5 +89,12 @@ local.properties
 ########################
 #
 DHKey
+
+# cscope goodness
 cscope.*
+
+# mistaken keyboard shortcuts
 hardcopy.*
+
+# notes
+.setup

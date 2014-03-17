@@ -13,10 +13,16 @@ public class MessagePublicKey extends Message {
     }
 
     public MessagePublicKey(String args) throws Exception {
+        args = args.trim();
+
+        // TODO: Remove
+        System.out.println("Pub Key Args = " + args + ";");
+
         // Parse the input string 
         String[] vals = args.split(" ");
         if ( vals.length != 2 ) {
-            throw new Exception(new String("PARSE ERROR"));
+            throw new Exception(new String(
+                        "Unexpected arg count; exp = " + 2 + "; act = " + vals.length + ";"));
         }
 
         // Populate from values
