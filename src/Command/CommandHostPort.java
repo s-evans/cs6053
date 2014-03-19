@@ -1,17 +1,11 @@
 
 public class CommandHostPort extends Command {
-    protected MessageTextParser mMtp;
     protected int mServerPort;
     protected String mServerHostName;
 
-    public CommandHostPort(String args) throws Exception {
-        super(args);
-        throw new Exception("Not Implemented");
-    }
-
     public CommandHostPort(MessageTextParser mtp,
             String serverHostName, int serverPort) throws Exception {
-        mMtp = mtp;
+        super(mtp);
         mServerPort = serverPort;
         mServerHostName = serverHostName;
     }

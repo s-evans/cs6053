@@ -1,14 +1,8 @@
 
 public class CommandQuit extends Command {
-    protected MessageTextParser mMtp;
-
-    public CommandQuit(String args) throws Exception {
-        super(args);
-        throw new Exception("Not Implemented");
-    }
 
     public CommandQuit(MessageTextParser mtp) throws Exception {
-        mMtp = mtp;
+        super(mtp);
     }
 
     protected boolean Quit() throws Exception {

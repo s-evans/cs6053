@@ -1,20 +1,15 @@
 import java.math.BigInteger;
 
-public abstract class CommandLogin {
-    protected MessageTextParser mMtp;
+public abstract class CommandLogin extends Command {
     protected String mIdent;
     protected String mCookie;
 
     private final String sExpectedComment = "Monitor Version 2.2.1";
 
-    public CommandLogin(String args) throws Exception {
-        throw new Exception("Not Implemented");
-    }
-
     public CommandLogin(
             MessageTextParser conn, 
             String ident, String cookie) {
-        mMtp = conn;
+        super(conn);
         mIdent = ident;
         mCookie = cookie;
     }

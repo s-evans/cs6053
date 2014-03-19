@@ -5,11 +5,6 @@ public class CommandTransferServer extends CommandTransfer {
     // For whatever reason, the monitor hates rounds over 20
     final protected static int sRounds = 20;
 
-    public CommandTransferServer(String args) throws Exception {
-        super(args);
-        throw new Exception("not implemented");
-    }
-
     public CommandTransferServer(
             MessageTextParser mtp, MessageTransfer msg) throws Exception {
         // Create parent class using the message

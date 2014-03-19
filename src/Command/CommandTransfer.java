@@ -1,17 +1,15 @@
 
 public abstract class CommandTransfer extends Command {
-    MessageTextParser mMtp;
     String mRecipientIdent; 
     Integer mAmount; 
     String mSenderIdent;
 
-    public CommandTransfer(String args) throws Exception {
-        throw new Exception("not implemented");
-    }
-
     public CommandTransfer(
             MessageTextParser mtp, String recipient, Integer amount, String sender) {
-        mMtp = mtp;
+        // Create parent class
+        super(mtp);
+
+        // Populate common junk
         mRecipientIdent = recipient;
         mAmount = amount;
         mSenderIdent = sender;

@@ -2,11 +2,6 @@
 public class CommandTransferClient extends CommandTransfer {
     protected Initiator mInitiator;
 
-    public CommandTransferClient(String args) throws Exception {
-        super(args);
-        throw new Exception("not implemented");
-    }
-
     public CommandTransferClient(
             MessageTextParser mtp, String recipient, Integer amount, String sender) throws Exception {
         // Create parent class
@@ -14,6 +9,23 @@ public class CommandTransferClient extends CommandTransfer {
 
         // Create ZKP initiator helper
         mInitiator = new Initiator();
+    }
+
+    public CommandTransferClient(
+            MessageTextParser mtp, String[] args) throws Exception {
+        // Create parent class
+        super(mtp, args[0], Integer.parseInt(args[1]), args[2]);
+
+        // Create ZKP initiator helper
+        mInitiator = new Initiator();
+    }
+
+    static public String verb() {
+        return "TRANSFER";
+    }
+
+    static public String usage() {
+        return "TODO";
     }
 
     protected boolean TransferRequest() throws Exception {

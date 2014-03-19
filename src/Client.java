@@ -25,7 +25,7 @@ public class Client implements Runnable {
 
         // Validate input
         if (args.length < 3 || args.length > 4) {
-            System.out.println("Usage: java Client <monitor-host-name> <monitor-port> <mIdent> [host-port]");
+            System.out.println("Usage: java Client <monitor-host-name> <monitor-port> <ident> [host-port]");
             return;
         }
 

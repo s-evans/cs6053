@@ -2,11 +2,6 @@ import java.math.BigInteger;
 
 public class CommandLoginClient extends CommandLogin {
 
-    public CommandLoginClient(String args) throws Exception {
-        super(args);
-        throw new Exception("Not Implemented");
-    }
-
     public CommandLoginClient(
             MessageTextParser conn, String ident, String cookie) throws Exception {
         super(conn, ident, cookie);

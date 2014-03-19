@@ -1,11 +1,9 @@
 
 public abstract class Command {
-    public Command(String args) {
+    MessageTextParser mMtp; 
 
-    }
-
-    public Command() {
-
+    public Command(MessageTextParser mtp) {
+        mMtp = mtp;
     }
 
     public abstract boolean Execute() throws Exception; 

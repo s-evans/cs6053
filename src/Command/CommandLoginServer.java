@@ -3,11 +3,6 @@ import java.math.BigInteger;
 public class CommandLoginServer extends CommandLogin {
     protected String mPassword;
 
-    public CommandLoginServer(String args) throws Exception {
-        super(args);
-        throw new Exception("Not Implemented");
-    }
-
     public CommandLoginServer(
             MessageTextParser conn, 
             String ident, String cookie, String password) throws Exception {
