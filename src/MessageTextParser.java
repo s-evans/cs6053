@@ -26,6 +26,11 @@ public class MessageTextParser {
         mCodecList.add(c);
     }
 
+    // Add a codec to send and receive operations symetrically (front of the list)
+    public void addCodecFront ( Codec c ) {
+        mCodecList.add(0, c);
+    }
+
     // Get a message string from the stream
     public Message recv() throws Exception {
         Message msg;

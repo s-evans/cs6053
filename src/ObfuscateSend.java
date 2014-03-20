@@ -23,6 +23,8 @@ public class ObfuscateSend {
         return ObfuscateCommand(commandWithArgs.split(" "), encrypted);
     }
 
+    // TODO: Update this class to output junk that is more meaningful
+
     /**
      * Obfuscates a command by mangling the command string and adding log output
      * @param commandWithArgs Command (e.g. IDENT) and any applicable arguments
