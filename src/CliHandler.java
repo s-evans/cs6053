@@ -11,11 +11,18 @@ public class CliHandler {
     protected static final String sVerbPrefix = "--";
     
     public CliHandler(MessageTextParser mtp) {
-        // Populate stuff
         mMtp = mtp;
-        mVerbMap = new HashMap<String, Class<? extends Command>>();
+        populateMap();
+    }
 
+    public CliHandler() {
+        mMtp = null;
+        populateMap();
+    }
+
+    protected void populateMap() {
         // Populate the map
+        mVerbMap = new HashMap<String, Class<? extends Command>>();
         mVerbMap.put(CommandTransferClient.verb(), CommandTransferClient.class);
         mVerbMap.put(CommandLogSpam.verb(), CommandLogSpam.class); 
     }
@@ -30,7 +37,7 @@ public class CliHandler {
             Object obj = method.invoke(null);
 
             // Append to a single string
-            usage += obj + "\n";
+            usage += "\t--" + obj + "\n";
         }
 
         return usage;

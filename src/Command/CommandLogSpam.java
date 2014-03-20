@@ -5,15 +5,15 @@ public class CommandLogSpam extends Command {
         // Create super class
         super(mtp);
 
-        // TODO: Do something with the args? 
+        // TODO: Do something with the arg(s)? 
     }
 
     static public String verb() {
-        return "LOGSPAM";
+        return "inject_log";
     }
 
     static public String usage() {
-        return "TODO";
+        return verb().concat(" <injected-string>");
     }
 
     public boolean Execute() throws Exception {

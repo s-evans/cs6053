@@ -141,9 +141,9 @@ class Sender {
 
     public String response() {
         if (mCheck) {
-            return "ACCEPT";
+            return "ACCEPTED";
         } else {
-            return "DECLINE";
+            return "DECLINED";
         }
     }
 }

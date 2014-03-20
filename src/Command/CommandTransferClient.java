@@ -14,18 +14,18 @@ public class CommandTransferClient extends CommandTransfer {
     public CommandTransferClient(
             MessageTextParser mtp, String[] args) throws Exception {
         // Create parent class
-        super(mtp, args[0], Integer.parseInt(args[1]), args[2]);
+        super(mtp, args[1], Integer.parseInt(args[2]), args[0]);
 
         // Create ZKP initiator helper
         mInitiator = new Initiator();
     }
 
     static public String verb() {
-        return "TRANSFER";
+        return "transfer";
     }
 
     static public String usage() {
-        return "TODO";
+        return verb().concat(" <sender-ident> <recipient-ident> <points>");
     }
 
     protected boolean TransferRequest() throws Exception {

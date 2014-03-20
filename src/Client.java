@@ -15,29 +15,32 @@ public class Client implements Runnable {
     protected MessageTextParser mMtp;
     protected IdentFile mIdentFile;
     protected MessageHandler mMessageHandler;
+    protected String[] mArgs;
 
     public static final int DEFAULT_HOST_PORT = 22334; 
 
     // Entry point
     public static void main(String[] args) throws Exception {
 
-        // TODO: Add a verb to the CLI to allow the client to do customizeable things for each run of the process 
-
         // Validate input
-        if (args.length < 3 || args.length > 4) {
-            System.out.println("Usage: java Client <monitor-host-name> <monitor-port> <ident> [host-port]");
+        if ( args.length < 4 ) {
+            // Print out usage
+            CliHandler cliHandler = new CliHandler();
+            System.out.println("Usage: java Client <monitor-host-name> <monitor-port> <ident> [server-port]");
+            System.out.println(cliHandler.getUsage());
             return;
         }
 
         // Get host port if it exists
         int hostPort = DEFAULT_HOST_PORT;
-        if (args.length >= 4) {
-            hostPort = Integer.parseInt(args[3]);
+        try {
+            hostPort = Integer.parseInt(args[4]);
+        } catch ( Exception e ) {
+            // Ignore
         }
 
         // Create and start the client
-        Client client = new Client(
-                new String(args[0]), Integer.parseInt(args[1]), hostPort, args[2]); 
+        Client client = new Client(args);
         client.start(); 
     }
 
@@ -47,6 +50,26 @@ public class Client implements Runnable {
         mMonitorHostName = monitorHostName;
         mMonitorPort = monitorPort;
         mLocalPort = localPort;
+    }
+
+    public Client(String[] args) {
+        // Monitor junk
+        mMonitorHostName = args[0];
+        mMonitorPort = Integer.parseInt(args[1]);
+
+        try {
+            // Login junk
+            mIdent = args[2]; 
+
+            // Get host port if it exists
+            mLocalPort = DEFAULT_HOST_PORT;
+            mLocalPort = Integer.parseInt(args[3]);
+        } catch ( Exception e ) {
+            // Ignore
+        }
+
+        // Argument junk
+        mArgs = args;
     }
 
     // Starts the thread running
@@ -112,13 +135,19 @@ public class Client implements Runnable {
     }
 
     protected void PopulateCommandList() throws Exception {
-        // TODO: Add all verbs here
+        // Parse the CLI for commands
+        CliHandler cliHandler = new CliHandler(mMtp);
+        Command[] cmds = cliHandler.getCommands(mArgs);
 
-        // TODO: Remove the below (just test code)
-
-        CommandTransferClient cmdXferClient = new 
-            CommandTransferClient(mMtp, "brule", 1, "dangus");
-        mMessageHandler.addCommand(cmdXferClient);
+        // Validate the count of commands
+        if ( cmds.length == 0 ) {
+            throw new Exception("No commands found!");
+        }
+        
+        // Iterate over the command list
+        for ( int i = 0 ; i < cmds.length ; i++ ) {
+            mMessageHandler.addCommand(cmds[i]);
+        }
     }
 
     protected void RunMessageHandler() throws Exception {

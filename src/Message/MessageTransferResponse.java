@@ -27,10 +27,10 @@ public class MessageTransferResponse extends Message {
         // Get value
         if ( vals[0].equals("ACCEPTED") ) {
             mResponse = Response.ACCEPT; 
-        } else if ( vals[0].equals("DECLINED") ) {  // TODO: This may not be correct, check monitor code
+        } else if ( vals[0].equals("DECLINED") ) {
             mResponse = Response.DECLINE;
         } else {
-            throw new Exception( new String("Invalid value") );
+            throw new Exception("Invalid value: " + vals[0]);
         }
             
     }
