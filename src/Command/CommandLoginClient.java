@@ -1,5 +1,3 @@
-import java.math.BigInteger;
-
 public class CommandLoginClient extends CommandLogin {
 
     public CommandLoginClient(

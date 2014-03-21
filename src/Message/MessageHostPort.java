@@ -1,5 +1,3 @@
-import org.w3c.dom.ranges.RangeException;
-
 public class MessageHostPort extends Message {
     public String mHostName;
     public Integer mPort;

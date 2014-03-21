@@ -2,8 +2,6 @@
 // on 2014-Mar-2.  i believe it was originally written by Tim Rapp and his group.
 // it has been adapted for use by our team.
 
-import java.security.*;
-import java.security.spec.*;
 import java.util.*;
 import java.math.*;
 

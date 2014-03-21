@@ -1,5 +1,3 @@
-import java.math.BigInteger;
-
 public class CommandLoginServer extends CommandLogin {
     protected String mPassword;
 

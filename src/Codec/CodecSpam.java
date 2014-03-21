@@ -1,5 +1,3 @@
-import java.math.BigInteger;
-
 public class CodecSpam extends Codec {
 
     // Constructor
