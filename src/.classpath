@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="Command/|MessageFactory/|Message/|MessageHandler/|ZKP/|Codec/" kind="src" path=""/>
+	<classpathentry kind="src" path="Codec"/>
+	<classpathentry kind="src" path="Command"/>
+	<classpathentry kind="src" path="Message"/>
+	<classpathentry kind="src" path="MessageFactory"/>
+	<classpathentry kind="src" path="MessageHandler"/>
+	<classpathentry kind="src" path="ZKP"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
