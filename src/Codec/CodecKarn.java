@@ -16,7 +16,7 @@ public class CodecKarn extends Codec {
     // Decode a message
     public String decode(String in) throws Exception {
         // Validate message is encrypted
-        if ( !mKarn.IsEncrypted(in) ) {
+        if ( !Karn.IsEncrypted(in) ) {
             throw new Exception("CodecKarn [decode]: Message not karn encrypted");
         }
 
