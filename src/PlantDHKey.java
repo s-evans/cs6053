@@ -16,5 +16,7 @@ public class PlantDHKey {
         ObjectOutputStream oos = new ObjectOutputStream(fos);
 
         oos.writeObject(key);
+        
+        oos.close();
     }
 }

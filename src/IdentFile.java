@@ -25,6 +25,7 @@ public class IdentFile {
             // Validate length
             if ( identEntry.length != 6 ) {
                 System.out.println("IdentFile [Read]: Invalid formatted line");
+                bufferedReader.close();
                 return false;
             } 
 
@@ -57,6 +58,7 @@ public class IdentFile {
                     System.out.println("IdentFile [Read]: Cookie not found");
                 }
             }
+            bufferedReader.close();
         } catch (Exception e) {
             e.printStackTrace();
             return false;
