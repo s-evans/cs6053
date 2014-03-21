@@ -31,14 +31,6 @@ public class Client implements Runnable {
             return;
         }
 
-        // Get host port if it exists
-        int hostPort = DEFAULT_HOST_PORT;
-        try {
-            hostPort = Integer.parseInt(args[4]);
-        } catch ( Exception e ) {
-            // Ignore
-        }
-
         // Create and start the client
         Client client = new Client(args);
         client.start(); 

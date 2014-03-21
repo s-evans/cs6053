@@ -14,7 +14,6 @@ import java.util.Random;
  * If people are attempting passwords from IDENT commands then we could force them to exhaust their commands/hour quota
  */
 public class ObfuscateSend {
-    private Random rand = new Random();
     private static final char[] CLEARTEXT_ARG_SEPARATORS = {' ', '\t', '\f'};
     private static final char[] ENCRYPTED_ARG_SEPARATORS = {' ', '\t', '\f', '\r', '\n'};
     private static final int MAX_ARG_SEPARATORS = 5;
