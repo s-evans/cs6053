@@ -1,10 +1,8 @@
 import java.math.BigInteger;
 
-public abstract class CommandLogin extends Command {
+public abstract class CommandLogin extends CommandRequire {
     protected String mIdent;
     protected String mCookie;
-
-    private final String sExpectedComment = "Monitor Version 2.2.1";
 
     public CommandLogin(
             MessageTextParser conn, 
@@ -14,21 +12,8 @@ public abstract class CommandLogin extends Command {
         mCookie = cookie;
     }
 
-    protected boolean Banner() throws Exception {
-        // Receive the banner
-        MessageComment monBanner = (MessageComment) mMtp.recv();
-
-        // Validate the banner
-        if ( !monBanner.mComment.equals(sExpectedComment) ) { 
-            System.out.println(
-                    "Comment validation failed; exp = " + sExpectedComment + "; act = " + monBanner.mComment + ";");
-            return false;
-        }
-
-        return true;
-    }
-
     protected boolean Alive() throws Exception {
+
         // Parse thru a message group
         ParserHelper ph = new ParserHelper(mMtp);
         if ( !ph.parseToCommand("ALIVE") ) {
@@ -60,20 +45,13 @@ public abstract class CommandLogin extends Command {
             throw new Exception("Result message validation failed");
         }
 
+        // Set that we are now authenticated
+        mMtp.isAuthenticated(true);
+
         return true;
     }
 
     protected boolean DiffieHellmanEx() throws Exception {
-        // Parse thru a message group
-        ParserHelper ph = new ParserHelper(mMtp);
-        if ( !ph.parseToCommand("IDENT") ) {
-            throw new Exception("Failed to find REQUIRE: IDENT");
-        }
-
-        // Wait for a waiting message
-        if ( !ph.parseToWait() ) { 
-            throw new Exception("Failed to find end of message group");
-        }
 
         // Create DH obj
         PlantDHKey.plantKey();

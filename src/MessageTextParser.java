@@ -5,10 +5,12 @@ import java.util.Iterator;
 import java.util.ListIterator;
 
 public class MessageTextParser {
-    private BufferedReader in;
-    private PrintWriter out;
-    private MessageFactory msgFactory;
-    private List<Codec> mCodecList;
+    protected BufferedReader in;
+    protected PrintWriter out;
+    protected MessageFactory msgFactory;
+    protected List<Codec> mCodecList;
+    protected boolean mAuthenticated;
+    protected String mCsum;
 
     // Constructor
     public MessageTextParser(
@@ -19,6 +21,24 @@ public class MessageTextParser {
         in = input;
         out = output;
         msgFactory = messageFactory;
+        mAuthenticated = false;
+        mCsum = null;
+    }
+
+    public void setCsum (String csum) {
+        mCsum = csum;
+    }
+
+    public String getCsum () {
+        return mCsum;
+    }
+
+    public boolean isAuthenticated() {
+        return mAuthenticated;
+    }
+
+    public void isAuthenticated(boolean authenticated) {
+        mAuthenticated = authenticated;
     }
 
     // Add a codec to send and receive operations symetrically

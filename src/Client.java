@@ -6,27 +6,25 @@ public class Client implements Runnable {
     protected Thread mThread;
     protected Socket mMonConnSock = null;
     protected String mMonitorHostName;
-    protected int mLocalPort;
     protected int mMonitorPort;
-    protected String mIdent;
     protected PrintWriter mOut;
     protected BufferedReader mIn;
     protected MessageFactory mMsgFactory;
     protected MessageTextParser mMtp;
-    protected IdentFile mIdentFile;
     protected MessageHandler mMessageHandler;
     protected String[] mArgs;
 
+    private final String sExpectedComment = "Monitor Version 2.2.1";
     public static final int DEFAULT_HOST_PORT = 22334; 
 
     // Entry point
     public static void main(String[] args) throws Exception {
 
         // Validate input
-        if ( args.length < 4 ) {
+        if ( args.length < 2 ) {
             // Print out usage
             CliHandler cliHandler = new CliHandler();
-            System.out.println("Usage: java Client <monitor-host-name> <monitor-port> <ident> [server-port]");
+            System.out.println("Usage: java Client <monitor-host-name> <monitor-port>\n");
             System.out.println(cliHandler.getUsage());
             return;
         }
@@ -37,28 +35,15 @@ public class Client implements Runnable {
     }
 
     // Constructor
-    public Client(String monitorHostName, int monitorPort, int localPort, String ident) throws Exception {
-        mIdent = ident;
+    public Client(String monitorHostName, int monitorPort) throws Exception {
         mMonitorHostName = monitorHostName;
         mMonitorPort = monitorPort;
-        mLocalPort = localPort;
     }
 
     public Client(String[] args) {
         // Monitor junk
         mMonitorHostName = args[0];
         mMonitorPort = Integer.parseInt(args[1]);
-
-        try {
-            // Login junk
-            mIdent = args[2]; 
-
-            // Get host port if it exists
-            mLocalPort = DEFAULT_HOST_PORT;
-            mLocalPort = Integer.parseInt(args[3]);
-        } catch ( Exception e ) {
-            // Ignore
-        }
 
         // Argument junk
         mArgs = args;
@@ -85,32 +70,6 @@ public class Client implements Runnable {
         mIn = new BufferedReader(new InputStreamReader(mMonConnSock.getInputStream()));
     }
 
-    protected void DoLogin() throws Exception { 
-        System.out.println("Client [run]: Attempting log in");
-
-        // Create the login command object 
-        CommandLoginClient cmdLogin = new CommandLoginClient(
-                mMtp, mIdent, mIdentFile.mCookie);
-
-        // Execute the login command 
-        if ( !cmdLogin.Execute() ) {
-            throw new Exception("Failed to log in");
-        }
-
-        // at this point, we think we're legit
-        System.out.println("Client [run]: Login succeeded");
-    }
-
-    protected void InitializeIdentFile() throws Exception {
-        // Create ident file object
-        mIdentFile = new IdentFile(mIdent);
-
-        // Attempt to read data from the ident file
-        if ( !mIdentFile.Read() ) {
-            throw new Exception("Failed to read ident file");
-        }
-    }
-
     protected void CreateStreamParser() throws Exception {
         // Create message factory
         mMsgFactory = new MessageFactoryClient();
@@ -119,26 +78,37 @@ public class Client implements Runnable {
         mMtp = new MessageTextParser(mIn, mOut, mMsgFactory);
     }
 
-    protected void PopulateMessageHandler() throws Exception {
-        // Add HOST_PORT directive handling
-        CommandHostPort cmdHostPort = new CommandHostPort(
-                mMtp, mMonConnSock.getLocalAddress().getHostName(), mLocalPort);
-        mMessageHandler.addMessageHandler("HOST_PORT", cmdHostPort);
-    }
-
-    protected void PopulateCommandList() throws Exception {
+    protected void PopulateRequireCommandList() throws Exception {
         // Parse the CLI for commands
         CliHandler cliHandler = new CliHandler(mMtp);
-        Command[] cmds = cliHandler.getCommands(mArgs);
+        CommandRequire[] cmds = cliHandler.getRequireCommands(mArgs);
 
-        // Validate the count of commands
-        if ( cmds.length == 0 ) {
-            throw new Exception("No commands found!");
-        }
-        
         // Iterate over the command list
         for ( int i = 0 ; i < cmds.length ; i++ ) {
-            mMessageHandler.addCommand(cmds[i]);
+            // Add message handler
+            mMessageHandler.addRequireHandler(cmds[i]);
+        }
+    }
+
+    protected void PopulateUserCommandList() throws Exception {
+        // Parse the CLI for commands
+        CliHandler cliHandler = new CliHandler(mMtp);
+        CommandUser[] cmds = cliHandler.getUserCommands(mArgs);
+
+        // Iterate over the command list
+        for ( int i = 0 ; i < cmds.length ; i++ ) {
+            mMessageHandler.addUserCommand(cmds[i]);
+        }
+    }
+
+    protected void GetBanner() throws Exception {
+        // Receive the banner
+        MessageComment monBanner = (MessageComment) mMtp.recv();
+
+        // Validate the banner
+        if ( !monBanner.mComment.equals(sExpectedComment) ) { 
+            throw new Exception(
+                    "Comment validation failed; exp = " + sExpectedComment + "; act = " + monBanner.mComment + ";");
         }
     }
 
@@ -147,10 +117,10 @@ public class Client implements Runnable {
         mMessageHandler = new MessageHandler(mMtp);
         
         // Add verbs to the message handler
-        PopulateCommandList();
+        PopulateUserCommandList();
 
         // Add message handler routines
-        PopulateMessageHandler();
+        PopulateRequireCommandList();
 
         // Run the message handler
         mMessageHandler.run();
@@ -159,15 +129,13 @@ public class Client implements Runnable {
     // Thread function
     public void run() {
         try {
-            InitializeIdentFile();
-
             CreateConnection();
 
             CreateBufferedIO();
 
             CreateStreamParser();
 
-            DoLogin();
+            GetBanner();
 
             RunMessageHandler();
 

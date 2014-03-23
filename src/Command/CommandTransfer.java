@@ -1,5 +1,5 @@
 
-public abstract class CommandTransfer extends Command {
+public abstract class CommandTransfer extends CommandUser {
     String mRecipientIdent; 
     Integer mAmount; 
     String mSenderIdent;

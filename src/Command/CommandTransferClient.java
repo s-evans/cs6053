@@ -28,6 +28,10 @@ public class CommandTransferClient extends CommandTransfer {
         return verb().concat(" <sender-ident> <recipient-ident> <points>");
     }
 
+    static public String explain() {
+        return "Tells the client to attempt a transfer given the parameters provided once authenticated.";
+    }
+
     protected boolean TransferRequest() throws Exception {
         // Create a transfer request message
         MessageTransferRequest msgXferReq = new MessageTransferRequest(
@@ -211,6 +215,10 @@ public class CommandTransferClient extends CommandTransfer {
     }
 
     public boolean Execute() throws Exception {
+        if ( !mMtp.isAuthenticated() ) {
+            return false;
+        }
+
         return InitiateTransfer();
     }
 }

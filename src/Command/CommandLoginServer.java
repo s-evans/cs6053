@@ -11,17 +11,43 @@ public class CommandLoginServer extends CommandLogin {
         mPassword = password;
     }
 
+    public CommandLoginServer( 
+            MessageTextParser mtp, String ident) throws Exception {
+        // Create the parent class
+        super(mtp, ident, null);
+
+        // Read the creds from file
+        IdentFile identFile = new IdentFile(ident);
+        if ( !identFile.Read() ) {
+            throw new Exception("Failed to read ident file");
+        }
+
+        // Use data from the file
+        mCookie = identFile.mCookie;
+        mPassword = identFile.mPassword;
+    }
+
+    public String Require() {
+        return "IDENT";
+    }
+
     protected boolean PasswordCsum() throws Exception {
-        // Receive the message
-        MessagePassCsum msg = (MessagePassCsum) mMtp.recv();
 
         // Create expected string
         String expected = SHA.perform(mPassword);
 
+        // Get the string received from the PARTICIPANT_PASSWORD_CHECKSUM message
+        String received = mMtp.getCsum();
+
+        // Validate received string pointer
+        if ( received == null ) {
+            throw new Exception("Started login before receiving password csum!");
+        }
+
         // Validate the message
-        if ( !msg.mChecksum.equals(expected) ) { 
+        if ( !received.equals(expected) ) { 
             System.out.println(
-                    "Password checksum validation failed; exp = " + expected + "; act = " + msg.mChecksum + ";");
+                    "Password checksum validation failed; exp = " + expected + "; act = " + received + ";");
             return false;
         }
 
@@ -29,12 +55,8 @@ public class CommandLoginServer extends CommandLogin {
     }
 
     public boolean Execute() throws Exception {
-        // Receive the banner
-        if ( !Banner() ) {
-            throw new Exception("Comment validation failed");
-        }
 
-        // Receive the password checksum
+        // Validate the password checksum
         if ( !PasswordCsum() ) { 
             throw new Exception("Password checksum validation failed");
         }

@@ -20,6 +20,14 @@ public class CommandLoginClient extends CommandLogin {
         mCookie = identFile.mCookie;
     }
 
+    public String Require() {
+        return require();
+    }
+
+    static public String require() {
+        return "IDENT";
+    }
+
     static public String verb() {
         return "login";
     }
@@ -28,11 +36,11 @@ public class CommandLoginClient extends CommandLogin {
         return verb().concat(" <ident>");
     }
 
+    static public String explain() {
+        return "Specifies the parameters to use when the monitor issues a 'REQUIRE: IDENT' command.";
+    }
+
     public boolean Execute() throws Exception {
-        // Receive the banner
-        if ( !Banner() ) {
-            throw new Exception("Comment validation failed");
-        }
 
         // Do DH KEX
         if ( !DiffieHellmanEx() ) {

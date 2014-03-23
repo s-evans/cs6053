@@ -14,6 +14,8 @@ class ConnectionHandler implements Runnable {
     protected MessageHandler mMessageHandler;
     protected MessageTextParser mMtp;
 
+    private final String sExpectedComment = "Monitor Version 2.2.1";
+
     public ConnectionHandler(
             Socket connSock, int connNum, String ident) {
         mIncomingConnSock = connSock;
@@ -45,28 +47,31 @@ class ConnectionHandler implements Runnable {
         }
     }
 
-    protected void DoLogin() throws Exception {
-        System.out.println("ConnectionHandler(" + mConnNumber + ") [Login]: Starting login from Server...");
+    protected void GetBanner() throws Exception {
+        // Receive the banner
+        MessageComment monBanner = (MessageComment) mMtp.recv();
 
-        // Create a login command object
-        CommandLoginServer cmdLogin = new CommandLoginServer(
-                mMtp, mIdent, mIdentFile.mCookie, mIdentFile.mPassword);
-
-        // Execute the login command 
-        if ( !cmdLogin.Execute() ) {
-            throw new Exception("Failed to log in");
+        // Validate the banner
+        if ( !monBanner.mComment.equals(sExpectedComment) ) { 
+            throw new Exception(
+                    "Comment validation failed; exp = " + sExpectedComment + "; act = " + monBanner.mComment + ";");
         }
-
-        System.out.println("ConnectionHandler(" + mConnNumber + ") [run]: Login succeeded");
     }
 
     protected void PopulateMessageHandler() throws Exception {
-        // Handle the QUIT message
-        CommandQuit cmdQuit = new CommandQuit(mMtp);
-        mMessageHandler.addMessageHandler("QUIT", cmdQuit);
+        // Handle the REQUIRE QUIT message
+        mMessageHandler.addRequireHandler(new CommandQuit(mMtp));
 
-        // Add transfer message handling 
-        mMessageHandler.addCommandHandler("TRANSFER", CommandTransferServer.class);
+        // Handle the REQUIRE IDENT message
+        mMessageHandler.addRequireHandler(new CommandLoginServer(mMtp, mIdent));
+
+        // Handle the PARTICIPANT_PASSWORD_CHECKSUM message
+        mMessageHandler.addCommandHandler(
+                CommandPasswordCsum.Directive(), CommandPasswordCsum.class);
+
+        // Add TRANSFER message handling 
+        mMessageHandler.addCommandHandler(
+                CommandTransferServer.Directive(), CommandTransferServer.class);
     }
     
     protected void RunMessageHandler() throws Exception {
@@ -94,7 +99,7 @@ class ConnectionHandler implements Runnable {
 
             CreateStreamParser();
 
-            DoLogin();
+            GetBanner();
 
             RunMessageHandler();
 

@@ -23,8 +23,11 @@ public class CliHandler {
     protected void populateMap() {
         // Populate the map
         mVerbMap = new HashMap<String, Class<? extends Command>>();
+        mVerbMap.put(CommandLoginClient.verb(), CommandLoginClient.class);
+        mVerbMap.put(CommandHostPort.verb(), CommandHostPort.class);
         mVerbMap.put(CommandTransferClient.verb(), CommandTransferClient.class);
-        mVerbMap.put(CommandLogSpam.verb(), CommandLogSpam.class); 
+        mVerbMap.put(CommandLogSpamOutput.verb(), CommandLogSpamOutput.class); 
+        mVerbMap.put(CommandLogSpamInput.verb(), CommandLogSpamInput.class); 
     }
 
     public String getUsage() throws Exception {
@@ -37,7 +40,14 @@ public class CliHandler {
             Object obj = method.invoke(null);
 
             // Append to a single string
-            usage += "\t--" + obj + "\n";
+            usage += "--" + obj + "\n";
+
+            // Get explanation
+            method = cmdClass.getMethod("explain");
+            obj = method.invoke(null);
+
+            // Append to a single string
+            usage += obj + "\n\n";
         }
 
         return usage;
@@ -47,8 +57,8 @@ public class CliHandler {
         System.out.println("Invalid command: " + arg);
     }
 
-    public Command[] getCommands(String[] args) throws Exception {
-        List<Command> cmdList = new ArrayList<Command>();
+    public CommandRequire[] getRequireCommands(String[] args) throws Exception {
+        List<CommandRequire> cmdList = new ArrayList<CommandRequire>();
 
         for ( int i = 0 ; i < args.length ; i++ ) {
             // Ignore non-verbs
@@ -60,11 +70,17 @@ public class CliHandler {
             String verb = args[i].substring(sVerbPrefix.length());
 
             // Look up verb in the map and get the command class
-            Class<? extends Command> cmdClass = mVerbMap.get(verb);
+            Class<? extends CommandRequire> cmdClass = null;
+
+            // Attempt to cast command to a require command
+            try {
+                cmdClass = (Class<? extends CommandRequire>) mVerbMap.get(verb);
+            } catch ( Exception e ) {
+                continue;
+            }
 
             // Validate verb is in the map
             if ( cmdClass == null ) {
-                invalidCommand(verb);
                 continue;
             }
 
@@ -87,16 +103,83 @@ public class CliHandler {
                 }
             }
 
-            // Create a new command object
-            Command cmd = cmdClass.
-                getDeclaredConstructor(MessageTextParser.class, String[].class).
-                newInstance(mMtp, cmdArgs); 
+            try {
+                // Create a new command object
+                CommandRequire cmd = cmdClass.
+                    getDeclaredConstructor(MessageTextParser.class, String[].class).
+                    newInstance(mMtp, cmdArgs); 
 
-            // Add the command object to a list
-            cmdList.add(cmd);
+                // Add the command object to a list
+                cmdList.add(cmd);
+            } catch ( Exception e ) {
+                continue;
+            }
         } 
 
         // Return the command list
-        return cmdList.toArray(new Command[cmdList.size()]);
+        return cmdList.toArray(new CommandRequire[cmdList.size()]);
+    }
+ 
+    public CommandUser[] getUserCommands(String[] args) throws Exception {
+        List<CommandUser> cmdList = new ArrayList<CommandUser>();
+
+        for ( int i = 0 ; i < args.length ; i++ ) {
+            // Ignore non-verbs
+            if ( !args[i].startsWith(sVerbPrefix) ) {
+                continue;
+            }
+
+            // Create verb string without prepend
+            String verb = args[i].substring(sVerbPrefix.length());
+
+            // Look up verb in the map and get the command class
+            Class<? extends CommandUser> cmdClass = null;
+
+            // Attempt to cast to a user command type
+            try {
+                cmdClass = (Class<? extends CommandUser>) mVerbMap.get(verb);
+            } catch ( Exception e ) {
+                continue;
+            }
+
+            // Validate verb is in the map
+            if ( cmdClass == null ) {
+                continue;
+            }
+
+            // Parse to end of args or to next verb in order to get arg list
+            int j = i + 1;
+            for ( ; j < args.length && !args[j].startsWith(sVerbPrefix) ; j++ ) {
+                // Just counting
+            }
+
+            // Populate the argument array
+            String[] cmdArgs = null;
+            int argCount = j - i - 1;
+            if ( argCount > 0 ) {
+                // Create a new string array for our args
+                cmdArgs = new String[argCount];
+
+                // Populate the string array
+                for ( int g = 0 ; g < argCount ; g++ ) {
+                    cmdArgs[g] = args[i + g + 1];
+                }
+            }
+
+            try { 
+                // Create a new command object
+                CommandUser cmd = cmdClass.
+                    getDeclaredConstructor(MessageTextParser.class, String[].class).
+                    newInstance(mMtp, cmdArgs); 
+
+                // Add the command object to a list
+                cmdList.add(cmd);
+            } catch ( Exception e ) {
+                continue;
+            }
+        } 
+
+        // Return the command list
+        return cmdList.toArray(new CommandUser[cmdList.size()]);
     }
 }

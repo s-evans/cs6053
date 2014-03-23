@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class MessageHandler {
     protected MessageTextParser mMtp;
-    protected HashMap<String, Command> mRequireMap;
+    protected HashMap<String, CommandRequire> mRequireMap;
     protected HashMap<String, Class<? extends Command>> mMessageMap;
-    protected List<Command> mCommandList;
+    protected List<CommandUser> mCommandList;
 
     enum Status {
         HANDLED,
@@ -16,22 +16,22 @@ public class MessageHandler {
 
     public MessageHandler(MessageTextParser mtp) {
         mMtp = mtp;
-        mRequireMap = new HashMap<String, Command>();
+        mRequireMap = new HashMap<String, CommandRequire>();
         mMessageMap = new HashMap<String, Class<? extends Command>>();
-        mCommandList = new ArrayList<Command>();
+        mCommandList = new ArrayList<CommandUser>();
     }
 
     // Add a command to execute when getting a REQUIRE message
-    public void addMessageHandler(String directive, Command cmd) {
-        mRequireMap.put(directive, cmd);
+    public void addRequireHandler(CommandRequire cmd) {
+        mRequireMap.put(cmd.Require(), cmd);
     }
 
     // Add a free form command to be executed in order following an open WAITING message
-    public void addCommand(Command cmd) {
+    public void addUserCommand(CommandUser cmd) {
         mCommandList.add(cmd);
     }
 
-    // Add a command to be created and executed given a standalone message
+    // Add a command to be created and executed given a standalone command message from the monitor
     public void addCommandHandler(String directive, Class<? extends Command> cmd) {
         mMessageMap.put(directive, cmd);
     }
@@ -58,13 +58,16 @@ public class MessageHandler {
 
         try {
             // Look up the command object given the command string 
-            Command cmd = mRequireMap.get(msgReq.mCommand);
+            Command cmd = mRequireMap.get(msgReq.mCommand.trim());
 
             // Execute the command
             if ( !cmd.Execute() ) {
                 System.out.println("Failed to execute command!");
                 return Status.STOP;
             }
+
+            // Remove the command from the list
+            mRequireMap.remove(msgReq.mCommand);
         } catch ( Exception e ) {
             // Could be leaving stream in a bad state
             e.printStackTrace();
@@ -134,6 +137,14 @@ public class MessageHandler {
         while ( true ) {
             // Get a message from the stream
             Message msg = mMtp.recv();
+
+            try {
+                // Handle COMMENT messages
+                MessageComment msgComment = (MessageComment) msg;
+                continue;
+            } catch ( Exception e ) {
+                // Ignore
+            }
 
             // Try it out as a REQUIRE message
             status = handleRequire(msg);

@@ -23,6 +23,10 @@ public class CommandTransferServer extends CommandTransfer {
         mSender = new Sender(sRounds);
     }
 
+    public static String Directive() {
+        return "TRANSFER";
+    }
+
     protected boolean Transfer() throws Exception {
         // Validate the sender and receiver user names make sense
         if ( !ShouldWeConsiderThisTransfer(
@@ -254,6 +258,10 @@ public class CommandTransferServer extends CommandTransfer {
     }
 
     public boolean Execute() throws Exception {
+        if ( !mMtp.isAuthenticated() ) {
+            return false;
+        }
+
         return EvaluateTransfer();
     }
 }

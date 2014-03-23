@@ -1,8 +1,12 @@
 
-public class CommandQuit extends Command {
+public class CommandQuit extends CommandRequire {
 
     public CommandQuit(MessageTextParser mtp) throws Exception {
         super(mtp);
+    }
+
+    public String Require() {
+        return "QUIT";
     }
 
     protected boolean Quit() throws Exception {
@@ -19,6 +23,8 @@ public class CommandQuit extends Command {
         if ( !msgResult.mCommand.equals(msgQuit.directive()) ) {
             throw new Exception("Result type validation failed");
         }
+        
+        System.out.println("Got quit command, ending connection.");
         
         return false;
     }
