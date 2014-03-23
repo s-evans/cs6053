@@ -20,7 +20,7 @@ public class CommandLogSpamInput extends CommandUser {
     }
 
     static public String explain() {
-        return "Arguments are a space separated list of text. This text should match something that the monitor is likely to receive from a client. This is implemented as an output stream filter, pushed to the front of the filter list. Therefore, successive log-related verbs found on the CLI will supercede previous filters, and be output first.";
+        return "Arguments are a space separated list of text. This text should match something that the monitor is likely to receive from a client. This is implemented as an output stream filter, pushed to the front of the filter list. Therefore, successive log-related verbs found on the CLI will supercede previous filters, and will be output first.";
     }
 
     // TODO: There is likely a much better solution but I'm tired
