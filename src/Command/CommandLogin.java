@@ -37,16 +37,20 @@ public abstract class CommandLogin extends CommandRequire {
 
         // Validate the result message command type
         if ( !msgResult.mCommand.equals(msgAlive.directive()) ) {
-            throw new Exception("Result type validation failed");
+            throw new Exception("Unexpected result message type; exp = " + msgAlive.directive() + "; act = " + msgResult.mCommand + ";");
         }
         
         // Validate the result code  
-        if ( !msgResult.mResult.contains("Identity has been verified.") ) {
-            throw new Exception("Result message validation failed");
+        final String exp = "Identity has been verified.";
+        if ( !msgResult.mResult.contains(exp) ) {
+            throw new Exception("Result message validation failed; exp = " + exp + "; act = " + msgResult.mCommand + ";");
         }
 
         // Set that we are now authenticated
         mMtp.isAuthenticated(true);
+
+        // Save the ident of the current connection
+        mMtp.setIdent(mIdent);
 
         return true;
     }
@@ -73,7 +77,7 @@ public abstract class CommandLogin extends CommandRequire {
 
         // Validate the result message command type
         if ( !msgResult.mCommand.equals(msgIdent.directive()) ) {
-            throw new Exception("Result type validation failed");
+            throw new Exception("Unexpected result message type; exp = " + msgIdent.directive() + "; act = " + msgResult.mCommand + ";");
         }
 
         // Create an ident message out of the result message from the monitor

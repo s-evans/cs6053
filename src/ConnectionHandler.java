@@ -10,7 +10,6 @@ class ConnectionHandler implements Runnable {
     protected BufferedReader mIn;
     protected PrintWriter mOut;
     protected MessageFactory mMsgFactory;
-    protected IdentFile mIdentFile;
     protected MessageHandler mMessageHandler;
     protected MessageTextParser mMtp;
 
@@ -35,16 +34,6 @@ class ConnectionHandler implements Runnable {
 
         // Create MessageTextParser object
         mMtp = new MessageTextParser(mIn, mOut, mMsgFactory);
-    }
-
-    protected void InitializeIdentFile() throws Exception {
-        // Create ident file object
-        mIdentFile = new IdentFile(mIdent);
-
-        // Attempt to read data from the ident file
-        if ( !mIdentFile.Read() ) {
-            throw new Exception("Failed to read ident file");
-        }
     }
 
     protected void GetBanner() throws Exception {
@@ -93,8 +82,6 @@ class ConnectionHandler implements Runnable {
     // Run for each new mIncomingConnSock connection from the monitor (presumably)
     public void run() {
         try {
-            InitializeIdentFile();
-
             CreateBufferedIO();
 
             CreateStreamParser();
