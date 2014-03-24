@@ -20,7 +20,7 @@ public class IdentFile {
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(mPath));
             String line = bufferedReader.readLine();
-            String[] identEntry = line.split("[:,]"); // passwords cannot contain ':' or ',' characters, or this will break
+            String[] identEntry = line.split(" "); 
 
             // Validate length
             if ( identEntry.length != 6 ) {
@@ -85,7 +85,7 @@ public class IdentFile {
             }
 
             pout = new PrintWriter(new FileWriter(mPath));
-            pout.printf("IDENT: %s, PASSWORD: %s, COOKIE: %s\n", mIdent, mPassword, mCookie);
+            pout.printf("IDENT %s PASSWORD %s COOKIE %s\n", mIdent, mPassword, mCookie);
             pout.flush();
             pout.close();
 
