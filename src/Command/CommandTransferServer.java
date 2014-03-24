@@ -251,10 +251,9 @@ public class CommandTransferServer extends CommandTransfer {
         // Conver to upper for easy comparison
         String user = username.toUpperCase();
 
-        // TODO: Restore for the competition
-        // return (user.equals("ALIVE") || user.equals("IDENT") || user.equals("PASSWORD"));
+        return (user.equals("ALIVE") || user.equals("IDENT") || user.equals("PASSWORD"));
         // return (user.equals("NEWTRY5") || user.equals("TEST1324") || user.equals("TEST5678"));
-        return (user.equals("DINGUS") || user.equals("DANGUS") || user.equals("BRULE"));
+        // return (user.equals("DINGUS") || user.equals("DANGUS") || user.equals("BRULE"));
     }
 
     public boolean Execute() throws Exception {
