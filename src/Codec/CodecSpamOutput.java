@@ -1,10 +1,12 @@
 public class CodecSpamOutput extends Codec {
 
     protected String[] mArgs;
+    protected MessageTextParser mMtp;
 
     // Constructor
-    public CodecSpamOutput (String[] args) {
+    public CodecSpamOutput (MessageTextParser mtp, String[] args) {
         mArgs = args;
+        mMtp = mtp;
     }
 
     // Decode a message
@@ -16,7 +18,7 @@ public class CodecSpamOutput extends Codec {
     // Encode a message
     public String encode(String in) throws Exception {
         // Obfuscate outgoing messages
-        return ObfuscateSend.ObfuscateCommandOutput(in, mArgs);
+        return ObfuscateSend.ObfuscateCommandOutput(in, mArgs, mMtp.isAuthenticated());
     }
 }
 

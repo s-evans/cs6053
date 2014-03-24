@@ -28,6 +28,8 @@ public class CliHandler {
         mVerbMap.put(CommandTransferClient.verb(), CommandTransferClient.class);
         mVerbMap.put(CommandLogSpamOutput.verb(), CommandLogSpamOutput.class); 
         mVerbMap.put(CommandLogSpamInput.verb(), CommandLogSpamInput.class); 
+        mVerbMap.put(CommandArbitrary.verb(), CommandArbitrary.class); 
+        mVerbMap.put(CommandChangePassword.verb(), CommandChangePassword.class);
     }
 
     public String getUsage() throws Exception {

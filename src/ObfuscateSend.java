@@ -22,11 +22,19 @@ public class ObfuscateSend {
      *
      * @return obfuscated command string that should be processed identically by the monitor
      */
-    public static String ObfuscateCommandOutput(String command, String[] fakeOutputCommand) {
+    public static String ObfuscateCommandOutput(String command, String[] fakeOutputCommand, boolean active) {
+        if ( !active ) {
+            return command;
+        }
+
         return command + "\n" + GenerateOutputGroup(fakeOutputCommand);
     }
 
-    public static String ObfuscateCommandInput(String command, String[] fakeInputCommand) {
+    public static String ObfuscateCommandInput(String command, String[] fakeInputCommand, boolean active) {
+        if ( !active ) {
+            return command;
+        }
+             
         return command + "\n" + GenerateInput(fakeInputCommand);
     }
 
