@@ -1,8 +1,6 @@
 
 public class CommandChangePassword extends CommandUser {
 
-    // TODO: test!
-    
     protected String mCurrentPassword;
     protected String mNewPassword;
 
